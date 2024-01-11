@@ -1,0 +1,7 @@
+--------------- Welcome to Prime generator! ---------------
+This application has three features:
+   1 - Generate a prime list with a determined length
+   2 - Generate a prime list up to a limit
+   3 - Generate the largest prime number up to a limit
+
+Which do you want to use? (1 || 2 || 3)
