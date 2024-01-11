@@ -4,18 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b3f86f93-f564-4049-a8e9-a2c5a53e2367" name="Changes" comment="Creating repository">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/exception/PrimeGeneratorException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/math/PrimeVerifier.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/service/PrimeGeneratorService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/service/impl/PrimeGeneratorServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/primenumbergenerator/math/PrimeVerifierTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/primenumbergenerator/service/PrimeGeneratorServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="b3f86f93-f564-4049-a8e9-a2c5a53e2367" name="Changes" comment="Creating prime generator">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/service/ViewService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/service/impl/ViewServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/primenumbergenerator/service/ViewServiceTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/PrimeNumberGeneratorTest.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,6 +18,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
         <option value="JUnit5 Test Class" />
       </list>
@@ -54,11 +48,14 @@
     "JUnit.PrimeGeneratorServiceTest.generateAPrimeList_numberSmallerThanOne.executor": "Run",
     "JUnit.PrimeGeneratorServiceTest.generateAPrimeList_zero.executor": "Run",
     "JUnit.PrimeGeneratorServiceTest.generateTheLargestPrimeNumberUpTo_happyPath.executor": "Run",
+    "JUnit.PrimeGeneratorServiceTest.generateTheLargestPrimeNumberUpTo_numberSmallerThanTwo.executor": "Run",
     "JUnit.PrimeVerifierTest.executor": "Debug",
     "JUnit.PrimeVerifierTest.isAPrimeNumberTest_happyPath.executor": "Run",
     "JUnit.PrimeVerifierTest.isAPrimeNumberTest_negativeNumber.executor": "Run",
     "JUnit.PrimeVerifierTest.isAPrimeNumberTest_notPrimeNumber.executor": "Run",
     "JUnit.PrimeVerifierTest.isAPrimeNumberTest_numberOne.executor": "Run",
+    "JUnit.ViewServiceTest.print.executor": "Run",
+    "JUnit.ViewServiceTest.readInteger.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
@@ -72,6 +69,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
+      <recent name="org.example.primenumbergenerator.service.impl" />
       <recent name="org.example.primenumbergenerator.exception" />
     </key>
     <key name="CreateTestDialog.Recents.Supers">
@@ -86,23 +84,7 @@
       <recent name="org.example.math" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.PrimeGeneratorServiceTest.generateTheLargestPrimeNumberUpTo_numberSmallerThanTwo">
-    <configuration name="PrimeGeneratorServiceTest.generateAPrimeListUpTo_happyPath" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="prime-number-generator" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.example.primenumbergenerator.service.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="org.example.primenumbergenerator.service" />
-      <option name="MAIN_CLASS_NAME" value="org.example.primenumbergenerator.service.PrimeGeneratorServiceTest" />
-      <option name="METHOD_NAME" value="generateAPrimeListUpTo_happyPath" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="JUnit.ViewServiceTest.readInteger">
     <configuration name="PrimeGeneratorServiceTest.generateAPrimeListUpTo_numberSmallerThanTwo" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="prime-number-generator" />
       <extension name="coverage">
@@ -114,22 +96,6 @@
       <option name="PACKAGE_NAME" value="org.example.primenumbergenerator.service" />
       <option name="MAIN_CLASS_NAME" value="org.example.primenumbergenerator.service.PrimeGeneratorServiceTest" />
       <option name="METHOD_NAME" value="generateAPrimeListUpTo_numberSmallerThanTwo" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="PrimeGeneratorServiceTest.generateAPrimeList_numberSmallerThanOne" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="prime-number-generator" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.example.primenumbergenerator.service.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="org.example.primenumbergenerator.service" />
-      <option name="MAIN_CLASS_NAME" value="org.example.primenumbergenerator.service.PrimeGeneratorServiceTest" />
-      <option name="METHOD_NAME" value="generateAPrimeList_numberSmallerThanOne" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -167,13 +133,45 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ViewServiceTest.print" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="prime-number-generator" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.primenumbergenerator.service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.primenumbergenerator.service" />
+      <option name="MAIN_CLASS_NAME" value="org.example.primenumbergenerator.service.ViewServiceTest" />
+      <option name="METHOD_NAME" value="print" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ViewServiceTest.readInteger" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="prime-number-generator" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.primenumbergenerator.service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.primenumbergenerator.service" />
+      <option name="MAIN_CLASS_NAME" value="org.example.primenumbergenerator.service.ViewServiceTest" />
+      <option name="METHOD_NAME" value="readInteger" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.ViewServiceTest.readInteger" />
+        <item itemvalue="JUnit.ViewServiceTest.print" />
         <item itemvalue="JUnit.PrimeGeneratorServiceTest.generateTheLargestPrimeNumberUpTo_numberSmallerThanTwo" />
         <item itemvalue="JUnit.PrimeGeneratorServiceTest.generateTheLargestPrimeNumberUpTo_happyPath" />
         <item itemvalue="JUnit.PrimeGeneratorServiceTest.generateAPrimeListUpTo_numberSmallerThanTwo" />
-        <item itemvalue="JUnit.PrimeGeneratorServiceTest.generateAPrimeListUpTo_happyPath" />
-        <item itemvalue="JUnit.PrimeGeneratorServiceTest.generateAPrimeList_numberSmallerThanOne" />
       </list>
     </recent_temporary>
   </component>
@@ -201,11 +199,31 @@
       <option name="project" value="LOCAL" />
       <updated>1704847311918</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Creating prime generator">
+      <option name="closed" value="true" />
+      <created>1704920172961</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1704920172961</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Creating repository" />
-    <option name="LAST_COMMIT_MESSAGE" value="Creating repository" />
+    <MESSAGE value="Creating prime generator" />
+    <option name="LAST_COMMIT_MESSAGE" value="Creating prime generator" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/service/impl/ViewServiceImpl.java</url>
+          <line>27</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
