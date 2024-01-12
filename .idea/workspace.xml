@@ -4,8 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b3f86f93-f564-4049-a8e9-a2c5a53e2367" name="Changes" comment="Making a view service">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/ViewOne.txt" afterDir="false" />
+    <list default="true" id="b3f86f93-f564-4049-a8e9-a2c5a53e2367" name="Changes" comment="First view">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/views/response.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/service/ViewService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/service/ViewService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/service/impl/ViewServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/service/impl/ViewServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/views/welcome.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/views/welcome.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/primenumbergenerator/service/ViewServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/primenumbergenerator/service/ViewServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,6 +58,7 @@
     "JUnit.PrimeVerifierTest.isAPrimeNumberTest_numberOne.executor": "Run",
     "JUnit.ViewServiceTest.print.executor": "Run",
     "JUnit.ViewServiceTest.readInteger.executor": "Run",
+    "Maven.prime-number-generator [package].executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
@@ -61,7 +67,7 @@
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/Projetos/Java/prime-number-generator"
+    "last_opened_file_path": "D:/Projetos/Java/prime-number-generator/src/main/resources/views"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -69,8 +75,14 @@
       <recent name="org.example.primenumbergenerator.service.impl" />
       <recent name="org.example.primenumbergenerator.exception" />
     </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Projetos\Java\prime-number-generator\src\main\resources\views" />
+    </key>
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Projetos\Java\prime-number-generator\src\main\resources\views" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="org.example.primenumbergenerator" />
@@ -81,7 +93,7 @@
       <recent name="org.example.math" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.ViewServiceTest.readInteger">
+  <component name="RunManager" selected="JUnit.ViewServiceTest.print">
     <configuration name="PrimeGeneratorServiceTest.generateAPrimeListUpTo_numberSmallerThanTwo" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="prime-number-generator" />
       <extension name="coverage">
@@ -164,8 +176,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.ViewServiceTest.readInteger" />
         <item itemvalue="JUnit.ViewServiceTest.print" />
+        <item itemvalue="JUnit.ViewServiceTest.readInteger" />
         <item itemvalue="JUnit.PrimeGeneratorServiceTest.generateTheLargestPrimeNumberUpTo_numberSmallerThanTwo" />
         <item itemvalue="JUnit.PrimeGeneratorServiceTest.generateTheLargestPrimeNumberUpTo_happyPath" />
         <item itemvalue="JUnit.PrimeGeneratorServiceTest.generateAPrimeListUpTo_numberSmallerThanTwo" />
@@ -212,24 +224,22 @@
       <option name="project" value="LOCAL" />
       <updated>1705010034220</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="First view">
+      <option name="closed" value="true" />
+      <created>1705010648532</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1705010648532</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Creating repository" />
     <MESSAGE value="Creating prime generator" />
     <MESSAGE value="Making a view service" />
-    <option name="LAST_COMMIT_MESSAGE" value="Making a view service" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/service/impl/ViewServiceImpl.java</url>
-          <line>27</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="First view" />
+    <option name="LAST_COMMIT_MESSAGE" value="First view" />
   </component>
 </project>

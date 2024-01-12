@@ -1,4 +1,4 @@
---------------- Welcome to Prime generator! ---------------
+--------------- Welcome to Prime generator ---------------
 This application has three features:
    1 - Generate a prime list with a determined length
    2 - Generate a prime list up to a limit

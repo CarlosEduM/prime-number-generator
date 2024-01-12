@@ -9,6 +9,9 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -31,10 +34,18 @@ class ViewServiceTest {
 
     @Test
     void print() throws IOException {
-        String test = "Test";
-        viewService.print(test);
+        String test = "Test\n{{}}";
+        List<Integer> list = IntStream.range(0, 16).boxed().toList();
+        viewService.print(test, list);
+        String expected = "Test\n" +
+                "  0  1  2  3  4  5  6  7  8  9 10 11 12 13\n" +
+                " 14 15";
 
-        assertEquals(test, OUTPUT_STREAM.toString());
+        assertEquals(expected, OUTPUT_STREAM.toString());
+    }
+
+    @Test
+    void testPrint() {
     }
 
     @Test
