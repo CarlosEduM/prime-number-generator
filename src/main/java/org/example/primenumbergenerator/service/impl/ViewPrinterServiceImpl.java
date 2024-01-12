@@ -1,6 +1,6 @@
 package org.example.primenumbergenerator.service.impl;
 
-import org.example.primenumbergenerator.service.ViewService;
+import org.example.primenumbergenerator.service.ViewPrinterService;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,12 +11,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class ViewServiceImpl implements ViewService {
+public class ViewPrinterServiceImpl implements ViewPrinterService {
     public static final Integer MAX_DATA_PER_LINE = 14;
     private final InputStream inputStream;
     private final OutputStream outputStream;
 
-    public ViewServiceImpl(InputStream inputStream, OutputStream outputStream) {
+    public ViewPrinterServiceImpl(InputStream inputStream, OutputStream outputStream) {
         this.inputStream = inputStream;
         this.outputStream = outputStream;
     }
