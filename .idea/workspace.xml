@@ -5,12 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b3f86f93-f564-4049-a8e9-a2c5a53e2367" name="Changes" comment="First view">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/views/response.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/service/ViewService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/service/ViewService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/service/impl/ViewServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/service/impl/ViewServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/views/welcome.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/views/welcome.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/primenumbergenerator/service/ViewServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/primenumbergenerator/service/ViewServiceTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/service/ViewReaderService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/service/impl/ViewReaderServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/primenumbergenerator/service/ViewReaderServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/service/ViewPrinterService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/service/ViewPrinterService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/service/impl/ViewPrinterServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/service/impl/ViewPrinterServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/primenumbergenerator/service/ViewPrinterServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/primenumbergenerator/service/ViewPrinterServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,14 +20,15 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="Class" />
         <option value="JUnit5 Test Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="HARD" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -56,6 +57,7 @@
     "JUnit.PrimeVerifierTest.isAPrimeNumberTest_negativeNumber.executor": "Run",
     "JUnit.PrimeVerifierTest.isAPrimeNumberTest_notPrimeNumber.executor": "Run",
     "JUnit.PrimeVerifierTest.isAPrimeNumberTest_numberOne.executor": "Run",
+    "JUnit.ViewPrinterServiceTest.print_happyPath.executor": "Run",
     "JUnit.ViewServiceTest.print.executor": "Run",
     "JUnit.ViewServiceTest.readInteger.executor": "Run",
     "Maven.prime-number-generator [package].executor": "Run",
@@ -92,9 +94,13 @@
       <recent name="org.example.primenumbergenerator.service.impl" />
       <recent name="org.example.math" />
     </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="org.example.primenumbergenerator.service" />
+      <recent name="org.example.primenumbergenerator.service.impl" />
+    </key>
   </component>
-  <component name="RunManager" selected="JUnit.ViewServiceTest.print">
-    <configuration name="PrimeGeneratorServiceTest.generateAPrimeListUpTo_numberSmallerThanTwo" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.ViewPrinterServiceTest.print_emptyList">
+    <configuration name="ViewPrinterServiceTest.print_emptyList" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="prime-number-generator" />
       <extension name="coverage">
         <pattern>
@@ -103,14 +109,14 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="org.example.primenumbergenerator.service" />
-      <option name="MAIN_CLASS_NAME" value="org.example.primenumbergenerator.service.PrimeGeneratorServiceTest" />
-      <option name="METHOD_NAME" value="generateAPrimeListUpTo_numberSmallerThanTwo" />
+      <option name="MAIN_CLASS_NAME" value="org.example.primenumbergenerator.service.ViewPrinterServiceTest" />
+      <option name="METHOD_NAME" value="print_emptyList" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="PrimeGeneratorServiceTest.generateTheLargestPrimeNumberUpTo_happyPath" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ViewPrinterServiceTest.print_happyPath" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="prime-number-generator" />
       <extension name="coverage">
         <pattern>
@@ -119,14 +125,14 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="org.example.primenumbergenerator.service" />
-      <option name="MAIN_CLASS_NAME" value="org.example.primenumbergenerator.service.PrimeGeneratorServiceTest" />
-      <option name="METHOD_NAME" value="generateTheLargestPrimeNumberUpTo_happyPath" />
+      <option name="MAIN_CLASS_NAME" value="org.example.primenumbergenerator.service.ViewPrinterServiceTest" />
+      <option name="METHOD_NAME" value="print_happyPath" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="PrimeGeneratorServiceTest.generateTheLargestPrimeNumberUpTo_numberSmallerThanTwo" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ViewPrinterServiceTest.print_nullList" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="prime-number-generator" />
       <extension name="coverage">
         <pattern>
@@ -135,8 +141,8 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="org.example.primenumbergenerator.service" />
-      <option name="MAIN_CLASS_NAME" value="org.example.primenumbergenerator.service.PrimeGeneratorServiceTest" />
-      <option name="METHOD_NAME" value="generateTheLargestPrimeNumberUpTo_numberSmallerThanTwo" />
+      <option name="MAIN_CLASS_NAME" value="org.example.primenumbergenerator.service.ViewPrinterServiceTest" />
+      <option name="METHOD_NAME" value="print_nullList" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -176,11 +182,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.ViewPrinterServiceTest.print_emptyList" />
+        <item itemvalue="JUnit.ViewPrinterServiceTest.print_nullList" />
+        <item itemvalue="JUnit.ViewPrinterServiceTest.print_happyPath" />
         <item itemvalue="JUnit.ViewServiceTest.print" />
         <item itemvalue="JUnit.ViewServiceTest.readInteger" />
-        <item itemvalue="JUnit.PrimeGeneratorServiceTest.generateTheLargestPrimeNumberUpTo_numberSmallerThanTwo" />
-        <item itemvalue="JUnit.PrimeGeneratorServiceTest.generateTheLargestPrimeNumberUpTo_happyPath" />
-        <item itemvalue="JUnit.PrimeGeneratorServiceTest.generateAPrimeListUpTo_numberSmallerThanTwo" />
       </list>
     </recent_temporary>
   </component>
@@ -234,6 +240,17 @@
     </task>
     <option name="localTasksCounter" value="5" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Creating repository" />

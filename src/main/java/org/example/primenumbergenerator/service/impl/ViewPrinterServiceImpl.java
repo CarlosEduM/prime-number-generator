@@ -13,11 +13,9 @@ import java.util.stream.IntStream;
 
 public class ViewPrinterServiceImpl implements ViewPrinterService {
     public static final Integer MAX_DATA_PER_LINE = 14;
-    private final InputStream inputStream;
     private final OutputStream outputStream;
 
-    public ViewPrinterServiceImpl(InputStream inputStream, OutputStream outputStream) {
-        this.inputStream = inputStream;
+    public ViewPrinterServiceImpl(OutputStream outputStream) {
         this.outputStream = outputStream;
     }
 
@@ -43,14 +41,7 @@ public class ViewPrinterServiceImpl implements ViewPrinterService {
     }
 
     @Override
-    public Integer readInteger() throws IOException {
-        byte[] bytes = inputStream.readAllBytes();
-        return ByteBuffer.wrap(bytes).getInt();
-    }
-
-    @Override
     public void close() throws IOException {
-        inputStream.close();
         outputStream.close();
     }
 }

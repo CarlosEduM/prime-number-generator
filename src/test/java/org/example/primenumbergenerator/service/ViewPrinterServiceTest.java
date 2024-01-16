@@ -9,10 +9,12 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ViewPrinterServiceTest {
     public static final ByteArrayOutputStream OUTPUT_STREAM = new ByteArrayOutputStream();
@@ -23,7 +25,7 @@ class ViewPrinterServiceTest {
     static void beforeAll() {
         byte[] bytesValue = ByteBuffer.allocate(4).putInt(OUTPUT_RESPONSE).array();
 
-        viewPrinterService = new ViewPrinterServiceImpl(new ByteArrayInputStream(bytesValue), OUTPUT_STREAM);
+        viewPrinterService = new ViewPrinterServiceImpl(OUTPUT_STREAM);
     }
 
     @AfterAll
@@ -32,7 +34,7 @@ class ViewPrinterServiceTest {
     }
 
     @Test
-    void print() throws IOException {
+    void print_happyPath() throws IOException {
         String test = "Test\n{{}}";
         List<Integer> list = IntStream.range(0, 16).boxed().toList();
         viewPrinterService.print(test, list);
@@ -44,13 +46,17 @@ class ViewPrinterServiceTest {
     }
 
     @Test
-    void testPrint() {
+    void print_emptyList() throws IOException {
+        String test = "Test\n{{}}";
+        List<Integer> list = new ArrayList<>();
+        viewPrinterService.print(test, list);
+        String expected = "Test\n";
+
+        assertEquals(expected, OUTPUT_STREAM.toString());
     }
 
     @Test
-    void readInteger() throws IOException {
-        Integer resp = viewPrinterService.readInteger();
-
-        assertEquals(OUTPUT_RESPONSE, resp);
+    void print_nullList() {
+        assertThrows(NullPointerException.class, () -> viewPrinterService.print("Test", null));
     }
 }
