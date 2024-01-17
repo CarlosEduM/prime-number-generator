@@ -4,17 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b3f86f93-f564-4049-a8e9-a2c5a53e2367" name="Changes" comment="Making some updates">
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/primenumbergenerator/service/ViewServiceTest.java" afterDir="false" />
+    <list default="true" id="b3f86f93-f564-4049-a8e9-a2c5a53e2367" name="Changes" comment="Making view service">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/views/configureLargestPrime.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/views/configurePrimeListWithLargestNumberLimit.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/views/configurePrimeListWithLengthLimit.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/service/ViewPrinterService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/service/ViewPrinterService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/exception/PrimeGeneratorException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/exception/PrimeGeneratorException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/service/ViewReaderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/service/ViewReaderService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/service/impl/ViewPrinterServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/service/impl/ViewPrinterServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/service/ViewService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/service/ViewService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/service/impl/ViewReaderServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/service/impl/ViewReaderServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/service/impl/ViewServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/service/impl/ViewServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/primenumbergenerator/service/ViewPrinterServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/primenumbergenerator/service/ViewPrinterServiceTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/org/example/primenumbergenerator/service/ViewReaderServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/primenumbergenerator/service/ViewReaderServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/primenumbergenerator/service/ViewServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/primenumbergenerator/service/ViewServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,7 +72,11 @@
     "JUnit.ViewPrinterServiceTest.print_nullList.executor": "Run",
     "JUnit.ViewReaderServiceTest.executor": "Run",
     "JUnit.ViewReaderServiceTest.readInteger.executor": "Run",
+    "JUnit.ViewReaderServiceTest.readInteger_nonInteger.executor": "Run",
+    "JUnit.ViewReaderServiceTest.readLong.executor": "Run",
     "JUnit.ViewReaderServiceTest.waitSomeInput.executor": "Run",
+    "JUnit.ViewServiceTest.configurePrimeListWithLargestNumberLimit_happyPath.executor": "Run",
+    "JUnit.ViewServiceTest.configurePrimeListWithLengthLimit_happyPath.executor": "Run",
     "JUnit.ViewServiceTest.print.executor": "Run",
     "JUnit.ViewServiceTest.readInteger.executor": "Run",
     "JUnit.ViewServiceTest.response.executor": "Run",
@@ -88,7 +93,7 @@
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/Projetos/Java/prime-number-generator/src/test/resources/views",
+    "last_opened_file_path": "D:/Projetos/Java/prime-number-generator/src/main/resources/views",
     "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices"
   }
 }]]></component>
@@ -98,8 +103,8 @@
       <recent name="org.example.primenumbergenerator.exception" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\Projetos\Java\prime-number-generator\src\test\resources\views" />
       <recent name="D:\Projetos\Java\prime-number-generator\src\main\resources\views" />
+      <recent name="D:\Projetos\Java\prime-number-generator\src\test\resources\views" />
     </key>
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
@@ -120,8 +125,8 @@
       <recent name="org.example.primenumbergenerator.service.impl" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.ViewServiceTest.response">
-    <configuration name="ViewPrinterServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.java in prime-number-generator">
+    <configuration name="ViewServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="prime-number-generator" />
       <extension name="coverage">
         <pattern>
@@ -130,29 +135,13 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="org.example.primenumbergenerator.service" />
-      <option name="MAIN_CLASS_NAME" value="org.example.primenumbergenerator.service.ViewPrinterServiceTest" />
+      <option name="MAIN_CLASS_NAME" value="org.example.primenumbergenerator.service.ViewServiceTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ViewPrinterServiceTest.print_emptyList" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="prime-number-generator" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.example.primenumbergenerator.service.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="org.example.primenumbergenerator.service" />
-      <option name="MAIN_CLASS_NAME" value="org.example.primenumbergenerator.service.ViewPrinterServiceTest" />
-      <option name="METHOD_NAME" value="print_emptyList" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ViewServiceTest.response" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ViewServiceTest.configureLargestPrime_happyPath" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="prime-number-generator" />
       <extension name="coverage">
         <pattern>
@@ -162,13 +151,13 @@
       </extension>
       <option name="PACKAGE_NAME" value="org.example.primenumbergenerator.service" />
       <option name="MAIN_CLASS_NAME" value="org.example.primenumbergenerator.service.ViewServiceTest" />
-      <option name="METHOD_NAME" value="response" />
+      <option name="METHOD_NAME" value="configureLargestPrime_happyPath" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ViewServiceTest.welcome" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ViewServiceTest.configurePrimeListWithLargestNumberLimit_happyPath" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="prime-number-generator" />
       <extension name="coverage">
         <pattern>
@@ -178,7 +167,23 @@
       </extension>
       <option name="PACKAGE_NAME" value="org.example.primenumbergenerator.service" />
       <option name="MAIN_CLASS_NAME" value="org.example.primenumbergenerator.service.ViewServiceTest" />
-      <option name="METHOD_NAME" value="welcome" />
+      <option name="METHOD_NAME" value="configurePrimeListWithLargestNumberLimit_happyPath" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ViewServiceTest.configurePrimeListWithLengthLimit_happyPath" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="prime-number-generator" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.primenumbergenerator.service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.primenumbergenerator.service" />
+      <option name="MAIN_CLASS_NAME" value="org.example.primenumbergenerator.service.ViewServiceTest" />
+      <option name="METHOD_NAME" value="configurePrimeListWithLengthLimit_happyPath" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -194,11 +199,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.ViewServiceTest.response" />
-        <item itemvalue="JUnit.ViewServiceTest.welcome" />
-        <item itemvalue="JUnit.ViewPrinterServiceTest" />
-        <item itemvalue="JUnit.ViewPrinterServiceTest.print_emptyList" />
         <item itemvalue="JUnit.java in prime-number-generator" />
+        <item itemvalue="JUnit.ViewServiceTest" />
+        <item itemvalue="JUnit.ViewServiceTest.configureLargestPrime_happyPath" />
+        <item itemvalue="JUnit.ViewServiceTest.configurePrimeListWithLargestNumberLimit_happyPath" />
+        <item itemvalue="JUnit.ViewServiceTest.configurePrimeListWithLengthLimit_happyPath" />
       </list>
     </recent_temporary>
   </component>
@@ -274,7 +279,15 @@
       <option name="project" value="LOCAL" />
       <updated>1705502434813</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Making view service">
+      <option name="closed" value="true" />
+      <created>1705512636228</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1705512636228</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -296,6 +309,7 @@
     <MESSAGE value="separating responsibilities" />
     <MESSAGE value="Implementing class path resource" />
     <MESSAGE value="Making some updates" />
-    <option name="LAST_COMMIT_MESSAGE" value="Making some updates" />
+    <MESSAGE value="Making view service" />
+    <option name="LAST_COMMIT_MESSAGE" value="Making view service" />
   </component>
 </project>

@@ -1,0 +1,2 @@
+---------------- Configurations ----------------
+What is the length for the list? (number > 0)

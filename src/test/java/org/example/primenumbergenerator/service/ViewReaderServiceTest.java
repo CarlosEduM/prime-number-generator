@@ -1,40 +1,65 @@
 package org.example.primenumbergenerator.service;
 
+import org.example.primenumbergenerator.exception.PrimeGeneratorException;
 import org.example.primenumbergenerator.service.impl.ViewReaderServiceImpl;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class ViewReaderServiceTest {
-    public static final Integer OUTPUT_RESPONSE = 10;
-    private static ViewReaderService viewReaderService;
+    @Test
+    void readInteger_happyPath() throws IOException {
+        Integer outputResponse = 10;
+        byte[] bytesValue = ByteBuffer.allocate(4).putInt(outputResponse).array();
 
-    @BeforeEach
-    void setUp() {
-        byte[] bytesValue = ByteBuffer.allocate(4).putInt(OUTPUT_RESPONSE).array();
+        try (ViewReaderService viewReaderService = new ViewReaderServiceImpl(new ByteArrayInputStream(bytesValue))) {
+            int resp = viewReaderService.readInteger();
 
-        viewReaderService = new ViewReaderServiceImpl(new ByteArrayInputStream(bytesValue));
-    }
-
-    @AfterEach
-    void tearDown() throws IOException {
-        viewReaderService.close();
+            assertEquals(outputResponse, resp);
+        }
     }
 
     @Test
-    void readInteger() {
-        Integer resp = viewReaderService.readInteger();
+    void readInteger_nonInteger() throws IOException {
+        byte[] bytesValue = "abc".getBytes(StandardCharsets.UTF_8);
 
-        assertEquals(OUTPUT_RESPONSE, resp);
+        try (ViewReaderService viewReaderService = new ViewReaderServiceImpl(new ByteArrayInputStream(bytesValue))) {
+            assertThrows(PrimeGeneratorException.class, viewReaderService::readInteger);
+        }
     }
 
     @Test
-    void waitSomeInput() {
-        assertDoesNotThrow(() -> viewReaderService.waitSomeInput());
+    void waitSomeInput_happyPath() throws IOException {
+        byte[] bytesValue = ByteBuffer.allocate(4).putInt(0).array();
+
+        try (ViewReaderService viewReaderService = new ViewReaderServiceImpl(new ByteArrayInputStream(bytesValue))) {
+            assertDoesNotThrow(viewReaderService::waitSomeInput);
+        }
+    }
+
+    @Test
+    void readLong_happyPath() throws IOException {
+        Long outputResponse = 10L;
+        byte[] bytesValue = ByteBuffer.allocate(8).putLong(outputResponse).array();
+
+        try (ViewReaderService viewReaderService = new ViewReaderServiceImpl(new ByteArrayInputStream(bytesValue))) {
+            Long resp = viewReaderService.readLong();
+
+            assertEquals(outputResponse, resp);
+        }
+    }
+
+    @Test
+    void readInteger_nonLong() throws IOException {
+        byte[] bytesValue = "abc".getBytes(StandardCharsets.UTF_8);
+
+        try (ViewReaderService viewReaderService = new ViewReaderServiceImpl(new ByteArrayInputStream(bytesValue))) {
+            assertThrows(PrimeGeneratorException.class, viewReaderService::readLong);
+        }
     }
 }

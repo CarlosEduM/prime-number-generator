@@ -1,0 +1,3 @@
+---------------- Configurations ----------------
+Up to what limit should the largest prime number
+be generated? (number > 1)

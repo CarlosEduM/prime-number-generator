@@ -1,0 +1,3 @@
+---------------- Configurations ----------------
+What is the highest number up to which you would
+like to generate prime numbers? (number > 1)

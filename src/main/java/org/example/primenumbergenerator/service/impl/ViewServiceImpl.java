@@ -21,20 +21,41 @@ public class ViewServiceImpl implements ViewService {
         this.classLoaderService = classLoaderService;
     }
 
-
     @Override
     public Integer welcome() {
-        String welcome = classLoaderService.loadResource("views/welcome.txt");
+        String view = classLoaderService.loadResource("views/welcome.txt");
 
-        printerService.print(welcome);
+        printerService.print(view);
         return readerService.readInteger();
     }
 
     @Override
-    public void response(List<Integer> primeList) {
-        String response = classLoaderService.loadResource("views/response.txt");
+    public Long configurePrimeListWithLengthLimit() {
+        return printAngReadResponse("views/configurePrimeListWithLengthLimit.txt");
+    }
 
-        printerService.print(response, primeList);
+    @Override
+    public Long configurePrimeListWithLargestNumberLimit() {
+        return printAngReadResponse("views/configurePrimeListWithLargestNumberLimit.txt");
+    }
+
+    @Override
+    public Long configureLargestPrime() {
+        return printAngReadResponse("views/configureLargestPrime.txt");
+    }
+
+    private Long printAngReadResponse(String resourcePath) {
+        String view = classLoaderService.loadResource(resourcePath);
+
+        printerService.print(view);
+        return readerService.readLong();
+    }
+
+    @Override
+    public void response(List<Integer> primeList) {
+        String view = classLoaderService.loadResource("views/response.txt");
+
+        printerService.print(view, primeList);
         readerService.waitSomeInput();
     }
 

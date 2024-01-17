@@ -8,4 +8,8 @@ public class PrimeGeneratorException extends RuntimeException {
     public PrimeGeneratorException(Throwable cause) {
         super(cause);
     }
+
+    public PrimeGeneratorException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }
