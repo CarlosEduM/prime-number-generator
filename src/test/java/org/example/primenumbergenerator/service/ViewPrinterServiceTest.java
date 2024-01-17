@@ -1,8 +1,8 @@
 package org.example.primenumbergenerator.service;
 
 import org.example.primenumbergenerator.service.impl.ViewPrinterServiceImpl;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -16,24 +16,25 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ViewPrinterServiceTest {
-    public static final ByteArrayOutputStream OUTPUT_STREAM = new ByteArrayOutputStream();
-    public static final Integer OUTPUT_RESPONSE = 10;
-    private static ViewPrinterService viewPrinterService;
+    public ByteArrayOutputStream outputStream;
+    public final Integer OUTPUT_RESPONSE = 10;
+    private ViewPrinterService viewPrinterService;
 
-    @BeforeAll
-    static void beforeAll() {
+    @BeforeEach
+    void setUp() {
+        outputStream = new ByteArrayOutputStream();
         ByteBuffer.allocate(4).putInt(OUTPUT_RESPONSE);
 
-        viewPrinterService = new ViewPrinterServiceImpl(OUTPUT_STREAM);
+        viewPrinterService = new ViewPrinterServiceImpl(outputStream);
     }
 
-    @AfterAll
-    static void afterAll() throws IOException {
+    @AfterEach
+    void tearDown() throws IOException {
         viewPrinterService.close();
     }
 
     @Test
-    void print_happyPath() throws IOException {
+    void print_happyPath() {
         String test = "Test\n{{}}";
         List<Integer> list = IntStream.range(0, 16).boxed().toList();
         viewPrinterService.print(test, list);
@@ -42,17 +43,17 @@ class ViewPrinterServiceTest {
                   0  1  2  3  4  5  6  7  8  9 10 11 12 13
                  14 15""";
 
-        assertEquals(expected, OUTPUT_STREAM.toString());
+        assertEquals(expected, outputStream.toString());
     }
 
     @Test
-    void print_emptyList() throws IOException {
+    void print_emptyList() {
         String test = "Test\n{{}}";
-        List<Integer> list = new ArrayList<>();
-        viewPrinterService.print(test, list);
+        List<Integer> emptyList = new ArrayList<>();
+        viewPrinterService.print(test, emptyList);
         String expected = "Test\n";
 
-        assertEquals(expected, OUTPUT_STREAM.toString());
+        assertEquals(expected, outputStream.toString());
     }
 
     @Test

@@ -1,5 +1,6 @@
 package org.example.primenumbergenerator.service.impl;
 
+import org.example.primenumbergenerator.exception.PrimeGeneratorException;
 import org.example.primenumbergenerator.service.ViewPrinterService;
 
 import java.io.IOException;
@@ -18,12 +19,16 @@ public class ViewPrinterServiceImpl implements ViewPrinterService {
     }
 
     @Override
-    public void print(String input) throws IOException {
-        outputStream.write(input.getBytes(StandardCharsets.UTF_8));
+    public void print(String input) {
+        try {
+            outputStream.write(input.getBytes(StandardCharsets.UTF_8));
+        } catch (IOException e) {
+            throw new PrimeGeneratorException(e);
+        }
     }
 
     @Override
-    public void print(String input, List<?> parameters) throws IOException {
+    public void print(String input, List<?> parameters) {
         String formattedString = IntStream.range(0, parameters.size())
                 .boxed()
                 .collect(Collectors.groupingBy(counter -> counter / MAX_DATA_PER_LINE))
