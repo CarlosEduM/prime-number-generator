@@ -23,7 +23,7 @@ class ViewPrinterServiceTest {
 
     @BeforeAll
     static void beforeAll() {
-        byte[] bytesValue = ByteBuffer.allocate(4).putInt(OUTPUT_RESPONSE).array();
+        ByteBuffer.allocate(4).putInt(OUTPUT_RESPONSE);
 
         viewPrinterService = new ViewPrinterServiceImpl(OUTPUT_STREAM);
     }

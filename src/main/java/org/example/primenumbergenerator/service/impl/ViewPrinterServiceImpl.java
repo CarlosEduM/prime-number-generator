@@ -3,9 +3,7 @@ package org.example.primenumbergenerator.service.impl;
 import org.example.primenumbergenerator.service.ViewPrinterService;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
-import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.stream.Collectors;
