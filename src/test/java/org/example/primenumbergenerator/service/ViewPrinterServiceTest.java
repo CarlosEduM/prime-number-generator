@@ -5,7 +5,6 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -38,9 +37,10 @@ class ViewPrinterServiceTest {
         String test = "Test\n{{}}";
         List<Integer> list = IntStream.range(0, 16).boxed().toList();
         viewPrinterService.print(test, list);
-        String expected = "Test\n" +
-                "  0  1  2  3  4  5  6  7  8  9 10 11 12 13\n" +
-                " 14 15";
+        String expected = """
+                Test
+                  0  1  2  3  4  5  6  7  8  9 10 11 12 13
+                 14 15""";
 
         assertEquals(expected, OUTPUT_STREAM.toString());
     }

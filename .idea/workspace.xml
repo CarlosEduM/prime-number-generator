@@ -114,7 +114,7 @@
       <recent name="org.example.primenumbergenerator.service.impl" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.ClassLoaderServiceTest.loadResource_emptyFile">
+  <component name="RunManager" selected="JUnit.ViewPrinterServiceTest.print_happyPath">
     <configuration name="ClassLoaderServiceTest.loadResource_emptyFile" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="prime-number-generator" />
       <extension name="coverage">
@@ -179,7 +179,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ViewPrinterServiceTest.print_emptyList" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ViewPrinterServiceTest.print_happyPath" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="prime-number-generator" />
       <extension name="coverage">
         <pattern>
@@ -189,7 +189,7 @@
       </extension>
       <option name="PACKAGE_NAME" value="org.example.primenumbergenerator.service" />
       <option name="MAIN_CLASS_NAME" value="org.example.primenumbergenerator.service.ViewPrinterServiceTest" />
-      <option name="METHOD_NAME" value="print_emptyList" />
+      <option name="METHOD_NAME" value="print_happyPath" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -197,11 +197,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.ViewPrinterServiceTest.print_happyPath" />
         <item itemvalue="JUnit.ClassLoaderServiceTest.loadResource_emptyFile" />
         <item itemvalue="JUnit.ClassLoaderServiceTest.loadResource_twoLines" />
         <item itemvalue="JUnit.ClassLoaderServiceTest.loadResource_happyPath" />
         <item itemvalue="JUnit.ClassLoaderServiceTest.loadResource_resourceDoNotExist" />
-        <item itemvalue="JUnit.ViewPrinterServiceTest.print_emptyList" />
       </list>
     </recent_temporary>
   </component>

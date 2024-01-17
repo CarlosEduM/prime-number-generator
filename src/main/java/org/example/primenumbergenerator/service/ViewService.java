@@ -5,5 +5,6 @@ import java.util.List;
 
 public interface ViewService extends Closeable {
     Integer welcome();
+
     void response(List<Integer> primeList);
 }

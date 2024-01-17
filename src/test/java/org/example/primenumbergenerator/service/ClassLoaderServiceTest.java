@@ -2,16 +2,11 @@ package org.example.primenumbergenerator.service;
 
 import org.example.primenumbergenerator.exception.PrimeGeneratorException;
 import org.example.primenumbergenerator.service.impl.ClassLoaderServiceImpl;
-import org.example.primenumbergenerator.service.impl.ViewPrinterServiceImpl;
-import org.example.primenumbergenerator.service.impl.ViewReaderServiceImpl;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
-import java.nio.ByteBuffer;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ClassLoaderServiceTest {
     private static ClassLoaderService classLoaderService;
