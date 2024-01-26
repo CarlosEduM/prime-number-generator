@@ -6,11 +6,13 @@ import java.util.List;
 public interface ViewService extends Closeable {
     Integer welcome();
 
-    Long configurePrimeListWithLengthLimit();
+    Integer configurePrimeListWithLengthLimit();
 
     Long configurePrimeListWithLargestNumberLimit();
 
     Long configureLargestPrime();
 
-    void response(List<Integer> primeList);
+    void response(List<Long> primeList);
+
+    void error(String errorMessage);
 }

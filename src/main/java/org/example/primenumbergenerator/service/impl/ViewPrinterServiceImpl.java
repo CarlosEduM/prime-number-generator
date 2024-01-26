@@ -40,7 +40,12 @@ public class ViewPrinterServiceImpl implements ViewPrinterService {
         String data = String.format(formattedString, parameters.toArray());
 
 
-        print(input.replace("{{}}", data));
+        print(input, data);
+    }
+
+    @Override
+    public void print(String input, String message) {
+        print(input.replace("{{}}", message));
     }
 
     @Override

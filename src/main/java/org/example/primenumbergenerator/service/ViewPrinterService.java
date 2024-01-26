@@ -7,4 +7,6 @@ public interface ViewPrinterService extends Closeable {
     void print(String input);
 
     void print(String input, List<?> parameters);
+
+    void print(String input, String message);
 }

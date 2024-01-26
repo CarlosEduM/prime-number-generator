@@ -58,6 +58,6 @@ class ViewPrinterServiceTest {
 
     @Test
     void print_nullList() {
-        assertThrows(NullPointerException.class, () -> viewPrinterService.print("Test", null));
+        assertThrows(NullPointerException.class, () -> viewPrinterService.print("Test", (List<?>) null));
     }
 }

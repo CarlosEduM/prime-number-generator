@@ -44,11 +44,11 @@ class ViewServiceTest {
 
     @Test
     void configurePrimeListWithLengthLimit_happyPath() {
-        long expectedValue = 1L;
+        int expectedValue = 1;
         when(classLoaderService.loadResource("views/configurePrimeListWithLengthLimit.txt"))
                 .thenReturn("Test");
         doNothing().when(printerService).print("Test");
-        when(readerService.readLong()).thenReturn(expectedValue);
+        when(readerService.readInteger()).thenReturn(expectedValue);
 
         long option = viewService.configurePrimeListWithLengthLimit();
 
@@ -88,7 +88,7 @@ class ViewServiceTest {
 
     @Test
     void response_happyPath() {
-        List<Integer> emptyList = new ArrayList<>();
+        List<Long> emptyList = new ArrayList<>();
         when(classLoaderService.loadResource("views/response.txt")).thenReturn("Test");
         doNothing().when(printerService).print("Test", emptyList);
         doNothing().when(readerService).waitSomeInput();

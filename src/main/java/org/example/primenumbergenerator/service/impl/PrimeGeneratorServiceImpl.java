@@ -18,7 +18,7 @@ public class PrimeGeneratorServiceImpl implements PrimeGeneratorService {
     }
 
     @Override
-    public List<Long> generateAPrimeList(Integer length) {
+    public List<Long> generatePrimeListWithLengthLimit(Integer length) {
         if (length < 1)
             throw new PrimeGeneratorException("The list length must be major than 0");
 
@@ -26,14 +26,14 @@ public class PrimeGeneratorServiceImpl implements PrimeGeneratorService {
     }
 
     @Override
-    public List<Long> generateAPrimeListUpTo(Long limit) {
+    public List<Long> generatePrimeListWithLargestNumberLimit(Long limit) {
         verifyLimit(limit);
 
         return generatePrimes(MIN_PRIME_POSSIBLE, limit, Integer.MAX_VALUE).toList();
     }
 
     @Override
-    public Long generateTheLargestPrimeNumberUpTo(Long limit) {
+    public Long generateLargestPrime(Long limit) {
         verifyLimit(limit);
 
         Optional<Long> prime = LongStream.iterate(limit, i -> i - 1)

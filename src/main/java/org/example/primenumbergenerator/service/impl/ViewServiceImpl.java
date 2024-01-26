@@ -23,39 +23,54 @@ public class ViewServiceImpl implements ViewService {
 
     @Override
     public Integer welcome() {
-        String view = classLoaderService.loadResource("views/welcome.txt");
-
-        printerService.print(view);
+        print("views/welcome.txt");
         return readerService.readInteger();
     }
 
     @Override
-    public Long configurePrimeListWithLengthLimit() {
-        return printAngReadResponse("views/configurePrimeListWithLengthLimit.txt");
+    public Integer configurePrimeListWithLengthLimit() {
+        return printAngReadIntegerResponse("views/configurePrimeListWithLengthLimit.txt");
     }
 
     @Override
     public Long configurePrimeListWithLargestNumberLimit() {
-        return printAngReadResponse("views/configurePrimeListWithLargestNumberLimit.txt");
+        return printAngReadLongResponse("views/configurePrimeListWithLargestNumberLimit.txt");
     }
 
     @Override
     public Long configureLargestPrime() {
-        return printAngReadResponse("views/configureLargestPrime.txt");
+        return printAngReadLongResponse("views/configureLargestPrime.txt");
     }
 
-    private Long printAngReadResponse(String resourcePath) {
-        String view = classLoaderService.loadResource(resourcePath);
-
-        printerService.print(view);
+    private Long printAngReadLongResponse(String resourcePath) {
+        print(resourcePath);
         return readerService.readLong();
     }
 
+    private Integer printAngReadIntegerResponse(String resourcePath) {
+        print(resourcePath);
+        return readerService.readInteger();
+    }
+
+    private void print(String resourcePath) {
+        String view = classLoaderService.loadResource(resourcePath);
+
+        printerService.print(view);
+    }
+
     @Override
-    public void response(List<Integer> primeList) {
+    public void response(List<Long> primeList) {
         String view = classLoaderService.loadResource("views/response.txt");
 
         printerService.print(view, primeList);
+        readerService.waitSomeInput();
+    }
+
+    @Override
+    public void error(String errorMessage) {
+        String view = classLoaderService.loadResource("views/error.txt");
+
+        printerService.print(view, errorMessage);
         readerService.waitSomeInput();
     }
 

@@ -13,8 +13,8 @@ import java.util.Objects;
 import java.util.Scanner;
 
 public class ClassLoaderServiceImpl implements ClassLoaderService {
-    private static final ClassLoader CLASS_LOADER = PrimeNumberGenerator.class.getClassLoader();
-    private static final Map<String, String> cache = new HashMap<>();
+    private final ClassLoader classLoader = PrimeNumberGenerator.class.getClassLoader();
+    private final Map<String, String> cache = new HashMap<>();
 
 
     @Override
@@ -29,24 +29,24 @@ public class ClassLoaderServiceImpl implements ClassLoaderService {
         return resource;
     }
 
-    private static String scanResource(String resourcePath) {
-        try (InputStream resource = CLASS_LOADER.getResourceAsStream(resourcePath)) {
+    private String scanResource(String resourcePath) {
+        try (InputStream resource = classLoader.getResourceAsStream(resourcePath)) {
             return tryToScanResource(resourcePath, resource);
         } catch (IOException e) {
             throw new PrimeGeneratorException(e);
         }
     }
 
-    private static String tryToScanResource(String resourcePath, InputStream resource) {
+    private String tryToScanResource(String resourcePath, InputStream resource) {
         if (resource == null)
             throw new PrimeGeneratorException("Some problem when trying to load '" + resourcePath + "'");
 
         try (Scanner scanner = new Scanner(resource, StandardCharsets.UTF_8)) {
-            return scanAll(scanner);
+            return tryToScanAll(scanner);
         }
     }
 
-    private static String scanAll(Scanner scanner) {
+    private String tryToScanAll(Scanner scanner) {
         StringBuilder builder = new StringBuilder();
 
         while (scanner.hasNextLine()) {

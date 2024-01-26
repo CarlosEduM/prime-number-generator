@@ -4,17 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b3f86f93-f564-4049-a8e9-a2c5a53e2367" name="Changes" comment="Making view service">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/views/configureLargestPrime.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/views/configurePrimeListWithLargestNumberLimit.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/views/configurePrimeListWithLengthLimit.txt" afterDir="false" />
+    <list default="true" id="b3f86f93-f564-4049-a8e9-a2c5a53e2367" name="Changes" comment="Putting more views">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/config/AppConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/views/error.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/primenumbergenerator/controller/PrimeGeneratorControllerTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/exception/PrimeGeneratorException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/exception/PrimeGeneratorException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/service/ViewReaderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/service/ViewReaderService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/controller/PrimeGeneratorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/controller/PrimeGeneratorController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/service/PrimeGeneratorService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/service/PrimeGeneratorService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/service/ViewPrinterService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/service/ViewPrinterService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/service/ViewService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/service/ViewService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/service/impl/ViewReaderServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/service/impl/ViewReaderServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/service/impl/ClassLoaderServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/service/impl/ClassLoaderServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/service/impl/PrimeGeneratorServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/service/impl/PrimeGeneratorServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/service/impl/ViewPrinterServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/service/impl/ViewPrinterServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/service/impl/ViewServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/service/impl/ViewServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/primenumbergenerator/service/ViewReaderServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/primenumbergenerator/service/ViewReaderServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/primenumbergenerator/service/PrimeGeneratorServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/primenumbergenerator/service/PrimeGeneratorServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/primenumbergenerator/service/ViewPrinterServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/primenumbergenerator/service/ViewPrinterServiceTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/org/example/primenumbergenerator/service/ViewServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/primenumbergenerator/service/ViewServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -47,10 +51,15 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "JUnit.ClassLoaderServiceTest.executor": "Run",
     "JUnit.ClassLoaderServiceTest.loadResource_emptyFile.executor": "Run",
     "JUnit.ClassLoaderServiceTest.loadResource_happyPath.executor": "Run",
     "JUnit.ClassLoaderServiceTest.loadResource_resourceDoNotExist.executor": "Run",
     "JUnit.ClassLoaderServiceTest.loadResource_twoLines.executor": "Run",
+    "JUnit.PrimeGeneratorControllerTest.executor": "Run",
+    "JUnit.PrimeGeneratorControllerTest.welcome.executor": "Run",
+    "JUnit.PrimeGeneratorControllerTest.welcome_happyPath2.executor": "Run",
+    "JUnit.PrimeGeneratorControllerTest.welcome_happyPath3.executor": "Run",
     "JUnit.PrimeGeneratorServiceTest.generateAPrimeListUpTo_happyPath.executor": "Run",
     "JUnit.PrimeGeneratorServiceTest.generateAPrimeListUpTo_negativeNumber.executor": "Run",
     "JUnit.PrimeGeneratorServiceTest.generateAPrimeListUpTo_numberSmallerThanTwo.executor": "Run",
@@ -77,6 +86,7 @@
     "JUnit.ViewReaderServiceTest.waitSomeInput.executor": "Run",
     "JUnit.ViewServiceTest.configurePrimeListWithLargestNumberLimit_happyPath.executor": "Run",
     "JUnit.ViewServiceTest.configurePrimeListWithLengthLimit_happyPath.executor": "Run",
+    "JUnit.ViewServiceTest.executor": "Run",
     "JUnit.ViewServiceTest.print.executor": "Run",
     "JUnit.ViewServiceTest.readInteger.executor": "Run",
     "JUnit.ViewServiceTest.response.executor": "Run",
@@ -116,6 +126,7 @@
       <recent name="org.example.primenumbergenerator" />
     </key>
     <key name="CreateTestDialog.RecentsKey">
+      <recent name="org.example.primenumbergenerator.controller" />
       <recent name="org.example.primenumbergenerator.service" />
       <recent name="org.example.primenumbergenerator.service.impl" />
       <recent name="org.example.math" />
@@ -125,65 +136,65 @@
       <recent name="org.example.primenumbergenerator.service.impl" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.java in prime-number-generator">
-    <configuration name="ViewServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.PrimeGeneratorControllerTest">
+    <configuration name="PrimeGeneratorControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="prime-number-generator" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.example.primenumbergenerator.service.*" />
+          <option name="PATTERN" value="org.example.primenumbergenerator.controller.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="org.example.primenumbergenerator.service" />
-      <option name="MAIN_CLASS_NAME" value="org.example.primenumbergenerator.service.ViewServiceTest" />
+      <option name="PACKAGE_NAME" value="org.example.primenumbergenerator.controller" />
+      <option name="MAIN_CLASS_NAME" value="org.example.primenumbergenerator.controller.PrimeGeneratorControllerTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ViewServiceTest.configureLargestPrime_happyPath" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="PrimeGeneratorControllerTest.welcome" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="prime-number-generator" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.example.primenumbergenerator.service.*" />
+          <option name="PATTERN" value="org.example.primenumbergenerator.controller.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="org.example.primenumbergenerator.service" />
-      <option name="MAIN_CLASS_NAME" value="org.example.primenumbergenerator.service.ViewServiceTest" />
-      <option name="METHOD_NAME" value="configureLargestPrime_happyPath" />
+      <option name="PACKAGE_NAME" value="org.example.primenumbergenerator.controller" />
+      <option name="MAIN_CLASS_NAME" value="org.example.primenumbergenerator.controller.PrimeGeneratorControllerTest" />
+      <option name="METHOD_NAME" value="welcome" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ViewServiceTest.configurePrimeListWithLargestNumberLimit_happyPath" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="PrimeGeneratorControllerTest.welcome_happyPath2" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="prime-number-generator" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.example.primenumbergenerator.service.*" />
+          <option name="PATTERN" value="org.example.primenumbergenerator.controller.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="org.example.primenumbergenerator.service" />
-      <option name="MAIN_CLASS_NAME" value="org.example.primenumbergenerator.service.ViewServiceTest" />
-      <option name="METHOD_NAME" value="configurePrimeListWithLargestNumberLimit_happyPath" />
+      <option name="PACKAGE_NAME" value="org.example.primenumbergenerator.controller" />
+      <option name="MAIN_CLASS_NAME" value="org.example.primenumbergenerator.controller.PrimeGeneratorControllerTest" />
+      <option name="METHOD_NAME" value="welcome_happyPath2" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ViewServiceTest.configurePrimeListWithLengthLimit_happyPath" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="PrimeGeneratorControllerTest.welcome_happyPath3" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="prime-number-generator" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.example.primenumbergenerator.service.*" />
+          <option name="PATTERN" value="org.example.primenumbergenerator.controller.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="org.example.primenumbergenerator.service" />
-      <option name="MAIN_CLASS_NAME" value="org.example.primenumbergenerator.service.ViewServiceTest" />
-      <option name="METHOD_NAME" value="configurePrimeListWithLengthLimit_happyPath" />
+      <option name="PACKAGE_NAME" value="org.example.primenumbergenerator.controller" />
+      <option name="MAIN_CLASS_NAME" value="org.example.primenumbergenerator.controller.PrimeGeneratorControllerTest" />
+      <option name="METHOD_NAME" value="welcome_happyPath3" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -199,11 +210,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.PrimeGeneratorControllerTest" />
         <item itemvalue="JUnit.java in prime-number-generator" />
-        <item itemvalue="JUnit.ViewServiceTest" />
-        <item itemvalue="JUnit.ViewServiceTest.configureLargestPrime_happyPath" />
-        <item itemvalue="JUnit.ViewServiceTest.configurePrimeListWithLargestNumberLimit_happyPath" />
-        <item itemvalue="JUnit.ViewServiceTest.configurePrimeListWithLengthLimit_happyPath" />
+        <item itemvalue="JUnit.PrimeGeneratorControllerTest.welcome_happyPath3" />
+        <item itemvalue="JUnit.PrimeGeneratorControllerTest.welcome_happyPath2" />
+        <item itemvalue="JUnit.PrimeGeneratorControllerTest.welcome" />
       </list>
     </recent_temporary>
   </component>
