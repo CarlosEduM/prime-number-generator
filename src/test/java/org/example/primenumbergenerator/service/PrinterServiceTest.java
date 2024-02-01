@@ -41,14 +41,16 @@ class PrinterServiceTest {
     @Test
     void print_happyPath() {
         String test = "Test\n{{}}";
-        List<Integer> list = IntStream.range(0, 16).boxed().toList();
+        List<Integer> list = IntStream.range(0, 4).boxed().toList();
         printerService.print(test, list);
-        String expected = """
-                Test
-                  0  1  2  3  4  5  6  7  8  9 10 11 12 13
-                 14 15""";
+        StringBuilder builder = new StringBuilder();
+        builder.append("Test\n");
+        builder.append("0\n");
+        builder.append("1\n");
+        builder.append("2\n");
+        builder.append("3");
 
-        assertEquals(expected, outputStream.toString());
+        assertEquals(builder.toString(), outputStream.toString());
     }
 
     @Test

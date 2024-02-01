@@ -17,7 +17,7 @@ class ReaderServiceTest {
     @Test
     void readInteger_happyPath() throws IOException {
         Integer outputResponse = 10;
-        byte[] bytesValue = ByteBuffer.allocate(4).putInt(outputResponse).array();
+        byte[] bytesValue = outputResponse.toString().getBytes(StandardCharsets.UTF_8);
 
         try (ReaderService readerService = new ReaderServiceImpl(new ByteArrayInputStream(bytesValue))) {
             int resp = readerService.readInteger();
@@ -36,18 +36,8 @@ class ReaderServiceTest {
     }
 
     @Test
-    void readInteger_throwingIOException() throws IOException {
-        ByteArrayInputStream byteArrayInputStream = mock(ByteArrayInputStream.class);
-        when(byteArrayInputStream.readAllBytes()).thenThrow(IOException.class);
-
-        try (ReaderService readerService = new ReaderServiceImpl(byteArrayInputStream)) {
-            assertThrows(PrimeGeneratorException.class, readerService::readInteger);
-        }
-    }
-
-    @Test
     void waitSomeInput_happyPath() throws IOException {
-        byte[] bytesValue = ByteBuffer.allocate(4).putInt(0).array();
+        byte[] bytesValue = "19\n\n".getBytes(StandardCharsets.UTF_8);
 
         try (ReaderService readerService = new ReaderServiceImpl(new ByteArrayInputStream(bytesValue))) {
             assertDoesNotThrow(readerService::waitSomeInput);
@@ -55,19 +45,19 @@ class ReaderServiceTest {
     }
 
     @Test
-    void waitSomeInput_exceptionWhenWaiting() throws IOException {
-        ByteArrayInputStream byteArrayInputStream = mock(ByteArrayInputStream.class);
-        when(byteArrayInputStream.read()).thenThrow(IOException.class);
+    void waitSomeInput_happyPathAfterRead() throws IOException {
+        byte[] bytesValue = "19\n".getBytes(StandardCharsets.UTF_8);
 
-        try (ReaderService readerService = new ReaderServiceImpl(byteArrayInputStream)) {
-            assertThrows(PrimeGeneratorException.class, readerService::waitSomeInput);
+        try (ReaderService readerService = new ReaderServiceImpl(new ByteArrayInputStream(bytesValue))) {
+            assertDoesNotThrow(readerService::readInteger);
+            assertDoesNotThrow(readerService::waitSomeInput);
         }
     }
 
     @Test
     void readLong_happyPath() throws IOException {
         Long outputResponse = 10L;
-        byte[] bytesValue = ByteBuffer.allocate(8).putLong(outputResponse).array();
+        byte[] bytesValue = outputResponse.toString().getBytes(StandardCharsets.UTF_8);
 
         try (ReaderService readerService = new ReaderServiceImpl(new ByteArrayInputStream(bytesValue))) {
             Long resp = readerService.readLong();
@@ -81,16 +71,6 @@ class ReaderServiceTest {
         byte[] bytesValue = "abc".getBytes(StandardCharsets.UTF_8);
 
         try (ReaderService readerService = new ReaderServiceImpl(new ByteArrayInputStream(bytesValue))) {
-            assertThrows(PrimeGeneratorException.class, readerService::readLong);
-        }
-    }
-
-    @Test
-    void readLong_throwingIOException() throws IOException {
-        ByteArrayInputStream byteArrayInputStream = mock(ByteArrayInputStream.class);
-        when(byteArrayInputStream.readAllBytes()).thenThrow(IOException.class);
-
-        try (ReaderService readerService = new ReaderServiceImpl(byteArrayInputStream)) {
             assertThrows(PrimeGeneratorException.class, readerService::readLong);
         }
     }

@@ -4,13 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b3f86f93-f564-4049-a8e9-a2c5a53e2367" name="Changes" comment="Making more test">
+    <list default="true" id="b3f86f93-f564-4049-a8e9-a2c5a53e2367" name="Changes" comment="Bettering the coverage">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/config/AppConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/config/AppConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/controller/PrimeGeneratorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/controller/PrimeGeneratorController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/PrimeNumberGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/PrimeNumberGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/service/impl/PrimeGeneratorServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/service/impl/PrimeGeneratorServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/service/impl/PrinterServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/service/impl/PrinterServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/service/impl/ReaderServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/primenumbergenerator/service/impl/ReaderServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/views/welcome.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/views/welcome.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/primenumbergenerator/controller/PrimeGeneratorControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/primenumbergenerator/controller/PrimeGeneratorControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/views/error.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/views/error.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/primenumbergenerator/service/PrinterServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/primenumbergenerator/service/PrinterServiceTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/org/example/primenumbergenerator/service/ReaderServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/primenumbergenerator/service/ReaderServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -43,6 +44,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.PrimeNumberGenerator.executor": "Run",
     "JUnit.ClassLoaderServiceTest.executor": "Run",
     "JUnit.ClassLoaderServiceTest.loadResource_classloaderException.executor": "Run",
     "JUnit.ClassLoaderServiceTest.loadResource_emptyFile.executor": "Run",
@@ -52,6 +54,7 @@
     "JUnit.ClassLoaderServiceTest.loadResource_twoLines.executor": "Run",
     "JUnit.PrimeGeneratorControllerTest.executor": "Run",
     "JUnit.PrimeGeneratorControllerTest.welcome.executor": "Run",
+    "JUnit.PrimeGeneratorControllerTest.welcome_exit.executor": "Run",
     "JUnit.PrimeGeneratorControllerTest.welcome_happyPath2.executor": "Run",
     "JUnit.PrimeGeneratorControllerTest.welcome_happyPath3.executor": "Run",
     "JUnit.PrimeGeneratorControllerTest.welcome_optionWrong.executor": "Run",
@@ -70,11 +73,20 @@
     "JUnit.PrimeVerifierTest.isAPrimeNumberTest_negativeNumber.executor": "Run",
     "JUnit.PrimeVerifierTest.isAPrimeNumberTest_notPrimeNumber.executor": "Run",
     "JUnit.PrimeVerifierTest.isAPrimeNumberTest_numberOne.executor": "Run",
+    "JUnit.PrinterServiceTest.executor": "Run",
     "JUnit.PrinterServiceTest.print_Exception.executor": "Run",
+    "JUnit.PrinterServiceTest.print_emptyList.executor": "Run",
+    "JUnit.PrinterServiceTest.print_happyPath.executor": "Run",
     "JUnit.ReaderServiceTest.executor": "Run",
+    "JUnit.ReaderServiceTest.readInteger_happyPath.executor": "Run",
+    "JUnit.ReaderServiceTest.readInteger_nonLong.executor": "Run",
     "JUnit.ReaderServiceTest.readInteger_throwingIOException.executor": "Run",
+    "JUnit.ReaderServiceTest.readLong_happyPath.executor": "Run",
     "JUnit.ReaderServiceTest.readLong_throwingIOException.executor": "Run",
     "JUnit.ReaderServiceTest.waitSomeInput_exceptionWhenWaiting.executor": "Run",
+    "JUnit.ReaderServiceTest.waitSomeInput_happyPath.executor": "Run",
+    "JUnit.ReaderServiceTest.waitSomeInput_happyPathAfterRead.executor": "Run",
+    "JUnit.ReaderServiceTest.waitSomeInput_twoUses.executor": "Run",
     "JUnit.ViewPrinterServiceTest.executor": "Run",
     "JUnit.ViewPrinterServiceTest.print_emptyList.executor": "Run",
     "JUnit.ViewPrinterServiceTest.print_exception.executor": "Run",
@@ -140,55 +152,36 @@
       <recent name="org.example.primenumbergenerator.service.impl" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.PrimeGeneratorControllerTest.welcome_exit">
-    <configuration name="PrimeGeneratorControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.java in prime-number-generator">
+    <configuration name="PrimeNumberGenerator" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.example.PrimeNumberGenerator" />
       <module name="prime-number-generator" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.example.primenumbergenerator.controller.*" />
+          <option name="PATTERN" value="org.example.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="org.example.primenumbergenerator.controller" />
-      <option name="MAIN_CLASS_NAME" value="org.example.primenumbergenerator.controller.PrimeGeneratorControllerTest" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PrinterServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="prime-number-generator" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.primenumbergenerator.service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.primenumbergenerator.service" />
+      <option name="MAIN_CLASS_NAME" value="org.example.primenumbergenerator.service.PrinterServiceTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="PrimeGeneratorControllerTest.welcome_exit" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="prime-number-generator" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.example.primenumbergenerator.controller.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="org.example.primenumbergenerator.controller" />
-      <option name="MAIN_CLASS_NAME" value="org.example.primenumbergenerator.controller.PrimeGeneratorControllerTest" />
-      <option name="METHOD_NAME" value="welcome_exit" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="PrimeGeneratorControllerTest.welcome_optionWrong" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="prime-number-generator" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.example.primenumbergenerator.controller.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="org.example.primenumbergenerator.controller" />
-      <option name="MAIN_CLASS_NAME" value="org.example.primenumbergenerator.controller.PrimeGeneratorControllerTest" />
-      <option name="METHOD_NAME" value="welcome_optionWrong" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ReaderServiceTest.readInteger_throwingIOException" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="PrinterServiceTest.print_emptyList" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="prime-number-generator" />
       <extension name="coverage">
         <pattern>
@@ -197,14 +190,14 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="org.example.primenumbergenerator.service" />
-      <option name="MAIN_CLASS_NAME" value="org.example.primenumbergenerator.service.ReaderServiceTest" />
-      <option name="METHOD_NAME" value="readInteger_throwingIOException" />
+      <option name="MAIN_CLASS_NAME" value="org.example.primenumbergenerator.service.PrinterServiceTest" />
+      <option name="METHOD_NAME" value="print_emptyList" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ReaderServiceTest.readLong_throwingIOException" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="PrinterServiceTest.print_happyPath" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="prime-number-generator" />
       <extension name="coverage">
         <pattern>
@@ -213,20 +206,28 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="org.example.primenumbergenerator.service" />
-      <option name="MAIN_CLASS_NAME" value="org.example.primenumbergenerator.service.ReaderServiceTest" />
-      <option name="METHOD_NAME" value="readLong_throwingIOException" />
+      <option name="MAIN_CLASS_NAME" value="org.example.primenumbergenerator.service.PrinterServiceTest" />
+      <option name="METHOD_NAME" value="print_happyPath" />
       <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="java in prime-number-generator" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="prime-number-generator" />
+      <option name="TEST_OBJECT" value="directory" />
+      <dir value="$PROJECT_DIR$/src/test/java" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.PrimeGeneratorControllerTest.welcome_exit" />
-        <item itemvalue="JUnit.PrimeGeneratorControllerTest" />
-        <item itemvalue="JUnit.PrimeGeneratorControllerTest.welcome_optionWrong" />
-        <item itemvalue="JUnit.ReaderServiceTest.readLong_throwingIOException" />
-        <item itemvalue="JUnit.ReaderServiceTest.readInteger_throwingIOException" />
+        <item itemvalue="JUnit.java in prime-number-generator" />
+        <item itemvalue="JUnit.PrinterServiceTest.print_emptyList" />
+        <item itemvalue="JUnit.PrinterServiceTest.print_happyPath" />
+        <item itemvalue="Application.PrimeNumberGenerator" />
+        <item itemvalue="JUnit.PrinterServiceTest" />
       </list>
     </recent_temporary>
   </component>
@@ -326,7 +327,15 @@
       <option name="project" value="LOCAL" />
       <updated>1706809383379</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Bettering the coverage">
+      <option name="closed" value="true" />
+      <created>1706812226747</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1706812226747</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -351,6 +360,7 @@
     <MESSAGE value="Making view service" />
     <MESSAGE value="Putting view to log error" />
     <MESSAGE value="Making more test" />
-    <option name="LAST_COMMIT_MESSAGE" value="Making more test" />
+    <MESSAGE value="Bettering the coverage" />
+    <option name="LAST_COMMIT_MESSAGE" value="Bettering the coverage" />
   </component>
 </project>

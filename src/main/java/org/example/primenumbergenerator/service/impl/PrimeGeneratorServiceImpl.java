@@ -47,7 +47,7 @@ public class PrimeGeneratorServiceImpl implements PrimeGeneratorService {
 
     private void verifyLimit(Long limit) {
         if (limit < MIN_PRIME_POSSIBLE)
-            throw new PrimeGeneratorException("The limit must be greater than 2");
+            throw new PrimeGeneratorException("The limit must be greater than 1");
     }
 
     private Stream<Long> generatePrimes(Long start, Long end, Integer length) {
