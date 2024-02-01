@@ -1,5 +1,6 @@
 package org.example.primenumbergenerator.controller;
 
+import org.example.primenumbergenerator.exception.PrimeGeneratorException;
 import org.example.primenumbergenerator.service.PrimeGeneratorService;
 import org.example.primenumbergenerator.service.ViewService;
 
@@ -17,23 +18,29 @@ public class PrimeGeneratorController implements Closeable {
         this.viewService = viewService;
     }
 
-    public void welcome() {
+    public Boolean welcome() {
         try {
-            tryToWelcome();
-        } catch (RuntimeException e) {
+            return tryToWelcome();
+        } catch (PrimeGeneratorException e) {
             error(e.getMessage());
+            return true;
         }
     }
 
-    private void tryToWelcome() {
+    private Boolean tryToWelcome() {
         Integer option = viewService.welcome();
 
         switch (option) {
+            case 0 -> {
+                return false;
+            }
             case 1 -> configurePrimeListWithLengthLimit();
             case 2 -> configurePrimeListWithLargestNumberLimit();
             case 3 -> configureLargestPrime();
-            default -> new RuntimeException("Option does not exist");
+            default -> throw new PrimeGeneratorException("Option does not exist");
         }
+
+        return true;
     }
 
 

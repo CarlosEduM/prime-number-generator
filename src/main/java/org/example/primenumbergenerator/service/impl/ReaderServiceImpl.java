@@ -18,34 +18,30 @@ public class ReaderServiceImpl implements ReaderService {
     @Override
     public Integer readInteger() {
         try {
-            return tryToReadInteger();
-        } catch (IOException e) {
-            throw new PrimeGeneratorException(e);
+            return readBuffer().getInt();
         } catch (BufferUnderflowException e) {
             throw new PrimeGeneratorException("The input is not a integer", e);
         }
     }
 
-    private Integer tryToReadInteger() throws IOException {
-        return getByteBuffer().getInt();
-    }
-
     @Override
     public Long readLong() {
         try {
-            return tryToReadLong();
-        } catch (IOException e) {
-            throw new PrimeGeneratorException(e);
+            return readBuffer().getLong();
         } catch (BufferUnderflowException e) {
             throw new PrimeGeneratorException("The input is not a long", e);
         }
     }
 
-    private Long tryToReadLong() throws IOException {
-        return getByteBuffer().getLong();
+    private ByteBuffer readBuffer() {
+        try {
+            return tryToReadBuffer();
+        } catch (IOException e) {
+            throw new PrimeGeneratorException(e);
+        }
     }
 
-    private ByteBuffer getByteBuffer() throws IOException {
+    private ByteBuffer tryToReadBuffer() throws IOException {
         byte[] bytes = inputStream.readAllBytes();
         return ByteBuffer.wrap(bytes);
     }

@@ -31,6 +31,10 @@ public class AppConfig implements Closeable {
         return new ViewServiceImpl(printerService, readerService, classLoaderService);
     }
 
+    public PrimeGeneratorController getPrimeGeneratorController() {
+        return primeGeneratorController;
+    }
+
     @Override
     public void close() throws IOException {
         primeGeneratorController.close();

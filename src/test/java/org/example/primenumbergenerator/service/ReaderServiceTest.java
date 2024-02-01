@@ -10,6 +10,8 @@ import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class ReaderServiceTest {
     @Test
@@ -34,11 +36,31 @@ class ReaderServiceTest {
     }
 
     @Test
+    void readInteger_throwingIOException() throws IOException {
+        ByteArrayInputStream byteArrayInputStream = mock(ByteArrayInputStream.class);
+        when(byteArrayInputStream.readAllBytes()).thenThrow(IOException.class);
+
+        try (ReaderService readerService = new ReaderServiceImpl(byteArrayInputStream)) {
+            assertThrows(PrimeGeneratorException.class, readerService::readInteger);
+        }
+    }
+
+    @Test
     void waitSomeInput_happyPath() throws IOException {
         byte[] bytesValue = ByteBuffer.allocate(4).putInt(0).array();
 
         try (ReaderService readerService = new ReaderServiceImpl(new ByteArrayInputStream(bytesValue))) {
             assertDoesNotThrow(readerService::waitSomeInput);
+        }
+    }
+
+    @Test
+    void waitSomeInput_exceptionWhenWaiting() throws IOException {
+        ByteArrayInputStream byteArrayInputStream = mock(ByteArrayInputStream.class);
+        when(byteArrayInputStream.read()).thenThrow(IOException.class);
+
+        try (ReaderService readerService = new ReaderServiceImpl(byteArrayInputStream)) {
+            assertThrows(PrimeGeneratorException.class, readerService::waitSomeInput);
         }
     }
 
@@ -59,6 +81,16 @@ class ReaderServiceTest {
         byte[] bytesValue = "abc".getBytes(StandardCharsets.UTF_8);
 
         try (ReaderService readerService = new ReaderServiceImpl(new ByteArrayInputStream(bytesValue))) {
+            assertThrows(PrimeGeneratorException.class, readerService::readLong);
+        }
+    }
+
+    @Test
+    void readLong_throwingIOException() throws IOException {
+        ByteArrayInputStream byteArrayInputStream = mock(ByteArrayInputStream.class);
+        when(byteArrayInputStream.readAllBytes()).thenThrow(IOException.class);
+
+        try (ReaderService readerService = new ReaderServiceImpl(byteArrayInputStream)) {
             assertThrows(PrimeGeneratorException.class, readerService::readLong);
         }
     }

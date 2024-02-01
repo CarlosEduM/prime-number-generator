@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -38,8 +40,9 @@ class PrimeGeneratorControllerTest {
         when(primeGeneratorService.generatePrimeListWithLengthLimit(2)).thenReturn(emptyList);
         doNothing().when(viewService).response(emptyList);
 
-        primeGeneratorController.welcome();
+        Boolean isToContinue = primeGeneratorController.welcome();
 
+        assertTrue(isToContinue);
         verify(viewService, times(1)).welcome();
         verify(viewService, times(1)).configurePrimeListWithLengthLimit();
         verify(viewService, times(1)).response(any());
@@ -55,8 +58,9 @@ class PrimeGeneratorControllerTest {
         when(primeGeneratorService.generatePrimeListWithLargestNumberLimit(2L)).thenReturn(emptyList);
         doNothing().when(viewService).response(emptyList);
 
-        primeGeneratorController.welcome();
+        Boolean isToContinue = primeGeneratorController.welcome();
 
+        assertTrue(isToContinue);
         verify(viewService, times(1)).welcome();
         verify(viewService, times(1)).configurePrimeListWithLargestNumberLimit();
         verify(viewService, times(1)).response(any());
@@ -72,11 +76,33 @@ class PrimeGeneratorControllerTest {
         when(primeGeneratorService.generateLargestPrime(2L)).thenReturn(1L);
         doNothing().when(viewService).response(singletonList);
 
-        primeGeneratorController.welcome();
+        Boolean isToContinue = primeGeneratorController.welcome();
 
+        assertTrue(isToContinue);
         verify(viewService, times(1)).welcome();
         verify(viewService, times(1)).configureLargestPrime();
         verify(viewService, times(1)).response(any());
         verify(primeGeneratorService, times(1)).generateLargestPrime(any());
+    }
+
+    @Test
+    void welcome_optionWrong() {
+        when(viewService.welcome()).thenReturn(4);
+        doNothing().when(viewService).error("Option does not exist");
+
+        Boolean isToContinue = primeGeneratorController.welcome();
+
+        assertTrue(isToContinue);
+        verify(viewService, times(1)).welcome();
+        verify(viewService, times(1)).error(eq("Option does not exist"));
+    }
+
+    @Test
+    void welcome_exit() {
+        when(viewService.welcome()).thenReturn(0);
+
+        Boolean isToContinue = primeGeneratorController.welcome();
+
+        assertFalse(isToContinue);
     }
 }
