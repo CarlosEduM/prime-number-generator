@@ -1,20 +1,20 @@
 package org.example.primenumbergenerator.service.impl;
 
 import org.example.primenumbergenerator.service.ClassLoaderService;
-import org.example.primenumbergenerator.service.ViewPrinterService;
-import org.example.primenumbergenerator.service.ViewReaderService;
+import org.example.primenumbergenerator.service.PrinterService;
+import org.example.primenumbergenerator.service.ReaderService;
 import org.example.primenumbergenerator.service.ViewService;
 
 import java.io.IOException;
 import java.util.List;
 
 public class ViewServiceImpl implements ViewService {
-    private final ViewPrinterService printerService;
-    private final ViewReaderService readerService;
+    private final PrinterService printerService;
+    private final ReaderService readerService;
     private final ClassLoaderService classLoaderService;
 
-    public ViewServiceImpl(ViewPrinterService printerService,
-                           ViewReaderService readerService,
+    public ViewServiceImpl(PrinterService printerService,
+                           ReaderService readerService,
                            ClassLoaderService classLoaderService) {
         this.printerService = printerService;
         this.readerService = readerService;

@@ -1,17 +1,17 @@
 package org.example.primenumbergenerator.service.impl;
 
 import org.example.primenumbergenerator.exception.PrimeGeneratorException;
-import org.example.primenumbergenerator.service.ViewReaderService;
+import org.example.primenumbergenerator.service.ReaderService;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.BufferUnderflowException;
 import java.nio.ByteBuffer;
 
-public class ViewReaderServiceImpl implements ViewReaderService {
+public class ReaderServiceImpl implements ReaderService {
     private final InputStream inputStream;
 
-    public ViewReaderServiceImpl(InputStream inputStream) {
+    public ReaderServiceImpl(InputStream inputStream) {
         this.inputStream = inputStream;
     }
 

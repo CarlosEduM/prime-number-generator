@@ -1,5 +1,6 @@
 package org.example.primenumbergenerator.config;
 
+import org.example.PrimeNumberGenerator;
 import org.example.primenumbergenerator.controller.PrimeGeneratorController;
 import org.example.primenumbergenerator.math.PrimeVerifier;
 import org.example.primenumbergenerator.service.*;
@@ -23,10 +24,11 @@ public class AppConfig implements Closeable {
     }
 
     private static ViewService getViewService() {
-        ClassLoaderService classLoaderService = new ClassLoaderServiceImpl();
-        ViewPrinterService viewPrinterService = new ViewPrinterServiceImpl(System.out);
-        ViewReaderService viewReaderService = new ViewReaderServiceImpl(System.in);
-        return new ViewServiceImpl(viewPrinterService, viewReaderService, classLoaderService);
+        ClassLoader classLoader = PrimeNumberGenerator.class.getClassLoader();
+        ClassLoaderService classLoaderService = new ClassLoaderServiceImpl(classLoader);
+        PrinterService printerService = new PrinterServiceImpl(System.out);
+        ReaderService readerService = new ReaderServiceImpl(System.in);
+        return new ViewServiceImpl(printerService, readerService, classLoaderService);
     }
 
     @Override

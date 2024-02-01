@@ -1,31 +1,37 @@
 package org.example.primenumbergenerator.service;
 
 import org.example.primenumbergenerator.service.impl.ViewServiceImpl;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class ViewServiceTest {
-    private ViewPrinterService printerService;
-    private ViewReaderService readerService;
+    private PrinterService printerService;
+    private ReaderService readerService;
     private ClassLoaderService classLoaderService;
     private ViewService viewService;
 
     @BeforeEach
     void setUp() {
-        printerService = mock(ViewPrinterService.class);
-        readerService = mock(ViewReaderService.class);
+        printerService = mock(PrinterService.class);
+        readerService = mock(ReaderService.class);
         classLoaderService = mock(ClassLoaderService.class);
         viewService = new ViewServiceImpl(printerService, readerService, classLoaderService);
+    }
+
+    @AfterEach
+    void tearDown() throws IOException {
+        viewService.close();
     }
 
     @Test
@@ -97,5 +103,17 @@ class ViewServiceTest {
 
         verify(classLoaderService).loadResource(eq("views/response.txt"));
         verify(printerService).print(eq("Test"), eq(emptyList));
+    }
+
+    @Test
+    void error_happyPath() {
+        when(classLoaderService.loadResource("views/error.txt")).thenReturn("Test");
+        doNothing().when(printerService).print("Test", "test");
+        doNothing().when(readerService).waitSomeInput();
+
+        assertDoesNotThrow(() -> viewService.error("test"));
+
+        verify(classLoaderService).loadResource(eq("views/error.txt"));
+        verify(printerService, times(1)).print("Test", "test");
     }
 }

@@ -1,12 +1,14 @@
 package org.example.primenumbergenerator.service;
 
-import org.example.primenumbergenerator.service.impl.ViewPrinterServiceImpl;
+import org.example.primenumbergenerator.exception.PrimeGeneratorException;
+import org.example.primenumbergenerator.service.impl.PrinterServiceImpl;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,30 +16,33 @@ import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
 
-class ViewPrinterServiceTest {
+class PrinterServiceTest {
     public ByteArrayOutputStream outputStream;
     public final Integer OUTPUT_RESPONSE = 10;
-    private ViewPrinterService viewPrinterService;
+    private PrinterService printerService;
 
     @BeforeEach
     void setUp() {
         outputStream = new ByteArrayOutputStream();
         ByteBuffer.allocate(4).putInt(OUTPUT_RESPONSE);
 
-        viewPrinterService = new ViewPrinterServiceImpl(outputStream);
+        printerService = new PrinterServiceImpl(outputStream);
     }
 
     @AfterEach
     void tearDown() throws IOException {
-        viewPrinterService.close();
+        printerService.close();
     }
 
     @Test
     void print_happyPath() {
         String test = "Test\n{{}}";
         List<Integer> list = IntStream.range(0, 16).boxed().toList();
-        viewPrinterService.print(test, list);
+        printerService.print(test, list);
         String expected = """
                 Test
                   0  1  2  3  4  5  6  7  8  9 10 11 12 13
@@ -50,7 +55,7 @@ class ViewPrinterServiceTest {
     void print_emptyList() {
         String test = "Test\n{{}}";
         List<Integer> emptyList = new ArrayList<>();
-        viewPrinterService.print(test, emptyList);
+        printerService.print(test, emptyList);
         String expected = "Test\n";
 
         assertEquals(expected, outputStream.toString());
@@ -58,6 +63,16 @@ class ViewPrinterServiceTest {
 
     @Test
     void print_nullList() {
-        assertThrows(NullPointerException.class, () -> viewPrinterService.print("Test", (List<?>) null));
+        assertThrows(NullPointerException.class, () -> printerService.print("Test", (List<?>) null));
+    }
+
+    @Test
+    void print_Exception() throws IOException {
+        OutputStream outputStreamMocked = mock(OutputStream.class);
+        PrinterServiceImpl printerService = new PrinterServiceImpl(outputStreamMocked);
+
+        doThrow(IOException.class).when(outputStreamMocked).write(any());
+
+        assertThrows(PrimeGeneratorException.class, () -> printerService.print(""));
     }
 }

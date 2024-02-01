@@ -13,8 +13,12 @@ import java.util.Objects;
 import java.util.Scanner;
 
 public class ClassLoaderServiceImpl implements ClassLoaderService {
-    private final ClassLoader classLoader = PrimeNumberGenerator.class.getClassLoader();
+    private final ClassLoader classLoader;
     private final Map<String, String> cache = new HashMap<>();
+
+    public ClassLoaderServiceImpl(ClassLoader classLoader) {
+        this.classLoader = classLoader;
+    }
 
 
     @Override
