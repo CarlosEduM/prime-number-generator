@@ -92,8 +92,8 @@ Type: PostgreSQL
 Purpose: Stores information about prime number generation requests and their results.
 
 Key Schemas/Collections: 
-- prime_requests (id, user_id, input_number_min, input_number_max, status, created_at, updated_at)
-- processing_results (id, processor_name, request_id, status, result, started_at, finished_at)
+- prime_requests (id, input_number_min, input_number_max, status, created_at, updated_at)
+- processing_results (id, processor_name, request_id, result, started_at, finished_at)
 
 ## 5. External Integrations / APIs
 
@@ -126,7 +126,7 @@ Repository URL: [Insert Repository URL]
 
 Primary Contact/Team: [Insert Lead Developer/Team Name]
 
-Date of Last Update: 2026-07-17
+Date of Last Update: 2026-08-12
 
 ## 9. Glossary / Acronyms
 
