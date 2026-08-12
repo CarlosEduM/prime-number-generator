@@ -8,5 +8,13 @@ package com.example.orchestrator.domain.entities;
 public enum PrimeRequestStatus {
     PENDING,
     PROCESSING,
-    COMPLETED
+    COMPLETED;
+
+    public PrimeRequestStatus getNext() {
+        if (this == PrimeRequestStatus.COMPLETED) {
+            throw new IllegalStateException("The request is already completed.");
+        }
+        int ordinal = this.ordinal();
+        return values()[ordinal + 1];
+    }
 }
