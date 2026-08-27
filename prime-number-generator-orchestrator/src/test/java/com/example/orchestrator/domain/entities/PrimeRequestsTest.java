@@ -66,7 +66,7 @@ public class PrimeRequestsTest {
     @Test
     public void testSetInputNumberRangeInputNumberMinTooLarge() {
         BigInteger inputNumberMin = BigInteger.valueOf(1005);
-        BigInteger inputNumberMax = BigInteger.valueOf(2005);
+        BigInteger inputNumberMax = BigInteger.valueOf(2006);
 
         assertThrows(BadInputException.class, () -> {
             primeRequests.setInputNumberRange(inputNumberMin, inputNumberMax);
