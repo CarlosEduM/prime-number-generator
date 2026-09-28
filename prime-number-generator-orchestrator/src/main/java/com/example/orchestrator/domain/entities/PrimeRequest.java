@@ -53,8 +53,8 @@ public class PrimeRequest {
             throw new IllegalOperationException("Input number range already set.");
 
         if (inputNumberMin.compareTo(MINOR_INPUT_NUMBER_MIN) < 0) {
-            String errorMessage = String.format("Input number minimum must be greater than or equal to %s.",
-                    MINOR_INPUT_NUMBER_MIN.toString());
+            String errorMessage = "Input number minimum must be greater than or equal to %s."
+                    .formatted(MINOR_INPUT_NUMBER_MIN.toString());
             throw new InvalidInputException(errorMessage);
         }
 
@@ -73,12 +73,11 @@ public class PrimeRequest {
     }
 
     public void setStatus(@NonNull PrimeRequestStatus newStatus) {
-        int comparison = this.status.compareTo(newStatus);
         if (this.status.equals(PrimeRequestStatus.COMPLETED))
             throw new InvalidInputException("Cannot set status of a completed request.");
 
-        if (comparison > 0) {
-            String errorMessage = String.format("Cannot set status from %s to %s.", this.status, newStatus);
+        if (this.status.compareTo(newStatus) > 0) {
+            String errorMessage = "Cannot set status from %s to %s.".formatted(this.status, newStatus);
             throw new InvalidInputException(errorMessage);
         }
 

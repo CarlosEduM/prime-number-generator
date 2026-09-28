@@ -39,9 +39,11 @@ public class PrimeRequestTest {
         BigInteger inputNumberMin = BigInteger.valueOf(-1);
         BigInteger inputNumberMax = BigInteger.valueOf(10);
 
-        assertThrows(InvalidInputException.class, () -> {
+        InvalidInputException exception = assertThrows(InvalidInputException.class, () -> {
             primeRequest.setInputNumberRange(inputNumberMin, inputNumberMax);
         });
+
+        assertEquals("Input number minimum must be greater than or equal to 0.", exception.getMessage());
     }
 
     @Test
@@ -49,9 +51,11 @@ public class PrimeRequestTest {
         BigInteger inputNumberMin = BigInteger.valueOf(5);
         BigInteger inputNumberMax = BigInteger.valueOf(10);
 
-        assertThrows(InvalidInputException.class, () -> {
+        InvalidInputException exception = assertThrows(InvalidInputException.class, () -> {
             primeRequest.setInputNumberRange(inputNumberMin, inputNumberMax);
         });
+
+        assertEquals("Input number maximum must be at least 10 numbers larger than the minimum.", exception.getMessage());
     }
 
     @Test
@@ -59,9 +63,12 @@ public class PrimeRequestTest {
         BigInteger inputNumberMin = BigInteger.valueOf(5);
         BigInteger inputNumberMax = BigInteger.valueOf(4);
 
-        assertThrows(InvalidInputException.class, () -> {
+        InvalidInputException exception = assertThrows(InvalidInputException.class, () -> {
             primeRequest.setInputNumberRange(inputNumberMin, inputNumberMax);
         });
+
+        assertEquals("Input number maximum must be at least 10 numbers larger than the minimum.",
+                exception.getMessage());
     }
 
     @Test
@@ -69,9 +76,11 @@ public class PrimeRequestTest {
         BigInteger inputNumberMin = BigInteger.valueOf(1005);
         BigInteger inputNumberMax = BigInteger.valueOf(2006);
 
-        assertThrows(InvalidInputException.class, () -> {
+        InvalidInputException exception = assertThrows(InvalidInputException.class, () -> {
             primeRequest.setInputNumberRange(inputNumberMin, inputNumberMax);
         });
+
+        assertEquals("Input number maximum could not be 1000 numbers larger than minimum.", exception.getMessage());
     }
 
     @Test
@@ -80,9 +89,11 @@ public class PrimeRequestTest {
         BigInteger inputNumberMax = BigInteger.valueOf(50);
         primeRequest.setInputNumberRange(inputNumberMin, inputNumberMax);
 
-        assertThrows(IllegalOperationException.class, () -> {
+        IllegalOperationException exception = assertThrows(IllegalOperationException.class, () -> {
             primeRequest.setInputNumberRange(inputNumberMin, inputNumberMax);
         });
+
+        assertEquals("Input number range already set.", exception.getMessage());
     }
 
     @Test
@@ -94,13 +105,6 @@ public class PrimeRequestTest {
         assertEquals(newStatus, primeRequest.getStatus());
     }
 
-    private static Stream<Arguments> provideStatusValidPairs() {
-        return Stream.of(
-                Arguments.of(PrimeRequestStatus.PENDING, PrimeRequestStatus.PROCESSING),
-                Arguments.of(PrimeRequestStatus.PROCESSING, PrimeRequestStatus.COMPLETED));
-    }
-
-    @Test
     @ParameterizedTest
     @MethodSource("provideStatusValidPairs")
     public void testSetStatusValidInput(PrimeRequestStatus actualStatus, PrimeRequestStatus newStatus) {
@@ -112,22 +116,22 @@ public class PrimeRequestTest {
         assertEquals(primeRequest.getStatus(), newStatus);
     }
 
-    private static Stream<Arguments> provideStatusInvalidPairs() {
+    private static Stream<Arguments> provideStatusValidPairs() {
         return Stream.of(
-                Arguments.of(PrimeRequestStatus.PROCESSING, PrimeRequestStatus.PENDING),
-                Arguments.of(PrimeRequestStatus.COMPLETED, PrimeRequestStatus.PENDING),
-                Arguments.of(PrimeRequestStatus.COMPLETED, PrimeRequestStatus.PROCESSING));
+                Arguments.of(PrimeRequestStatus.PENDING, PrimeRequestStatus.PROCESSING),
+                Arguments.of(PrimeRequestStatus.PROCESSING, PrimeRequestStatus.COMPLETED));
     }
 
     @Test
-    @ParameterizedTest
-    @MethodSource("provideStatusInvalidPairs")
-    public void testSetStatusInvalidInputException(PrimeRequestStatus actualStatus, PrimeRequestStatus newStatus) {
-        if (actualStatus != PrimeRequestStatus.PENDING)
-            primeRequest.setStatus(actualStatus);
+    public void testSetStatusInvalidInputException() {
+        PrimeRequestStatus actualStatus = PrimeRequestStatus.PROCESSING;
+        PrimeRequestStatus newStatus = PrimeRequestStatus.PENDING;
+        primeRequest.setStatus(actualStatus);
 
-        assertThrows(InvalidInputException.class, () -> {
+        InvalidInputException exception = assertThrows(InvalidInputException.class, () -> {
             primeRequest.setStatus(newStatus);
         });
+
+        assertEquals("Cannot set status from %s to %s.".formatted(actualStatus, newStatus), exception.getMessage());
     }
 }
