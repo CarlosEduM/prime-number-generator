@@ -1,9 +1,9 @@
 package com.example.orchestrator.domain.repositories;
 
-import com.example.orchestrator.domain.entities.PrimeRequests;
+import com.example.orchestrator.domain.entities.PrimeRequest;
 
 public interface PrimeRequestRepository {
 
-    void save(PrimeRequests primeRequest);
+    void save(PrimeRequest primeRequest);
 
 }

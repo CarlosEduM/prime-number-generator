@@ -20,7 +20,7 @@ import lombok.Getter;
     name = "processing_results",
     uniqueConstraints = @UniqueConstraint(columnNames = {"request_id", "processor_name"})
 )
-public class ProcessingResults {
+public class ProcessingResult {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -32,9 +32,9 @@ public class ProcessingResults {
     private LocalDateTime startedAt;
     private LocalDateTime finishedAt;
 
-    public ProcessingResults() {}
+    public ProcessingResult() {}
 
-    public ProcessingResults(Long requestId) {
+    public ProcessingResult(Long requestId) {
         this.requestId = requestId;
         this.state = ProcessingResultState.PROCESSING;
     }
