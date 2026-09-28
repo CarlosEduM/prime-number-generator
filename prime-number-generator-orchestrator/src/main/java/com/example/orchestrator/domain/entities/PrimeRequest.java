@@ -2,7 +2,6 @@ package com.example.orchestrator.domain.entities;
 
 import java.math.BigInteger;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -20,7 +19,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import lombok.Getter;
 
 @Entity
@@ -34,19 +33,13 @@ public class PrimeRequest {
     private BigInteger inputNumberMin;
     private BigInteger inputNumberMax;
     @Enumerated(EnumType.STRING)
-    private PrimeRequestStatus status;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private PrimeRequestStatus status = PrimeRequestStatus.PENDING;
+    private LocalDateTime createdAt = LocalDateTime.now();;
+    private LocalDateTime updatedAt = LocalDateTime.now();;
 
-    @OneToMany(targetEntity = ProcessingResult.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "pr_fk", referencedColumnName = "id")
-    private List<ProcessingResult> results;
-
-    public PrimeRequest() {
-        this.status = PrimeRequestStatus.PENDING;
-        this.createdAt = LocalDateTime.now();
-        this.updatedAt = LocalDateTime.now();
-    }
+    @OneToOne(targetEntity = ProcessingResults.class, cascade = CascadeType.ALL)
+    @JoinColumn(name = "results_id", referencedColumnName = "id")
+    private ProcessingResults results = new ProcessingResults();
 
     public void setInputNumberRange(@Nonnull BigInteger inputNumberMin, @Nonnull BigInteger inputNumberMax) {
         if (Objects.nonNull(this.inputNumberMax) && Objects.nonNull(this.inputNumberMin))

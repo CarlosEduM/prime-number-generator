@@ -6,6 +6,7 @@ package com.example.orchestrator.domain.entities;
  * The actual state of the processing result.
  */
 public enum ProcessingResultState {
+    IN_QUEUE,
     PROCESSING,
     SUCCESS,
     FAIL
