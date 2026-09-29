@@ -10,7 +10,6 @@ import org.jspecify.annotations.NonNull;
 import com.example.orchestrator.domain.exceptions.IllegalOperationException;
 import com.example.orchestrator.domain.exceptions.InvalidInputException;
 
-import jakarta.annotation.Nonnull;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -41,7 +40,7 @@ public class PrimeRequest {
     @JoinColumn(name = "results_id", referencedColumnName = "id")
     private ProcessingResults results = new ProcessingResults();
 
-    public void setInputNumberRange(@Nonnull BigInteger inputNumberMin, @Nonnull BigInteger inputNumberMax) {
+    public void setInputNumberRange(@NonNull BigInteger inputNumberMin, @NonNull BigInteger inputNumberMax) {
         if (Objects.nonNull(this.inputNumberMax) && Objects.nonNull(this.inputNumberMin))
             throw new IllegalOperationException("Input number range already set.");
 
