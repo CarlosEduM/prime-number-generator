@@ -11,7 +11,7 @@ import com.example.orchestrator.domain.pojos.PageableResult;
 public interface PrimeRequestRepository {
     PrimeRequests save(@NonNull PrimeRequests primeRequest);
 
-    PrimeRequests getById(@NonNull UUID id);
+    PrimeRequests getByIdAndOwnerId(@NonNull UUID id, @NonNull String ownerId);
 
-    PageableResult<PrimeRequests> findAll(PageableRequest request);
+    PageableResult<PrimeRequests> findAllByOwnerId(@NonNull String ownerId, @NonNull PageableRequest request);
 }

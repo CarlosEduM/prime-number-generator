@@ -50,20 +50,23 @@ class PrimeRequestRepositoryAdapterTest {
     @Test
     void testGetByIdReturnsPrimeRequest() {
         UUID id = UUID.randomUUID();
+        String ownerId = "user-1";
         PrimeRequests expected = new PrimeRequests();
-        when(jpaRepository.findById(id)).thenReturn(Optional.of(expected));
+        when(jpaRepository.findByIdAndOwnerId(id, ownerId)).thenReturn(Optional.of(expected));
 
-        PrimeRequests actual = repositoryAdapter.getById(id);
+        PrimeRequests actual = repositoryAdapter.getByIdAndOwnerId(id, ownerId);
 
         assertSame(expected, actual);
+        verify(jpaRepository).findByIdAndOwnerId(id, ownerId);
     }
 
     @Test
     void testGetByIdThrowsWhenPrimeRequestDoesNotExist() {
         UUID id = UUID.randomUUID();
-        when(jpaRepository.findById(id)).thenReturn(Optional.empty());
+        String ownerId = "user-1";
+        when(jpaRepository.findByIdAndOwnerId(id, ownerId)).thenReturn(Optional.empty());
 
-        assertThrows(NotFoundException.class, () -> repositoryAdapter.getById(id));
+        assertThrows(NotFoundException.class, () -> repositoryAdapter.getByIdAndOwnerId(id, ownerId));
     }
 
     @Test
@@ -73,19 +76,20 @@ class PrimeRequestRepositoryAdapterTest {
                 1,
                 5,
                 List.of(new PageableRequest.Sort("createdAt", PageableRequest.Direction.DESC)));
+        String ownerId = "user-1";
         PageRequest springPageRequest = PageRequest.of(
                 1,
                 5,
                 Sort.by(Sort.Order.desc("createdAt")));
-        when(jpaRepository.findAll(springPageRequest)).thenReturn(
+        when(jpaRepository.findAllByOwnerId(ownerId, springPageRequest)).thenReturn(
                 new PageImpl<>(List.of(primeRequest), springPageRequest, 12));
 
-        PageableResult<PrimeRequests> actual = repositoryAdapter.findAll(request);
+        PageableResult<PrimeRequests> actual = repositoryAdapter.findAllByOwnerId(ownerId, request);
 
         assertEquals(List.of(primeRequest), actual.content());
         assertEquals(1, actual.page());
         assertEquals(5, actual.size());
         assertEquals(12, actual.totalElements());
-        verify(jpaRepository).findAll(springPageRequest);
+        verify(jpaRepository).findAllByOwnerId(ownerId, springPageRequest);
     }
 }

@@ -35,6 +35,23 @@ public class PrimeRequestTest {
     }
 
     @Test
+    public void testAssignOwnerIdSetsOwnerOnce() {
+        primeRequest.assignOwnerId("user-1");
+
+        assertEquals("user-1", primeRequest.getOwnerId());
+        assertThrows(IllegalOperationException.class, () -> primeRequest.assignOwnerId("user-2"));
+    }
+
+    @Test
+    public void testAssignOwnerIdRejectsBlankOwner() {
+        InvalidInputException exception = assertThrows(
+                InvalidInputException.class,
+                () -> primeRequest.assignOwnerId(" "));
+
+        assertEquals("Owner ID must not be blank.", exception.getMessage());
+    }
+
+    @Test
     public void testSetInputNumberRangeInputNumberMinTooSmall() {
         BigInteger inputNumberMin = BigInteger.valueOf(-1);
         BigInteger inputNumberMax = BigInteger.valueOf(10);

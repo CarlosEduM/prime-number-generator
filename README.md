@@ -2,7 +2,7 @@
 
 ## Project Description
 
-This project aims to create a microservice architecture for generating prime numbers asynchronously using queues. The system consists of an orchestrator service that emits events, calculates performance metrics, and manages authentication with API tokens. Multiple processor services consume the events, process them, and return the results back to the orchestrator via REST API.
+This project aims to create a microservice architecture for generating prime numbers asynchronously using queues. The system consists of an orchestrator service that emits events and persists performance metrics. The service layer proccess each request's owner and scopes reads to that owner; authentication and the REST presentation layer are not implemented yet. The processor service consume the events, process them, and return the results back to the orchestrator via events in a message broker.
 
 ### Key Features
 

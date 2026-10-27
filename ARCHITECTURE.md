@@ -65,7 +65,7 @@ Provide a simple block diagram (e.g., a C4 Model Level 1: System Context diagram
 
 Name: Prime Number Generator Orchestrator
 
-Description: This service receives requests from users to generate prime numbers, stores them in a database, sends them to Kafka queue for processing, and handles result retrieval via REST API. It also manages authentication with API tokens.
+Description: This service receives requests to generate prime numbers, stores them in a database, sends them to Kafka queue for processing, and handles result retrieval. The service layer persists request ownership and scopes queries by owner, but the presentation layer and authentication are not implemented yet.
 
 Technologies: Java, Spring Boot, Maven, PostgreSQL, Kafka
 
@@ -108,15 +108,15 @@ TODO
 
 ## 7. Security Considerations
 
-Authentication: API Key-based authentication with role-based access control (RBAC)
+Authentication: Planned external JWT validation with Spring Security OAuth2 Resource Server. Not implemented until the presentation layer and routes exist.
 
 Authorization: 
-- Clients: Access orchestrator service via API token with 'client' role
-- Processors: Access orchestrator service via API token with 'processor' role
+- User requests: Scope reads and listings to the owner subject stored with each request; requests belonging to another user should return 404.
+- Processor authentication/authorization is outside the current user-request ownership scope.
 
 Data Encryption: TLS in transit for all communications
 
-Key Security Tools/Practices: JWT tokens, secure API key storage, role-based access control
+Key Security Tools/Practices: Validate externally issued JWTs and derive the request owner from the authenticated token's `sub` claim. No API key/JWT validation is currently configured.
 
 ## 8. Project Identification
 

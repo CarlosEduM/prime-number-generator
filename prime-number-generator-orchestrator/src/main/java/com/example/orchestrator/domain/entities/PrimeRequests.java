@@ -11,6 +11,7 @@ import com.example.orchestrator.domain.exceptions.IllegalOperationException;
 import com.example.orchestrator.domain.exceptions.InvalidInputException;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -29,6 +30,8 @@ public class PrimeRequests {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+    @Column(name = "owner_id", nullable = false, updatable = false)
+    private String ownerId;
     private BigInteger inputNumberMin;
     private BigInteger inputNumberMax;
     @Enumerated(EnumType.STRING)
@@ -39,6 +42,16 @@ public class PrimeRequests {
     @OneToOne(targetEntity = ProcessingResults.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "results_id", referencedColumnName = "id")
     private ProcessingResults results = new ProcessingResults();
+
+    public void assignOwnerId(@NonNull String ownerId) {
+        if (Objects.isNull(ownerId) || ownerId.isBlank())
+            throw new InvalidInputException("Owner ID must not be blank.");
+
+        if (Objects.nonNull(this.ownerId))
+            throw new IllegalOperationException("Request owner already set.");
+
+        this.ownerId = ownerId;
+    }
 
     public void setInputNumberRange(@NonNull BigInteger inputNumberMin, @NonNull BigInteger inputNumberMax) {
         if (Objects.nonNull(this.inputNumberMax) && Objects.nonNull(this.inputNumberMin))

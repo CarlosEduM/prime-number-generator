@@ -28,20 +28,21 @@ public class PrimeRequestRepositoryAdapter implements PrimeRequestRepository {
     }
 
     @Override
-    public PrimeRequests getById(@NonNull UUID id) {
-        return this.primeRequestJpaRepository.findById(id)
+    public PrimeRequests getByIdAndOwnerId(@NonNull UUID id, @NonNull String ownerId) {
+        return this.primeRequestJpaRepository.findByIdAndOwnerId(id, ownerId)
                 .orElseThrow(() -> new NotFoundException("Prime request with ID %s not found.".formatted(id)));
     }
 
     @Override
-    public PageableResult<PrimeRequests> findAll(@NonNull PageableRequest request) {
+    public PageableResult<PrimeRequests> findAllByOwnerId(
+            @NonNull String ownerId, @NonNull PageableRequest request) {
         Sort sort = Sort.by(request.sorts().stream()
                 .map(order -> new Sort.Order(
                         order.direction() == PageableRequest.Direction.ASC ? Sort.Direction.ASC : Sort.Direction.DESC,
                         order.property()))
                 .toList());
-        Page<PrimeRequests> page = this.primeRequestJpaRepository.findAll(
-                PageRequest.of(request.page(), request.size(), sort));
+        Page<PrimeRequests> page = this.primeRequestJpaRepository.findAllByOwnerId(
+                ownerId, PageRequest.of(request.page(), request.size(), sort));
 
         return new PageableResult<>(page.getContent(), page.getNumber(), page.getSize(), page.getTotalElements());
     }
