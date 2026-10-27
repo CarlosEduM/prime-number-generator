@@ -16,11 +16,11 @@ import com.example.orchestrator.domain.exceptions.IllegalOperationException;
 import com.example.orchestrator.domain.exceptions.InvalidInputException;
 
 public class PrimeRequestTest {
-    private PrimeRequest primeRequest;
+    private PrimeRequests primeRequest;
 
     @BeforeEach
     public void setUp() {
-        primeRequest = new PrimeRequest();
+        primeRequest = new PrimeRequests();
     }
 
     @Test

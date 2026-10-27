@@ -23,7 +23,7 @@ import lombok.Getter;
 
 @Entity
 @Getter
-public class PrimeRequest {
+public class PrimeRequests {
     private static final BigInteger MINOR_INPUT_NUMBER_MIN = BigInteger.ZERO;
 
     @Id

@@ -18,7 +18,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.example.orchestrator.application.dtos.PrimeRequestDTO;
-import com.example.orchestrator.domain.entities.PrimeRequest;
+import com.example.orchestrator.domain.entities.PrimeRequests;
 import com.example.orchestrator.domain.pojos.PageableRequest;
 import com.example.orchestrator.domain.pojos.PageableResult;
 import com.example.orchestrator.domain.repositories.PrimeRequestRepository;
@@ -38,12 +38,12 @@ class PrimeRequestServiceTest {
     @Test
     void testRequestPrimeNumberRangeSavesAndReturnsRequest() {
         PrimeRequestDTO request = new PrimeRequestDTO(BigInteger.ZERO, BigInteger.TEN);
-        PrimeRequest savedRequest = new PrimeRequest();
-        when(repository.save(any(PrimeRequest.class))).thenReturn(savedRequest);
+        PrimeRequests savedRequest = new PrimeRequests();
+        when(repository.save(any(PrimeRequests.class))).thenReturn(savedRequest);
 
-        PrimeRequest actual = service.requestPrimeNumberRange(request);
+        PrimeRequests actual = service.requestPrimeNumberRange(request);
 
-        ArgumentCaptor<PrimeRequest> savedRequestCaptor = ArgumentCaptor.forClass(PrimeRequest.class);
+        ArgumentCaptor<PrimeRequests> savedRequestCaptor = ArgumentCaptor.forClass(PrimeRequests.class);
         verify(repository).save(savedRequestCaptor.capture());
         assertSame(savedRequest, actual);
         assertEquals(BigInteger.ZERO, savedRequestCaptor.getValue().getInputNumberMin());
@@ -53,10 +53,10 @@ class PrimeRequestServiceTest {
     @Test
     void testGetPrimeRequestReturnsRequestForId() {
         UUID id = UUID.randomUUID();
-        PrimeRequest expected = new PrimeRequest();
+        PrimeRequests expected = new PrimeRequests();
         when(repository.getById(id)).thenReturn(expected);
 
-        PrimeRequest actual = service.getPrimeRequest(id);
+        PrimeRequests actual = service.getPrimeRequest(id);
 
         assertSame(expected, actual);
         verify(repository).getById(id);
@@ -65,10 +65,10 @@ class PrimeRequestServiceTest {
     @Test
     void testGetAllPrimeRequestsReturnsPageForRequest() {
         PageableRequest pageableRequest = PageableRequest.of(1, 10);
-        PageableResult<PrimeRequest> expected = new PageableResult<>(List.of(new PrimeRequest()), 1, 10, 1);
+        PageableResult<PrimeRequests> expected = new PageableResult<>(List.of(new PrimeRequests()), 1, 10, 1);
         when(repository.findAll(pageableRequest)).thenReturn(expected);
 
-        PageableResult<PrimeRequest> actual = service.getAllPrimeRequests(pageableRequest);
+        PageableResult<PrimeRequests> actual = service.getAllPrimeRequests(pageableRequest);
 
         assertSame(expected, actual);
         verify(repository).findAll(pageableRequest);
