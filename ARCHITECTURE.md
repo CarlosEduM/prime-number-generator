@@ -65,7 +65,7 @@ Provide a simple block diagram (e.g., a C4 Model Level 1: System Context diagram
 
 Name: Prime Number Generator Orchestrator
 
-Description: This service receives requests to generate prime numbers, stores them in a database, sends them to Kafka queue for processing, and handles result retrieval. The service layer persists request ownership and scopes queries by owner, but the presentation layer and authentication are not implemented yet.
+Description: This service receives authenticated prime-number range requests, stores request ownership in the database, and scopes queries by owner. The `POST /api/prime-requests` presentation endpoint derives ownership from the validated JWT subject.
 
 Technologies: Java, Spring Boot, Maven, PostgreSQL, Kafka
 
@@ -108,11 +108,15 @@ TODO
 
 ## 7. Security Considerations
 
-Authentication: Planned external JWT validation with Spring Security OAuth2 Resource Server. Not implemented until the presentation layer and routes exist.
+Authentication: External JWT validation with Spring Security OAuth2 Resource Server. Configure `OAUTH2_ISSUER_URI` with the trusted issuer URI. All HTTP requests require a valid bearer JWT.
 
 Authorization: 
 - User requests: Scope reads and listings to the owner subject stored with each request; requests belonging to another user should return 404.
 - Processor authentication/authorization is outside the current user-request ownership scope.
+
+User request endpoint:
+- `POST /api/prime-requests`: accepts `inputNumberMin` and `inputNumberMax`, assigns the authenticated JWT `sub` as owner, persists the request, and returns `201 Created`.
+- The request body cannot specify or override its owner.
 
 Data Encryption: TLS in transit for all communications
 

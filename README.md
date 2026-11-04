@@ -24,6 +24,30 @@ This project aims to create a microservice architecture for generating prime num
 - **Docker**: Containerization technology to package and run applications.
 - **Composer**: A tool for defining and running multi-container Docker applications.
 
+## Requesting a Prime Number Range
+
+The orchestrator exposes an authenticated endpoint to create a prime-number request:
+
+```http
+POST /api/prime-requests
+Authorization: Bearer <JWT>
+Content-Type: application/json
+
+{
+  "inputNumberMin": 0,
+  "inputNumberMax": 100
+}
+```
+
+The range values are integers. The minimum must be non-negative, and the maximum
+must be 10–1000 greater than the minimum. A successful request returns `201 Created`
+with the request ID, range, status, and timestamps. The owner is taken from the
+validated JWT `sub` claim, never from the request body.
+
+Configure `OAUTH2_ISSUER_URI` with the issuer URI of the trusted authorization
+server. Spring Security validates bearer tokens against that issuer; requests
+without a valid token receive `401 Unauthorized`.
+
 ## Setup
 
 To set up the project locally, follow these steps:
