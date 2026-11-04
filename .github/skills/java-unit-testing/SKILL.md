@@ -24,7 +24,7 @@ Create readable, isolated Java unit tests that describe observable behavior and 
 
 4. **Keep the test isolated.** Exercise the unit without starting a database, network service, broker, Spring application context, or other infrastructure. Use real values for simple value objects. Replace external or nondeterministic collaborators with the lightest suitable test double: a fake or stub for simple deterministic behavior, or a mock where interaction itself is part of the contract. Avoid mocking the class under test, excessive stubbing, and assertions about incidental call order.
 
-5. **Write for readability.** Use given-when-then or Arrange-Act-Assert with clear separation between setup, action, and assertion. Name tests after the scenario and expected outcome, using the repository's naming convention. Keep setup local and small; extract helpers only for genuinely repeated fixture creation that improves clarity. Prefer explicit, meaningful values over opaque literals, and avoid unrelated assertions in one test.
+5. **Write for readability.** Use given-when-then or Arrange-Act-Assert with clear separation between setup, action, and assertion. Name each test method with the repository's naming convention. Keep setup local and small; extract helpers only for genuinely repeated fixture creation that improves clarity. Prefer explicit, meaningful values over opaque literals, and avoid unrelated assertions in one test.
 
 6. **Assert outcomes, not activity for its own sake.** Make expected and actual values easy to distinguish. Use simple, independently known expected values; do not duplicate production logic in the test to compute the expected result. Assert returned values, state, thrown exception types, and meaningful collaborator effects with the most specific assertion available. Verify mock interactions only when they represent required behavior, not merely to mirror the implementation. Assert exception messages only when the message is part of the expected contract.
 
@@ -52,7 +52,7 @@ class ExampleServiceTest {
 	}
 
 	@Test
-	void returnsTheRequestedItem() {
+	void testGetItemReturnsRequestedItem() {
 		Item expected = new Item("item-1");
 		when(repository.findById("item-1")).thenReturn(expected);
 
@@ -75,9 +75,9 @@ Use the Mockito APIs consistently with the project imports. Add `verify(reposito
 - Can another developer understand the scenario and expected result without tracing the production implementation?
 - Was the focused test command run, and are any verification gaps stated clearly?
 
-## Naming Example
+## Naming Convention
 
-Prefer names that reveal the condition and expected outcome, such as `givenValidRange_whenRequestingPrimes_thenRequestIsSaved`, over vague names such as `testRequest`. Follow existing project naming conventions when they differ.
+Follow the naming style used by this repository's tests, such as `ProcessingResultsTest`: test methods start with `test`, followed by the behavior or method under test and a concise scenario or expected outcome in lower camel case. For example, use `testUpdateToProcessingValidValues` or `testUpdateToProcessingInvalidStates`, not BDD-style names such as `givenValidRange_whenRequestingPrimes_thenRequestIsSaved`. For a new project with no established convention, inspect nearby tests first; if none exist, use descriptive lower-camel-case names beginning with `test`.
 
 ## Reference
 
