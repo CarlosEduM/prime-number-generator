@@ -1,0 +1,32 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: prime_number_generator
+      POSTGRES_USER: ${DB_USERNAME:-primeapp}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-primeapp_dev_password}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  orchestrator:
+    build:
+      context: ./prime-number-generator-orchestrator
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      DB_URL: jdbc:postgresql://postgres:5432/prime_number_generator
+      DB_USERNAME: ${DB_USERNAME:-primeapp}
+      DB_PASSWORD: ${DB_PASSWORD:-primeapp_dev_password}
+      OAUTH2_ISSUER_URI: https://accounts.google.com
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
