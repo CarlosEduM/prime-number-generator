@@ -68,6 +68,26 @@ Configure `OAUTH2_ISSUER_URI` with the issuer URI of the trusted authorization
 server. Spring Security validates bearer tokens against that issuer; requests
 without a valid token receive `401 Unauthorized`.
 
+## Running with Docker Compose
+
+The root `compose.yaml` starts the orchestrator and PostgreSQL. From the
+repository root, run:
+
+```bash
+docker compose up --build
+```
+
+The API is available at `http://localhost:8080`. PostgreSQL data is persisted
+in the `postgres_data` volume and is not exposed on a host port. For local
+development the compose file has default database credentials; override them
+by setting `DB_USERNAME` and `DB_PASSWORD` in the environment before starting
+the services.
+
+The compose file configures `https://accounts.google.com` as the JWT issuer.
+Issuer validation alone does not restrict tokens to a specific Google OAuth
+client; configure audience validation against your Google client ID before
+using this setup as a production resource server.
+
 ## Setup
 
 To set up the project locally, follow these steps:
