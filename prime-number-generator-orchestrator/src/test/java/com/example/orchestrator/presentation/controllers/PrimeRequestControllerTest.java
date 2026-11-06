@@ -6,11 +6,13 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.math.BigInteger;
+import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,7 @@ import com.example.orchestrator.application.dtos.PrimeRequestDTO;
 import com.example.orchestrator.application.services.PrimeRequestService;
 import com.example.orchestrator.domain.entities.PrimeRequests;
 import com.example.orchestrator.domain.exceptions.InvalidInputException;
+import com.example.orchestrator.domain.exceptions.NotFoundException;
 import com.example.orchestrator.infrastructure.security.SecurityConfiguration;
 
 @WebMvcTest(PrimeRequestController.class)
@@ -97,5 +100,45 @@ class PrimeRequestControllerTest {
                         """))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.detail").value("Invalid range."));
+    }
+
+    @Test
+    void testGetPrimeRequestUsesAuthenticatedSubjectAsOwner() throws Exception {
+        UUID requestId = UUID.fromString("7b09c7d7-12a6-4270-91d9-85cc3eae8fa3");
+        PrimeRequests request = new PrimeRequests();
+        request.assignOwnerId("user-42");
+        request.setInputNumberRange(BigInteger.ZERO, BigInteger.TEN);
+        when(primeRequestService.getPrimeRequest(requestId, "user-42")).thenReturn(request);
+
+        mockMvc.perform(get("/api/prime-requests/{id}", requestId)
+                .with(jwt().jwt(token -> token.subject("user-42"))))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.inputNumberMin").value(0))
+                .andExpect(jsonPath("$.inputNumberMax").value(10))
+                .andExpect(jsonPath("$.status").value("PENDING"))
+                .andExpect(jsonPath("$.ownerId").doesNotExist());
+
+        verify(primeRequestService).getPrimeRequest(requestId, "user-42");
+    }
+
+    @Test
+    void testGetPrimeRequestWithoutAuthenticationReturnsUnauthorized() throws Exception {
+        mockMvc.perform(get("/api/prime-requests/{id}",
+                UUID.fromString("7b09c7d7-12a6-4270-91d9-85cc3eae8fa3")))
+                .andExpect(status().isUnauthorized());
+
+        verifyNoInteractions(primeRequestService);
+    }
+
+    @Test
+    void testGetPrimeRequestNotFoundForAuthenticatedOwnerReturnsNotFound() throws Exception {
+        UUID requestId = UUID.fromString("7b09c7d7-12a6-4270-91d9-85cc3eae8fa3");
+        when(primeRequestService.getPrimeRequest(requestId, "user-42"))
+                .thenThrow(new NotFoundException("Prime request not found."));
+
+        mockMvc.perform(get("/api/prime-requests/{id}", requestId)
+                .with(jwt().jwt(token -> token.subject("user-42"))))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.detail").value("Prime request not found."));
     }
 }
