@@ -41,8 +41,28 @@ Content-Type: application/json
 
 The range values are integers. The minimum must be non-negative, and the maximum
 must be 10–1000 greater than the minimum. A successful request returns `201 Created`
-with the request ID, range, status, and timestamps. The owner is taken from the
+with only the new request ID in the response body. The owner is taken from the
 validated JWT `sub` claim, never from the request body.
+
+Retrieve a request belonging to the authenticated user with:
+
+```http
+GET /api/prime-requests/{id}
+Authorization: Bearer <JWT>
+```
+
+The endpoint returns `200 OK` with the request details, or `404 Not Found` when
+the request does not exist or belongs to another user.
+
+List the authenticated user's requests with optional pagination parameters:
+
+```http
+GET /api/prime-requests?page=0&size=20
+Authorization: Bearer <JWT>
+```
+
+`page` is zero-based and `size` must be at least 1. Both default to `0` and `20`,
+respectively. The response includes the current page and total element count.
 
 Configure `OAUTH2_ISSUER_URI` with the issuer URI of the trusted authorization
 server. Spring Security validates bearer tokens against that issuer; requests

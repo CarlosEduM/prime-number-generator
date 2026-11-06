@@ -115,7 +115,9 @@ Authorization:
 - Processor authentication/authorization is outside the current user-request ownership scope.
 
 User request endpoint:
-- `POST /api/prime-requests`: accepts `inputNumberMin` and `inputNumberMax`, assigns the authenticated JWT `sub` as owner, persists the request, and returns `201 Created`.
+- `POST /api/prime-requests`: accepts `inputNumberMin` and `inputNumberMax`, assigns the authenticated JWT `sub` as owner, persists the request, and returns `201 Created` with only the new request ID in the body.
+- `GET /api/prime-requests/{id}`: retrieves a request scoped to the authenticated JWT `sub`; missing requests and requests belonging to another user return `404 Not Found`.
+- `GET /api/prime-requests?page=0&size=20`: lists requests scoped to the authenticated JWT `sub`; page is zero-based, size is at least 1, and defaults are 0 and 20.
 - The request body cannot specify or override its owner.
 
 Data Encryption: TLS in transit for all communications
