@@ -1,0 +1,7 @@
+{
+  "state": "FAIL",
+  "startedAt": null,
+  "results": null,
+  "errorMessage": "Failed to generate prime numbers for the requested range.",
+  "finishedAt": "2026-11-11T16:00:02"
+}

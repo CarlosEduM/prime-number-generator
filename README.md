@@ -77,6 +77,15 @@ message body. It consumes processing updates from `prime-number-results`; the
 message key must be that same processing result ID and the body must match
 `ProcessingResultUpdateDTO`.
 
+Example processing-result update payloads:
+
+- `PROCESSING`: [processing.json](./examples/processing-result-updates/processing.json)
+- `SUCCESS`: [success.json](./examples/processing-result-updates/success.json)
+- `FAIL`: [fail.json](./examples/processing-result-updates/fail.json)
+
+The processing result ID is sent as the Kafka message key, not in the JSON
+body. Fields unused for a given state must be `null`.
+
 The Kafka UI is available at `http://localhost:8081`.
 
 The Kafka bootstrap address is `kafka:9092` from containers and
