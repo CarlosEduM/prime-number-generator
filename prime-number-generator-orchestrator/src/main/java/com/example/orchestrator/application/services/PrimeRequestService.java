@@ -4,7 +4,9 @@ import java.util.UUID;
 
 import org.jspecify.annotations.NonNull;
 
+import com.example.orchestrator.application.dtos.PrimeNumberRangeMessage;
 import com.example.orchestrator.application.dtos.PrimeRequestDTO;
+import com.example.orchestrator.application.messaging.PrimeRequestMessageProducer;
 import com.example.orchestrator.domain.entities.PrimeRequests;
 import com.example.orchestrator.domain.exceptions.InvalidInputException;
 import com.example.orchestrator.domain.pojos.PageableRequest;
@@ -13,9 +15,13 @@ import com.example.orchestrator.domain.repositories.PrimeRequestRepository;
 
 public class PrimeRequestService {
     private final PrimeRequestRepository primeRequestRepository;
+    private final PrimeRequestMessageProducer primeRequestMessageProducer;
 
-    public PrimeRequestService(PrimeRequestRepository primeRequestRepository) {
+    public PrimeRequestService(
+            PrimeRequestRepository primeRequestRepository,
+            PrimeRequestMessageProducer primeRequestMessageProducer) {
         this.primeRequestRepository = primeRequestRepository;
+        this.primeRequestMessageProducer = primeRequestMessageProducer;
     }
 
     public PrimeRequests requestPrimeNumberRange(@NonNull PrimeRequestDTO request, @NonNull String ownerId) {
@@ -23,7 +29,12 @@ public class PrimeRequestService {
         primeRequest.assignOwnerId(requireOwnerId(ownerId));
         primeRequest.setInputNumberRange(request.inputNumberMin(), request.inputNumberMax());
 
-        return primeRequestRepository.save(primeRequest);
+        PrimeRequests savedRequest = primeRequestRepository.save(primeRequest);
+        primeRequestMessageProducer.produce(
+                savedRequest.getResults().getId(),
+                new PrimeNumberRangeMessage(savedRequest.getInputNumberMin(), savedRequest.getInputNumberMax()));
+
+        return savedRequest;
     }
 
     public PrimeRequests getPrimeRequest(@NonNull UUID id, @NonNull String ownerId) {
