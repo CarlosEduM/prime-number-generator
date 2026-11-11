@@ -5,9 +5,8 @@ import org.springframework.context.annotation.Configuration;
 
 import com.example.orchestrator.application.messaging.PrimeRequestMessageProducer;
 import com.example.orchestrator.application.services.PrimeRequestService;
-import com.example.orchestrator.application.services.ProcessingResultService;
+import com.example.orchestrator.application.services.ProcessingResultUpdateService;
 import com.example.orchestrator.domain.repositories.PrimeRequestRepository;
-import com.example.orchestrator.domain.repositories.ProcessingResultRepository;
 
 @Configuration
 public class ApplicationServiceConfiguration {
@@ -19,7 +18,7 @@ public class ApplicationServiceConfiguration {
     }
 
     @Bean
-    ProcessingResultService processingResultService(ProcessingResultRepository processingResultRepository) {
-        return new ProcessingResultService(processingResultRepository);
+    ProcessingResultUpdateService processingResultUpdateService(PrimeRequestRepository primeRequestRepository) {
+        return new ProcessingResultUpdateService(primeRequestRepository);
     }
 }

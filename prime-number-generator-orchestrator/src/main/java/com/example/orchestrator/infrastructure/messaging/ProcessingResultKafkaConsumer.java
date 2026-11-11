@@ -9,20 +9,20 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
 import com.example.orchestrator.application.dtos.ProcessingResultUpdateDTO;
-import com.example.orchestrator.application.services.ProcessingResultService;
+import com.example.orchestrator.application.services.ProcessingResultUpdateService;
 
 @Component
 public class ProcessingResultKafkaConsumer {
-    private final ProcessingResultService processingResultService;
+    private final ProcessingResultUpdateService processingResultUpdateService;
 
-    public ProcessingResultKafkaConsumer(ProcessingResultService processingResultService) {
-        this.processingResultService = processingResultService;
+    public ProcessingResultKafkaConsumer(ProcessingResultUpdateService processingResultUpdateService) {
+        this.processingResultUpdateService = processingResultUpdateService;
     }
 
     @KafkaListener(topics = "${prime-number-generator.kafka.result-topic}")
     public void consume(
             @Payload ProcessingResultUpdateDTO updateDTO,
             @Header(KafkaHeaders.RECEIVED_KEY) String key) {
-        processingResultService.updateProcessingResult(UUID.fromString(key), updateDTO);
+        processingResultUpdateService.updateProcessingResult(UUID.fromString(key), updateDTO);
     }
 }

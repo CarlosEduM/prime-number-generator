@@ -11,17 +11,17 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.example.orchestrator.application.dtos.ProcessingResultUpdateDTO;
-import com.example.orchestrator.application.services.ProcessingResultService;
+import com.example.orchestrator.application.services.ProcessingResultUpdateService;
 import com.example.orchestrator.domain.entities.ProcessingResultState;
 
 @ExtendWith(MockitoExtension.class)
 class ProcessingResultKafkaConsumerTest {
     @Mock
-    private ProcessingResultService processingResultService;
+    private ProcessingResultUpdateService processingResultUpdateService;
 
     @Test
-    void testConsumeForwardsPayloadAndKafkaKeyToProcessingResultService() {
-        ProcessingResultKafkaConsumer consumer = new ProcessingResultKafkaConsumer(processingResultService);
+    void testConsumeForwardsPayloadAndKafkaKeyToProcessingResultUpdateService() {
+        ProcessingResultKafkaConsumer consumer = new ProcessingResultKafkaConsumer(processingResultUpdateService);
         UUID processingResultId = UUID.randomUUID();
         ProcessingResultUpdateDTO updateDTO = new ProcessingResultUpdateDTO(
                 ProcessingResultState.PROCESSING,
@@ -32,6 +32,6 @@ class ProcessingResultKafkaConsumerTest {
 
         consumer.consume(updateDTO, processingResultId.toString());
 
-        verify(processingResultService).updateProcessingResult(processingResultId, updateDTO);
+        verify(processingResultUpdateService).updateProcessingResult(processingResultId, updateDTO);
     }
 }

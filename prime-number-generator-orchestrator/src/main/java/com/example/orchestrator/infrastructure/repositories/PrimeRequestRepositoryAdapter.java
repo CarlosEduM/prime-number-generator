@@ -34,6 +34,13 @@ public class PrimeRequestRepositoryAdapter implements PrimeRequestRepository {
     }
 
     @Override
+    public PrimeRequests getByResultsId(@NonNull UUID resultsId) {
+        return this.primeRequestJpaRepository.findByResults_Id(resultsId)
+                .orElseThrow(() -> new NotFoundException(
+                        "Prime request with processing result ID %s not found.".formatted(resultsId)));
+    }
+
+    @Override
     public PageableResult<PrimeRequests> findAllByOwnerId(
             @NonNull String ownerId, @NonNull PageableRequest request) {
         Sort sort = Sort.by(request.sorts().stream()

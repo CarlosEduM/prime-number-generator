@@ -70,6 +70,26 @@ class PrimeRequestRepositoryAdapterTest {
     }
 
     @Test
+    void testGetByResultsIdReturnsPrimeRequest() {
+        UUID resultsId = UUID.randomUUID();
+        PrimeRequests expected = new PrimeRequests();
+        when(jpaRepository.findByResults_Id(resultsId)).thenReturn(Optional.of(expected));
+
+        PrimeRequests actual = repositoryAdapter.getByResultsId(resultsId);
+
+        assertSame(expected, actual);
+        verify(jpaRepository).findByResults_Id(resultsId);
+    }
+
+    @Test
+    void testGetByResultsIdThrowsWhenPrimeRequestDoesNotExist() {
+        UUID resultsId = UUID.randomUUID();
+        when(jpaRepository.findByResults_Id(resultsId)).thenReturn(Optional.empty());
+
+        assertThrows(NotFoundException.class, () -> repositoryAdapter.getByResultsId(resultsId));
+    }
+
+    @Test
     void testFindAllMapsPageableRequestIncludingSortAndPageMetadata() {
         PrimeRequests primeRequest = new PrimeRequests();
         PageableRequest request = new PageableRequest(

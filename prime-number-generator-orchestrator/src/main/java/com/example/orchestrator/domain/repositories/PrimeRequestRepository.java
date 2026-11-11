@@ -13,5 +13,7 @@ public interface PrimeRequestRepository {
 
     PrimeRequests getByIdAndOwnerId(@NonNull UUID id, @NonNull String ownerId);
 
+    PrimeRequests getByResultsId(@NonNull UUID resultsId);
+
     PageableResult<PrimeRequests> findAllByOwnerId(@NonNull String ownerId, @NonNull PageableRequest request);
 }

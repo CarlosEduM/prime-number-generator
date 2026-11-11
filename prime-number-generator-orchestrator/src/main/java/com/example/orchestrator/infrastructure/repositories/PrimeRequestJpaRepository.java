@@ -13,5 +13,7 @@ public interface PrimeRequestJpaRepository
         extends JpaRepository<PrimeRequests, UUID> {
     Optional<PrimeRequests> findByIdAndOwnerId(UUID id, String ownerId);
 
+    Optional<PrimeRequests> findByResults_Id(UUID resultsId);
+
     Page<PrimeRequests> findAllByOwnerId(String ownerId, Pageable pageable);
 }
