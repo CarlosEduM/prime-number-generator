@@ -13,6 +13,9 @@ import com.example.orchestrator.domain.pojos.PageableRequest;
 import com.example.orchestrator.domain.pojos.PageableResult;
 import com.example.orchestrator.domain.repositories.PrimeRequestRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j 
 public class PrimeRequestService {
     private final PrimeRequestRepository primeRequestRepository;
     private final PrimeRequestMessageProducer primeRequestMessageProducer;
@@ -25,6 +28,8 @@ public class PrimeRequestService {
     }
 
     public PrimeRequests requestPrimeNumberRange(@NonNull PrimeRequestDTO request, @NonNull String ownerId) {
+        log.info("Received request to generate prime numbers in range {} - {} for owner {}",
+                request.inputNumberMin(), request.inputNumberMax(), ownerId);
         PrimeRequests primeRequest = new PrimeRequests();
         primeRequest.assignOwnerId(requireOwnerId(ownerId));
         primeRequest.setInputNumberRange(request.inputNumberMin(), request.inputNumberMax());
@@ -38,11 +43,14 @@ public class PrimeRequestService {
     }
 
     public PrimeRequests getPrimeRequest(@NonNull UUID id, @NonNull String ownerId) {
+        log.info("Getting prime request with ID {} for owner {}", id, ownerId);
         return primeRequestRepository.getByIdAndOwnerId(id, requireOwnerId(ownerId));
     }
 
     public PageableResult<PrimeRequests> getAllPrimeRequests(
             @NonNull PageableRequest pageableRequest, @NonNull String ownerId) {
+        log.info("Getting page {} with size {} and sorts {} for owner {}", pageableRequest.page(), 
+        pageableRequest.size(), pageableRequest.sorts(), ownerId);
         return this.primeRequestRepository.findAllByOwnerId(requireOwnerId(ownerId), pageableRequest);
     }
 

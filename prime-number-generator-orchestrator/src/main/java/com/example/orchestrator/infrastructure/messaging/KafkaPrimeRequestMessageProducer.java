@@ -9,6 +9,9 @@ import org.springframework.stereotype.Component;
 import com.example.orchestrator.application.dtos.PrimeNumberRangeMessage;
 import com.example.orchestrator.application.messaging.PrimeRequestMessageProducer;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Component
 public class KafkaPrimeRequestMessageProducer implements PrimeRequestMessageProducer {
     private final KafkaTemplate<String, PrimeNumberRangeMessage> kafkaTemplate;
@@ -23,6 +26,8 @@ public class KafkaPrimeRequestMessageProducer implements PrimeRequestMessageProd
 
     @Override
     public void produce(UUID key, PrimeNumberRangeMessage message) {
+        log.info("Producing message to Kafka topic {} with key {}", topic, key);
+        log.debug("Message content: {}", message);
         kafkaTemplate.send(topic, key.toString(), message).join();
     }
 }

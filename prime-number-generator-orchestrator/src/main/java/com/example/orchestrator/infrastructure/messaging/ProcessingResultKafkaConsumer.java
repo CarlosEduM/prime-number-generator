@@ -11,6 +11,9 @@ import org.springframework.stereotype.Component;
 import com.example.orchestrator.application.dtos.ProcessingResultUpdateDTO;
 import com.example.orchestrator.application.services.ProcessingResultUpdateService;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j 
 @Component
 public class ProcessingResultKafkaConsumer {
     private final ProcessingResultUpdateService processingResultUpdateService;
@@ -23,6 +26,8 @@ public class ProcessingResultKafkaConsumer {
     public void consume(
             @Payload ProcessingResultUpdateDTO updateDTO,
             @Header(KafkaHeaders.RECEIVED_KEY) String key) {
+        log.info("Consuming processing result update for key {}", key);
+        log.debug("Message content: {}", updateDTO);
         processingResultUpdateService.updateProcessingResult(UUID.fromString(key), updateDTO);
     }
 }
