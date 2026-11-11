@@ -77,6 +77,8 @@ message body. It consumes processing updates from `prime-number-results`; the
 message key must be that same processing result ID and the body must match
 `ProcessingResultUpdateDTO`.
 
+The Kafka UI is available at `http://localhost:8081`.
+
 The Kafka bootstrap address is `kafka:9092` from containers and
 `localhost:29092` from the host. Topic names can be overridden with
 `KAFKA_REQUEST_TOPIC` and `KAFKA_RESULT_TOPIC`; configure the corresponding
