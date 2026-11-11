@@ -70,7 +70,20 @@ without a valid token receive `401 Unauthorized`.
 
 ## Running with Docker Compose
 
-The root `compose.yaml` starts the orchestrator and PostgreSQL. From the
+The root `compose.yaml` starts the orchestrator, PostgreSQL, and a local Kafka
+broker. The orchestrator publishes requests to `prime-number-requests`, with
+the processing result ID as the Kafka key and only the requested range in the
+message body. It consumes processing updates from `prime-number-results`; the
+message key must be that same processing result ID and the body must match
+`ProcessingResultUpdateDTO`.
+
+The Kafka bootstrap address is `kafka:9092` from containers and
+`localhost:29092` from the host. Topic names can be overridden with
+`KAFKA_REQUEST_TOPIC` and `KAFKA_RESULT_TOPIC`; configure the corresponding
+topic names for the processor as well. `KAFKA_BOOTSTRAP_SERVERS` can override
+the broker address for an externally managed Kafka cluster.
+
+From the
 repository root, run:
 
 ```bash

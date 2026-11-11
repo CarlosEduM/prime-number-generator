@@ -65,7 +65,7 @@ Provide a simple block diagram (e.g., a C4 Model Level 1: System Context diagram
 
 Name: Prime Number Generator Orchestrator
 
-Description: This service receives authenticated prime-number range requests, stores request ownership in the database, and scopes queries by owner. The `POST /api/prime-requests` presentation endpoint derives ownership from the validated JWT subject.
+Description: This service receives authenticated prime-number range requests, stores request ownership in the database, and scopes queries by owner. The `POST /api/prime-requests` presentation endpoint derives ownership from the validated JWT subject. After persisting a request, the application publishes only the requested number range to Kafka, keyed by the associated processing result ID. It consumes processing-result updates from Kafka and forwards the UUID key and update payload to `ProcessingResultService`.
 
 Technologies: Java, Spring Boot, Maven, PostgreSQL, Kafka
 
@@ -100,7 +100,7 @@ Key Schemas/Collections:
 ### 5.1. Apache Kafka
 
 Purpose: Inter-service communication via message queues
-Integration Method: Kafka Producer/Consumer API
+Integration Method: Kafka Producer/Consumer API. The orchestrator publishes range messages to `prime-number-requests`; the key is the processing result ID. It consumes `ProcessingResultUpdateDTO` messages from `prime-number-results`, keyed by that same ID. Both topic names and the broker address are configurable through application properties/environment variables.
 
 ## 6. Deployment & Infrastructure
 
