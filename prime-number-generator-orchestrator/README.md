@@ -209,10 +209,10 @@ docker compose up --build
 
 When the containers are ready, the API is at `http://localhost:8080`, and the
 Kafka UI is at `http://localhost:8081`. The Compose setup configures PostgreSQL
-and Kafka as dependencies of the orchestrator. PostgreSQL data is kept in the
-`postgres_data` volume; the database port is not published to the host. Kafka
-is available at `localhost:29092` from the host and `kafka:9092` from other
-Compose containers.
+and Kafka as dependencies of the orchestrator. PostgreSQL is available to
+local database tools at `localhost:5432`; its data is kept in the
+`postgres_data` volume. Kafka is available at `localhost:29092` from the host
+and `kafka:9092` from other Compose containers.
 
 To stop the stack:
 

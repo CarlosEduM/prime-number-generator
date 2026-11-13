@@ -155,12 +155,14 @@ Compose starts:
 
 - the orchestrator API at `http://localhost:8080`;
 - the processor worker, connected to the Compose Kafka broker;
-- PostgreSQL, with data stored in the `postgres_data` volume;
+- PostgreSQL at `localhost:5432`, with data stored in the `postgres_data`
+  volume;
 - a local Kafka broker, available at `localhost:29092` from the host and
   `kafka:9092` from other Compose containers;
 - Kafka UI at `http://localhost:8081`.
 
-The database port is not exposed on the host. The Compose setup configures the
+The PostgreSQL port is published on the host loopback interface at
+`localhost:5432` for local database tools. The Compose setup configures the
 orchestrator to use `https://accounts.google.com` as its JWT issuer. API
 requests require a valid bearer token from that issuer. Swagger UI is available
 at `http://localhost:8080/swagger-ui/index.html`.
