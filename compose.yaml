@@ -70,5 +70,18 @@ services:
       kafka:
         condition: service_healthy
 
+  processor:
+    build:
+      context: ./prime-number-generator-processor
+      dockerfile: Dockerfile
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      KAFKA_REQUEST_TOPIC: prime-number-requests
+      KAFKA_RESULT_TOPIC: prime-number-results
+      KAFKA_PROCESSING_REQUEST_GROUP_ID: prime-number-generator-processor
+    depends_on:
+      kafka:
+        condition: service_healthy
+
 volumes:
   postgres_data:
