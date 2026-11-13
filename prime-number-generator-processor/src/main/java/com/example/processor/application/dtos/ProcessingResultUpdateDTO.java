@@ -4,11 +4,15 @@ import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public record ProcessingResultUpdateDTO(
         ProcessingResultUpdateState state,
+        @JsonFormat(shape = JsonFormat.Shape.STRING)
         LocalDateTime startedAt,
         List<BigInteger> results,
         String errorMessage,
+        @JsonFormat(shape = JsonFormat.Shape.STRING)
         LocalDateTime finishedAt) {
 
     public ProcessingResultUpdateDTO {

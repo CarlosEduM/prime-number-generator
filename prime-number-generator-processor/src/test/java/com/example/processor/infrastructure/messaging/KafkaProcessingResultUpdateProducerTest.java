@@ -1,10 +1,12 @@
 package com.example.processor.infrastructure.messaging;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -16,6 +18,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.support.serializer.JsonSerializer;
 
 import com.example.processor.application.dtos.ProcessingResultUpdateDTO;
 
@@ -51,5 +54,16 @@ class KafkaProcessingResultUpdateProducerTest {
                 .thenReturn(CompletableFuture.failedFuture(new IllegalStateException("Kafka unavailable")));
 
         assertThrows(CompletionException.class, () -> producer.produce(key, message));
+    }
+
+    @Test
+    void testJsonSerializerSupportsLocalDateTime() {
+        ProcessingResultUpdateDTO message = ProcessingResultUpdateDTO.processing(
+                LocalDateTime.parse("2026-11-13T10:00:00"));
+
+        byte[] serialized = new JsonSerializer<ProcessingResultUpdateDTO>().serialize(TOPIC, message);
+
+        String json = new String(serialized, StandardCharsets.UTF_8);
+        assertTrue(json.contains("\"startedAt\":\"2026-11-13T10:00:00\""));
     }
 }

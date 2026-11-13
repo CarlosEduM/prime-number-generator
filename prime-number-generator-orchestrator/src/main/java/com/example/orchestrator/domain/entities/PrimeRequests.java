@@ -26,7 +26,7 @@ import lombok.Getter;
 @Getter
 public class PrimeRequests {
     private static final BigInteger MINIMUM_RANGE_DIFFERENCE = BigInteger.valueOf(10);
-    private static final BigInteger MAXIMUM_RANGE_DIFFERENCE = BigInteger.valueOf(1_000_000);
+    private static final BigInteger MAXIMUM_RANGE_DIFFERENCE = BigInteger.valueOf(1_000);
     private static final BigInteger MINOR_INPUT_NUMBER_MIN = BigInteger.ZERO;
 
     @Id

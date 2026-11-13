@@ -89,7 +89,7 @@ public class PrimeRequestTest {
     }
 
     @Test
-    public void testSetInputNumberRangeInputNumberMinTooLarge() {
+    public void testSetInputNumberRangeInputNumberMaxTooLarge() {
         BigInteger inputNumberMin = BigInteger.valueOf(1005);
         BigInteger inputNumberMax = BigInteger.valueOf(2006);
 
@@ -97,7 +97,8 @@ public class PrimeRequestTest {
             primeRequest.setInputNumberRange(inputNumberMin, inputNumberMax);
         });
 
-        assertEquals("Input number maximum could not be 1000 numbers larger than minimum.", exception.getMessage());
+        assertEquals("Input number maximum could not be more than 1000 numbers larger than minimum.",
+                exception.getMessage());
     }
 
     @Test
