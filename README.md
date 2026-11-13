@@ -1,119 +1,204 @@
 # Prime Number Generator System
 
-## Project Description
+This repository is a demonstration project for designing systems that need to
+handle long-running work without keeping a client's request open until that
+work is finished. Prime-number generation is used as an example of a
+computationally expensive task; the focus is on system design, not on providing
+a production-grade prime-number library.
 
-This project aims to create a microservice architecture for generating prime numbers asynchronously using queues. The system consists of an orchestrator service that emits events and persists performance metrics, and the processor service who will consume the events, process them, and return the results back to the orchestrator via events in a message broker.
+The system is split into an **orchestrator**, which owns the client-facing API
+and request lifecycle, and a **processor**, which is intended to perform the
+calculation independently.
 
-### Key Features
+## Architecture at a glance
 
-- **Orchestrator Service**: Receives requests from users to generate prime numbers within a specified range. It stores request information in a PostgreSQL database, sends the request to a Kafka queue for processing, and handles result retrieval via REST API.
-- **Processor Service**: Listens to the Kafka queue for prime number generation requests, processes them, and returns results back to the orchestrator.
-- **Data Store**: Uses a PostgreSQL database to store information about prime number generation requests and their results.
-- **External Integration**: Utilizes Apache Kafka for inter-service communication via message queues.
-
-### Technologies
-
-- **Java**: The primary programming language.
-- **Spring Boot**: A Java-based open-source framework for creating stand-alone applications.
-- **Maven**: A software project management and comprehension tool.
-- **PostgreSQL**: A relational database management system.
-- **Kafka**: Apache Kafka, a distributed streaming platform.
-
-### Deployment
-
-- **Docker**: Containerization technology to package and run applications.
-- **Composer**: A tool for defining and running multi-container Docker applications.
-
-## Requesting a Prime Number Range
-
-The orchestrator exposes an authenticated endpoint to create a prime-number request:
-
-```http
-POST /api/prime-requests
-Authorization: Bearer <JWT>
-Content-Type: application/json
-
-{
-  "inputNumberMin": 0,
-  "inputNumberMax": 100
-}
+```mermaid
+flowchart LR
+    Client -->|HTTP request| Orchestrator
+    Orchestrator -->|Persist request| PostgreSQL
+    Orchestrator -->|Generation job| Kafka
+    Kafka -->|Consume job| Processor
+    Processor -->|Progress and result events| Kafka
+    Kafka -->|Consume updates| Orchestrator
+    Client -->|Read request status/result| Orchestrator
 ```
 
-The range values are integers. The minimum must be non-negative, and the maximum
-must be 10–1000 greater than the minimum. A successful request returns `201 Created`
-with only the new request ID in the response body. The owner is taken from the
-validated JWT `sub` claim, never from the request body.
+The orchestrator records the request, publishes a job to Kafka, and returns a
+request ID without waiting for the calculation to finish. The processor
+reports progress and the final outcome as events. The orchestrator stores
+those updates so clients can check the request later. The HTTP call waits for
+the initial Kafka publish to complete, but not for prime generation.
 
-Retrieve a request belonging to the authenticated user with:
+## Why these design choices
 
-```http
-GET /api/prime-requests/{id}
-Authorization: Bearer <JWT>
+### Event-driven communication with Kafka
+
+The project demonstrates an event-driven approach for workloads that may take
+significant time to complete. A queue separates request acceptance from
+calculation: incoming work can wait in Kafka while processors handle earlier
+jobs. This helps the API remain responsive during long calculations and lets
+the API and workers scale independently.
+
+Kafka also provides a boundary between services: the orchestrator and
+processor coordinate through message keys and payloads rather than a direct,
+synchronous call. Queue-based automatic scaling is possible when the
+deployment platform is configured with an autoscaling policy and the Kafka
+topic has enough partitions; this repository does not configure such a policy.
+
+### A separate processing microservice
+
+The processor is intended to be an internal worker, isolated from the client's
+HTTP request. This keeps CPU-intensive work from occupying the API request
+lifecycle and allows processing capacity to be adjusted independently:
+
+- **Vertical scaling** can assign more CPU and memory to worker instances.
+- **Horizontal scaling** can add worker instances to process jobs in parallel,
+  subject to Kafka consumer-group and partition limits.
+- The worker could be implemented in another language, such as Go, without
+  changing the client-facing API, provided it continues to honor the Kafka
+  message contract.
+
+The brute-force prime-generation approach is intended to simulate a slow
+process. A run taking around 30 minutes is a design scenario, not a measured
+runtime guarantee. The processor implementation is currently a bootstrap
+skeleton; see its README for details.
+
+### Layered architecture
+
+The orchestrator separates presentation, application, domain, and
+infrastructure concerns. Business rules and use cases depend on application
+interfaces and domain concepts rather than directly on Spring, Kafka, or
+PostgreSQL APIs. Infrastructure adapters connect those interfaces to the
+chosen frameworks and external systems.
+
+Spring Boot is a common Java platform, but keeping these boundaries still
+preserves options. For example, replacing Kafka with another message broker
+or PostgreSQL with a non-relational database would require new or modified
+infrastructure adapters and configuration, while the domain rules and
+application use cases can remain unchanged. The same principle allows the
+processor implementation to use a different programming language while
+preserving the agreed message contract.
+
+### Trade-offs and when this architecture fits
+
+These choices have real costs. A multi-service, event-driven system introduces
+more moving parts to build, configure, test, deploy, monitor, and troubleshoot.
+It increases development time and requires stronger technical knowledge of
+messaging, distributed systems, and operations. Before adopting this
+architecture, weigh those costs against the expected benefits.
+
+For an application with few users and modest response-time requirements, a
+monolith that accepts a request and handles the work asynchronously in the
+background may be sufficient. Kafka and a separate processor are not goals in
+themselves; they are useful when independent scaling, workload isolation, or
+service boundaries justify their added complexity.
+
+This design aims to make capacity adaptable as demand changes, but it does not
+support an unlimited number of users just by adding hardware. Actual capacity
+depends on available resources and on tuning the API, worker count, Kafka
+partitions, database, and other infrastructure. The current database design
+and configuration are for demonstration; I would not recommend them for an
+application with more than 500,000 users without further design review and
+load testing. That figure is a conservative project-specific recommendation,
+not a measured capacity limit.
+
+The benefit of the current boundaries is that the system can evolve without
+requiring every change to affect every service or business rule. Adapters,
+configuration, and message contracts may still need to change when replacing a
+technology, but the code is structured to make those changes quicker and more
+localized than if framework and infrastructure details were spread throughout
+the application.
+
+## Repository layout
+
+```text
+prime-number-generator-orchestrator/  Client API, request lifecycle, persistence, Kafka integration
+prime-number-generator-processor/     Internal processing worker (currently a skeleton)
+examples/                             Example Kafka result-update payloads
+compose.yaml                          Local PostgreSQL, Kafka, Kafka UI, and orchestrator
 ```
 
-The endpoint returns `200 OK` with the request details, or `404 Not Found` when
-the request does not exist or belongs to another user.
+For service-specific behavior and contracts, see:
 
-List the authenticated user's requests with optional pagination parameters:
+- [Orchestrator README](./prime-number-generator-orchestrator/README.md)
+- [Processor README](./prime-number-generator-processor/README.md)
 
-```http
-GET /api/prime-requests?page=0&size=20
-Authorization: Bearer <JWT>
-```
+## Quick start
 
-`page` is zero-based and `size` must be at least 1. Both default to `0` and `20`,
-respectively. The response includes the current page and total element count.
+### Requirements
 
-Configure `OAUTH2_ISSUER_URI` with the issuer URI of the trusted authorization
-server. Spring Security validates bearer tokens against that issuer; requests
-without a valid token receive `401 Unauthorized`.
+- Docker with the Docker Compose plugin.
+- Java 25 and the included Maven Wrapper scripts if building or testing a
+  service outside Docker.
 
-## Running with Docker Compose
+### Start the local stack
 
-The root `compose.yaml` starts the orchestrator, PostgreSQL, and a local Kafka
-broker. The orchestrator publishes requests to `prime-number-requests`, with
-the processing result ID as the Kafka key and only the requested range in the
-message body. It consumes processing updates from `prime-number-results`; the
-message key must be that same processing result ID and the body must match
-`ProcessingResultUpdateDTO`.
-
-Example processing-result update payloads:
-
-- `PROCESSING`: [processing.json](./examples/processing-result-updates/processing.json)
-- `SUCCESS`: [success.json](./examples/processing-result-updates/success.json)
-- `FAIL`: [fail.json](./examples/processing-result-updates/fail.json)
-
-The processing result ID is sent as the Kafka message key, not in the JSON
-body. Fields unused for a given state must be `null`.
-
-The Kafka UI is available at `http://localhost:8081`.
-
-The Kafka bootstrap address is `kafka:9092` from containers and
-`localhost:29092` from the host. Topic names can be overridden with
-`KAFKA_REQUEST_TOPIC` and `KAFKA_RESULT_TOPIC`; configure the corresponding
-topic names for the processor as well. `KAFKA_BOOTSTRAP_SERVERS` can override
-the broker address for an externally managed Kafka cluster.
-
-From the
-repository root, run:
+From the repository root, run:
 
 ```bash
 docker compose up --build
 ```
 
-The API is available at `http://localhost:8080`. PostgreSQL data is persisted
-in the `postgres_data` volume and is not exposed on a host port. For local
-development the compose file has default database credentials; override them
-by setting `DB_USERNAME` and `DB_PASSWORD` in the environment before starting
-the services.
+Compose starts:
 
-The compose file configures `https://accounts.google.com` as the JWT issuer.
-Issuer validation alone does not restrict tokens to a specific Google OAuth
-client; configure audience validation against your Google client ID before
-using this setup as a production resource server.
+- the orchestrator API at `http://localhost:8080`;
+- PostgreSQL, with data stored in the `postgres_data` volume;
+- a local Kafka broker, available at `localhost:29092` from the host and
+  `kafka:9092` from other Compose containers;
+- Kafka UI at `http://localhost:8081`.
 
-## Setup
+The database port is not exposed on the host. The Compose setup configures the
+orchestrator to use `https://accounts.google.com` as its JWT issuer. API
+requests require a valid bearer token from that issuer. Swagger UI is available
+at `http://localhost:8080/swagger-ui/index.html`.
 
-To set up the project locally, follow these steps:
+The Compose stack does **not** currently start a processor. The processor
+module does not yet consume Kafka jobs or publish result updates, so requests
+can be accepted and queued, but will not complete through the full workflow
+until a processor is implemented and connected.
 
-1. **Clone the Repository**:
+Compose uses development database credentials by default. Override them before
+starting the stack when needed:
+
+```bash
+DB_USERNAME=myuser DB_PASSWORD=my-local-password docker compose up --build
+```
+
+These defaults and the issuer setup are for local demonstration only. Issuer
+validation alone does not restrict tokens to a specific OAuth client audience;
+configure audience validation and production-grade secrets and transport
+security before using the system in a deployed environment.
+
+Stop the containers with:
+
+```bash
+docker compose down
+```
+
+The PostgreSQL volume is retained when the containers stop.
+
+### Run tests
+
+Each service is a separate Maven project. Run its tests from the corresponding
+module directory:
+
+```bash
+cd prime-number-generator-orchestrator
+./mvnw test
+```
+
+```bash
+cd prime-number-generator-processor
+./mvnw test
+```
+
+## API and message contracts
+
+The orchestrator API requires authentication and exposes operations to create,
+retrieve, and list a user's prime-generation requests. Its detailed endpoints,
+validation rules, configuration, and Kafka payloads are documented in the
+[Orchestrator README](./prime-number-generator-orchestrator/README.md).
+
+The processor's intended Kafka workflow, scaling considerations, dependencies,
+and current implementation status are documented in the
+[Processor README](./prime-number-generator-processor/README.md).
