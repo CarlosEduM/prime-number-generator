@@ -25,6 +25,8 @@ import lombok.Getter;
 @Entity
 @Getter
 public class PrimeRequests {
+    private static final BigInteger MINIMUM_RANGE_DIFFERENCE = BigInteger.valueOf(10);
+    private static final BigInteger MAXIMUM_RANGE_DIFFERENCE = BigInteger.valueOf(1_000_000);
     private static final BigInteger MINOR_INPUT_NUMBER_MIN = BigInteger.ZERO;
 
     @Id
@@ -65,13 +67,15 @@ public class PrimeRequests {
 
         BigInteger difference = inputNumberMax.subtract(inputNumberMin);
 
-        if (difference.compareTo(BigInteger.valueOf(10)) < 0)
+        if (difference.compareTo(MINIMUM_RANGE_DIFFERENCE) < 0)
             throw new InvalidInputException(
-                    "Input number maximum must be at least 10 numbers larger than the minimum.");
+                    "Input number maximum must be at least %s numbers larger than the minimum."
+                            .formatted(MINIMUM_RANGE_DIFFERENCE.toString()));
 
-        if (difference.compareTo(BigInteger.valueOf(1000)) > 0)
+        if (difference.compareTo(MAXIMUM_RANGE_DIFFERENCE) > 0)
             throw new InvalidInputException(
-                    "Input number maximum could not be 1000 numbers larger than minimum.");
+                    "Input number maximum could not be more than %s numbers larger than minimum."
+                            .formatted(MAXIMUM_RANGE_DIFFERENCE.toString()));
 
         this.inputNumberMin = inputNumberMin;
         this.inputNumberMax = inputNumberMax;
