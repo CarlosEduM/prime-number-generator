@@ -276,6 +276,14 @@ The code is organized into four layers:
 - `infrastructure`: Kafka producer/consumer, JPA adapters, and framework
   configuration.
 
+The result-topic Kafka consumer is intentionally in `infrastructure`. It
+receives an internal processing-state update and adapts it to a call to the
+existing `ProcessingResultUpdateService`; it does not initiate a new
+client-facing request or prime-generation workflow. This differs from the
+processor's request consumer, which is the processor's sole inbound job entry
+point and is placed in `presentation`. The placement reflects these services'
+different responsibilities, rather than a universal rule for Kafka consumers.
+
 The service persists the initial request before publishing its Kafka message;
 database persistence and Kafka publication are not implemented as a single
 atomic transaction. Plan operational recovery accordingly. The current design

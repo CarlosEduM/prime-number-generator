@@ -1,9 +1,9 @@
 # Prime Number Generator Processor
 
-The processor is intended to be an internal worker in the prime-number
-generation system. Its responsibility is deliberately narrow: receive a
-generation job, calculate the primes in the requested range, and report
-progress and the final outcome to the orchestrator.
+The processor is an internal worker in the prime-number generation system. Its
+responsibility is deliberately narrow: receive a generation job, calculate
+the primes in the requested range, and report progress and the final outcome
+to the orchestrator.
 
 The processor is isolated from the client's HTTP request. The orchestrator
 accepts and records requests, then hands work to Kafka; the processor works
@@ -13,11 +13,11 @@ progress.
 
 ## Why isolate the processor
 
-This service is designed to simulate a slow, compute-intensive process. A
-brute-force prime-generation algorithm is suitable for that purpose because
-the calculation can be made deliberately expensive. A workload taking around
-30 minutes is a design scenario, not a guaranteed runtime or a benchmark of
-the current code.
+This service simulates a slow, compute-intensive process. Its current
+brute-force generator checks candidate divisors up to the square root of each
+candidate number. A workload taking around 30 minutes is a design scenario,
+not a guaranteed runtime or a benchmark; actual duration depends on the range
+and available resources.
 
 Because calculation happens outside the HTTP request lifecycle, a slow job
 does not occupy the client's connection or prevent the orchestrator from
@@ -28,14 +28,15 @@ autoscaling policy, but this requires deployment-level autoscaling
 configuration and sufficient Kafka topic partitions; it is not configured in
 this repository today.
 
-## Intended workflow
+## Processing workflow
 
 1. The orchestrator saves the request and publishes a range message to the
    Kafka request topic.
 2. The processor consumes the message and uses the Kafka key as the processing
    result ID that correlates all updates for this job.
 3. It publishes a `PROCESSING` update with a start timestamp.
-4. It calculates the prime numbers in the range.
+4. It calculates the prime numbers in the range using the brute-force
+   generator.
 5. It publishes either a `SUCCESS` update containing the primes or a `FAIL`
    update containing an error message. Both final updates include a finish
    timestamp.
@@ -47,6 +48,21 @@ model, the orchestrator's request `status` describes the general request
 lifecycle, while the processing result `state` describes the calculation
 (`IN_QUEUE`, `PROCESSING`, `SUCCESS`, or `FAIL`). A completed request can
 therefore have a successful or failed processing state.
+
+## Why the request consumer is in the presentation layer
+
+The `PrimeNumberRequestKafkaConsumer` is in the processor's `presentation`
+layer because consuming a range message is the service's only inbound path for
+generation jobs. It adapts the Kafka key and payload into a call to the
+application service. The consumer handles message transport; generation
+behavior remains in the application and domain code.
+
+The orchestrator uses a different placement for its result-topic consumer. It
+keeps that consumer in `infrastructure` because the message is an internal
+processing-state update that is adapted to an existing update service; it does
+not start a new client request or generation workflow. This is a deliberate,
+project-specific choice based on each consumer's role, not a general rule that
+Kafka consumers always belong in one layer.
 
 ## Kafka integration contract
 
@@ -93,14 +109,24 @@ The processor module currently depends on:
 - **Java 25** to build and run the application.
 - **Maven** through the included Maven Wrapper.
 - **Spring Boot** as the application framework.
-- **Spring for Apache Kafka** for the intended message-consumer and
-  message-producer integration.
-- **Apache Kafka** as a runtime dependency once message processing is
-  implemented.
+- **Spring for Apache Kafka** for message consumption and result publication.
+- **Apache Kafka** as a runtime service.
 
 The current Maven dependencies include the Spring Kafka starter, optional
-Lombok, and the Spring Kafka test starter. The processor does not currently
-depend on PostgreSQL or expose an HTTP API.
+Lombok, and the Spring Kafka test starter. The processor does not depend on
+PostgreSQL or expose a client-facing HTTP API.
+
+## Configuration
+
+The processor must use the same request and result topics as the orchestrator.
+These settings can be supplied through environment variables:
+
+| Variable | Default | Purpose |
+| --- | --- | --- |
+| `KAFKA_BOOTSTRAP_SERVERS` | `localhost:9092` | Kafka broker address |
+| `KAFKA_PROCESSING_REQUEST_GROUP_ID` | `prime-number-generator-processor` | Consumer group for generation jobs |
+| `KAFKA_REQUEST_TOPIC` | `prime-number-requests` | Topic for generation jobs |
+| `KAFKA_RESULT_TOPIC` | `prime-number-results` | Topic for progress and result updates |
 
 ## Build and test
 
@@ -111,27 +137,37 @@ cd prime-number-generator-processor
 ./mvnw test
 ```
 
-The module can also be started with:
+The module can also be started with Kafka available at the configured broker:
 
 ```bash
 ./mvnw spring-boot:run
 ```
 
-At present, this only starts the Spring Boot application shell; it does not
-consume Kafka messages or calculate primes.
+When using the root Compose broker from the host, set
+`KAFKA_BOOTSTRAP_SERVERS=localhost:29092`. The orchestrator should be configured
+with the same topic names to persist the processor's updates.
 
-## Current implementation status
+To build and run the processor with the full local stack, start Compose from
+the repository root:
 
-This module is currently a Spring Boot bootstrap skeleton. It contains the
-application entry point and a context-load test, but it does not yet include:
+```bash
+docker compose up --build
+```
 
-- a Kafka request listener or result producer;
-- the prime-generation algorithm or a long-running worker;
-- Kafka broker, topic, or consumer-group configuration;
-- progress reporting and failure handling;
-- a processor Dockerfile or a processor service in the root Compose setup.
+Compose builds the processor image from this module's Dockerfile and starts the
+worker after Kafka is healthy. The worker uses `kafka:9092` and the same
+request and result topics as the orchestrator.
 
-The workflow, contracts, and scaling discussion above describe the intended
-design. They should be updated as these capabilities are implemented. The
-orchestrator and its message formats are documented in the
+## Current implementation
+
+The module currently includes:
+
+- a Kafka request consumer in the `presentation` layer;
+- a brute-force prime generator and an application service that reports
+  `PROCESSING`, `SUCCESS`, or `FAIL`;
+- a Kafka result producer in the `infrastructure` layer and configurable
+  broker, topic, and consumer-group settings.
+
+Queue-depth-based autoscaling is not configured. The orchestrator and shared
+message formats are documented in the
 [orchestrator README](../prime-number-generator-orchestrator/README.md).

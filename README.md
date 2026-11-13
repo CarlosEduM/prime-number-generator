@@ -58,10 +58,11 @@ lifecycle and allows processing capacity to be adjusted independently:
   changing the client-facing API, provided it continues to honor the Kafka
   message contract.
 
-The brute-force prime-generation approach is intended to simulate a slow
-process. A run taking around 30 minutes is a design scenario, not a measured
-runtime guarantee. The processor implementation is currently a bootstrap
-skeleton; see its README for details.
+The processor uses brute-force prime generation to simulate a slow process. A
+run taking around 30 minutes is a design scenario, not a measured runtime
+guarantee. The service implements Kafka job consumption, prime generation, and
+result publication, and is included in the root Compose stack; see its README
+for setup details.
 
 ### Layered architecture
 
@@ -78,6 +79,17 @@ infrastructure adapters and configuration, while the domain rules and
 application use cases can remain unchanged. The same principle allows the
 processor implementation to use a different programming language while
 preserving the agreed message contract.
+
+The two Kafka consumers are placed in different layers because they have
+different roles in this system. The processor's request consumer is its only
+inbound path for generation jobs, so it is in `presentation`: it adapts the
+Kafka key and payload into an application-service call. The orchestrator's
+result consumer is in `infrastructure`: it handles an internal processing
+update and delegates to the existing update use case; it does not start a new
+client request or generation workflow. This is a project-specific boundary
+decision based on each consumer's responsibility, not a rule that all Kafka
+consumers must belong to one layer. Business rules remain in application and
+domain code.
 
 ### Trade-offs and when this architecture fits
 
@@ -113,9 +125,9 @@ the application.
 
 ```text
 prime-number-generator-orchestrator/  Client API, request lifecycle, persistence, Kafka integration
-prime-number-generator-processor/     Internal processing worker (currently a skeleton)
+prime-number-generator-processor/     Internal processing worker
 examples/                             Example Kafka result-update payloads
-compose.yaml                          Local PostgreSQL, Kafka, Kafka UI, and orchestrator
+compose.yaml                          Local PostgreSQL, Kafka, Kafka UI, orchestrator, and processor
 ```
 
 For service-specific behavior and contracts, see:
@@ -142,6 +154,7 @@ docker compose up --build
 Compose starts:
 
 - the orchestrator API at `http://localhost:8080`;
+- the processor worker, connected to the Compose Kafka broker;
 - PostgreSQL, with data stored in the `postgres_data` volume;
 - a local Kafka broker, available at `localhost:29092` from the host and
   `kafka:9092` from other Compose containers;
@@ -152,10 +165,9 @@ orchestrator to use `https://accounts.google.com` as its JWT issuer. API
 requests require a valid bearer token from that issuer. Swagger UI is available
 at `http://localhost:8080/swagger-ui/index.html`.
 
-The Compose stack does **not** currently start a processor. The processor
-module does not yet consume Kafka jobs or publish result updates, so requests
-can be accepted and queued, but will not complete through the full workflow
-until a processor is implemented and connected.
+The processor starts after Kafka becomes healthy and consumes generation jobs
+from the configured request topic. It publishes progress and results for the
+orchestrator to persist.
 
 Compose uses development database credentials by default. Override them before
 starting the stack when needed:
