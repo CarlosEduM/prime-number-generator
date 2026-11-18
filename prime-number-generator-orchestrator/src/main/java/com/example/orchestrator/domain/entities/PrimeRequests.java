@@ -38,8 +38,8 @@ public class PrimeRequests {
     private BigInteger inputNumberMax;
     @Enumerated(EnumType.STRING)
     private PrimeRequestStatus status = PrimeRequestStatus.PENDING;
-    private LocalDateTime createdAt = LocalDateTime.now();;
-    private LocalDateTime updatedAt = LocalDateTime.now();;
+    private LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime updatedAt = LocalDateTime.now();
 
     @OneToOne(targetEntity = ProcessingResults.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "results_id", referencedColumnName = "id")

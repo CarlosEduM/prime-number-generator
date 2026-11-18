@@ -45,7 +45,7 @@ class PrimeRequestControllerTest {
 
     @Test
     void testCreatePrimeRequestWithoutAuthenticationReturnsUnauthorized() throws Exception {
-        mockMvc.perform(post("/api/prime-requests")
+        mockMvc.perform(post("/api/v1/prime-requests")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("""
                         {"inputNumberMin":0,"inputNumberMax":10}
@@ -65,7 +65,7 @@ class PrimeRequestControllerTest {
         when(primeRequestService.requestPrimeNumberRange(any(PrimeRequestDTO.class), eq("user-42")))
                 .thenReturn(createdRequest);
 
-        mockMvc.perform(post("/api/prime-requests")
+        mockMvc.perform(post("/api/v1/prime-requests")
                 .with(jwt().jwt(token -> token.subject("user-42")))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("""
@@ -80,7 +80,7 @@ class PrimeRequestControllerTest {
 
     @Test
     void testCreatePrimeRequestWithMissingRangeValueReturnsBadRequest() throws Exception {
-        mockMvc.perform(post("/api/prime-requests")
+        mockMvc.perform(post("/api/v1/prime-requests")
                 .with(jwt())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("""
@@ -96,7 +96,7 @@ class PrimeRequestControllerTest {
         when(primeRequestService.requestPrimeNumberRange(any(PrimeRequestDTO.class), eq("user-42")))
                 .thenThrow(new InvalidInputException("Invalid range."));
 
-        mockMvc.perform(post("/api/prime-requests")
+        mockMvc.perform(post("/api/v1/prime-requests")
                 .with(jwt().jwt(token -> token.subject("user-42")))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("""
@@ -114,7 +114,7 @@ class PrimeRequestControllerTest {
         request.setInputNumberRange(BigInteger.ZERO, BigInteger.TEN);
         when(primeRequestService.getPrimeRequest(requestId, "user-42")).thenReturn(request);
 
-        mockMvc.perform(get("/api/prime-requests/{id}", requestId)
+        mockMvc.perform(get("/api/v1/prime-requests/{id}", requestId)
                 .with(jwt().jwt(token -> token.subject("user-42"))))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.inputNumberMin").value(0))
@@ -127,7 +127,7 @@ class PrimeRequestControllerTest {
 
     @Test
     void testGetPrimeRequestWithoutAuthenticationReturnsUnauthorized() throws Exception {
-        mockMvc.perform(get("/api/prime-requests/{id}",
+        mockMvc.perform(get("/api/v1/prime-requests/{id}",
                 UUID.fromString("7b09c7d7-12a6-4270-91d9-85cc3eae8fa3")))
                 .andExpect(status().isUnauthorized());
 
@@ -140,7 +140,7 @@ class PrimeRequestControllerTest {
         when(primeRequestService.getPrimeRequest(requestId, "user-42"))
                 .thenThrow(new NotFoundException("Prime request not found."));
 
-        mockMvc.perform(get("/api/prime-requests/{id}", requestId)
+        mockMvc.perform(get("/api/v1/prime-requests/{id}", requestId)
                 .with(jwt().jwt(token -> token.subject("user-42"))))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.detail").value("Prime request not found."));
@@ -155,7 +155,7 @@ class PrimeRequestControllerTest {
         PageableResult<PrimeRequests> page = new PageableResult<>(List.of(request), 1, 5, 6);
         when(primeRequestService.getAllPrimeRequests(pageableRequest, "user-42")).thenReturn(page);
 
-        mockMvc.perform(get("/api/prime-requests")
+        mockMvc.perform(get("/api/v1/prime-requests")
                 .with(jwt().jwt(token -> token.subject("user-42")))
                 .param("page", "1")
                 .param("size", "5"))
@@ -172,7 +172,7 @@ class PrimeRequestControllerTest {
 
     @Test
     void testGetAllPrimeRequestsWithoutAuthenticationReturnsUnauthorized() throws Exception {
-        mockMvc.perform(get("/api/prime-requests"))
+        mockMvc.perform(get("/api/v1/prime-requests"))
                 .andExpect(status().isUnauthorized());
 
         verifyNoInteractions(primeRequestService);
@@ -180,7 +180,7 @@ class PrimeRequestControllerTest {
 
     @Test
     void testGetAllPrimeRequestsWithInvalidPageReturnsBadRequest() throws Exception {
-        mockMvc.perform(get("/api/prime-requests")
+        mockMvc.perform(get("/api/v1/prime-requests")
                 .with(jwt())
                 .param("page", "-1"))
                 .andExpect(status().isBadRequest());

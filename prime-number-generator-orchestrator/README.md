@@ -21,7 +21,7 @@ processor are available and correctly configured.
 
 ## Workflow
 
-1. A client submits a range to `POST /api/prime-requests` with a valid bearer
+1. A client submits a range to `POST /api/v1/prime-requests` with a valid bearer
    token.
 2. The orchestrator uses the JWT `sub` claim as the request owner, validates
    the range, and persists the request with `PENDING` status and an associated
@@ -64,7 +64,7 @@ request body. Requests and lists are scoped to that owner.
 ### Create a request
 
 ```http
-POST /api/prime-requests
+POST /api/v1/prime-requests
 Authorization: Bearer <JWT>
 Content-Type: application/json
 
@@ -85,7 +85,7 @@ return `401 Unauthorized`.
 ### Get one request
 
 ```http
-GET /api/prime-requests/{id}
+GET /api/v1/prime-requests/{id}
 Authorization: Bearer <JWT>
 ```
 
@@ -95,7 +95,7 @@ request that does not exist or belongs to another user returns `404 Not Found`.
 ### List requests
 
 ```http
-GET /api/prime-requests?page=0&size=20
+GET /api/v1/prime-requests?page=0&size=20
 Authorization: Bearer <JWT>
 ```
 

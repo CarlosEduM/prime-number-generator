@@ -26,7 +26,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 
 @RestController
-@RequestMapping("/api/prime-requests")
+@RequestMapping("/api/v1/prime-requests")
 @Validated
 public class PrimeRequestController {
     private final PrimeRequestService primeRequestService;

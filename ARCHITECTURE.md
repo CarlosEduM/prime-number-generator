@@ -214,9 +214,9 @@ Current security model:
 - Swagger endpoints are public; the API itself is protected.
 
 Current API behavior:
-- `POST /api/prime-requests`: creates a request and returns the new UUID.
-- `GET /api/prime-requests/{id}`: retrieves a single request owned by the authenticated user.
-- `GET /api/prime-requests?page=0&size=20`: lists paginated user-scoped results.
+- `POST /api/v1/prime-requests`: creates a request and returns the new UUID.
+- `GET /api/v1/prime-requests/{id}`: retrieves a single request owned by the authenticated user.
+- `GET /api/v1/prime-requests?page=0&size=20`: lists paginated user-scoped results.
 
 The validation rules implemented in the domain model enforce non-negative ranges and a range width between 10 and 1,000 inclusive.
 
