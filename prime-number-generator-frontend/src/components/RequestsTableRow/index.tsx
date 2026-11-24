@@ -36,7 +36,11 @@ function RequestsTableRow({ request }: IRequestsTableRowProps) {
         {new Date(request.updatedAt).toLocaleString('pt-BR')}
       </TableCell>
       <TableCell>
-        <Link component={RouterLink} to={`/requests/${request.id}`}>
+        <Link
+          component={RouterLink}
+          to={`/requests/${request.id}`}
+          state={{ request }}
+        >
           Ver detalhes
         </Link>
       </TableCell>
