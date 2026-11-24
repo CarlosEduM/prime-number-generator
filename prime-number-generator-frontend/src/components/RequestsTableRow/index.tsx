@@ -25,9 +25,7 @@ function RequestsTableRow({ request }: RequestsTableRowProps) {
   return (
     <TableRow hover>
       <TableCell>
-        <Link component={RouterLink} to={`/requests/${request.id}`}>
-          {request.id}
-        </Link>
+        {request.id}
       </TableCell>
       <TableCell>
         {request.inputNumberMin} a {request.inputNumberMax}
