@@ -1,11 +1,10 @@
-import { Container, Typography } from '@mui/material'
+import { Container } from '@mui/material'
+import NotFound from '../../components/NotFound'
 
 function NotFoundPage() {
   return (
     <Container maxWidth="lg" sx={{ py: 5 }}>
-      <Typography component="h1" variant="h4">
-        Página não encontrada
-      </Typography>
+      <NotFound message="O endereço acessado não corresponde a nenhuma página." />
     </Container>
   )
 }

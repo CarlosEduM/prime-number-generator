@@ -3,7 +3,7 @@ import { Container, Stack, Typography } from '@mui/material'
 import { useLocation, useParams } from 'react-router'
 import RequestDetailsHeader from '../../components/RequestDetailsHeader'
 import RequestDetailsLoading from '../../components/RequestDetailsLoading'
-import RequestNotFound from '../../components/RequestNotFound'
+import NotFound from '../../components/NotFound'
 import RequestProgress from '../../components/RequestProgress'
 import RequestResult from '../../components/RequestResult'
 import RequestSummary from '../../components/RequestSummary'
@@ -42,7 +42,9 @@ function RequestDetailsPage() {
       {isLoading ? (
         <RequestDetailsLoading />
       ) : !details ? (
-        <RequestNotFound />
+        <NotFound
+          message={`A solicitação com o ID "${requestId}" não foi encontrada.`}
+        />
       ) : (
         <Stack spacing={3}>
           <RequestDetailsHeader

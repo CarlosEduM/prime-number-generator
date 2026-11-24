@@ -1,23 +1,21 @@
 import { Alert, Button, Stack } from '@mui/material'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import { Link as RouterLink } from 'react-router'
+import type { INotFoundProps } from '../../interfaces/INotFoundProps'
 
-function RequestNotFound() {
+function NotFound({ message }: INotFoundProps) {
   return (
-    <Stack spacing={3}>
+    <Stack spacing={3} sx={{ alignItems: 'flex-start' }}>
       <Button
         component={RouterLink}
         to="/requests"
         startIcon={<ArrowBackIcon />}
-        sx={{ alignSelf: 'flex-start' }}
       >
         Voltar para processos
       </Button>
-      <Alert severity="warning">
-        Não encontramos uma solicitação com esse identificador.
-      </Alert>
+      <Alert severity="warning">{message}</Alert>
     </Stack>
   )
 }
 
-export default RequestNotFound
+export default NotFound
