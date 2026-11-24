@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import {
   Table,
   TableBody,
@@ -8,19 +7,16 @@ import {
   TablePagination,
   TableRow,
 } from '@mui/material'
-import type { IPrimeRequest } from '../../interfaces/IPrimeRequest'
+import type { IRequestsTableProps } from '../../interfaces/IRequestsTableProps'
 import RequestsTableRow from '../RequestsTableRow'
 
-interface RequestsTableProps {
-  requests: IPrimeRequest[]
-}
-
-function RequestsTable({ requests }: RequestsTableProps) {
-  const [page, setPage] = useState(0)
-  const [rowsPerPage, setRowsPerPage] = useState(10)
-  const pageCount = Math.ceil(requests.length / rowsPerPage)
-  const currentPage = Math.min(page, Math.max(0, pageCount - 1))
-
+function RequestsTable({
+  requests,
+  page,
+  rowsPerPage,
+  onPageChange,
+  onRowsPerPageChange,
+}: IRequestsTableProps) {
   return (
     <>
       <TableContainer sx={{ overflowX: 'auto' }}>
@@ -38,8 +34,8 @@ function RequestsTable({ requests }: RequestsTableProps) {
           <TableBody>
             {requests
               .slice(
-                currentPage * rowsPerPage,
-                currentPage * rowsPerPage + rowsPerPage,
+                page * rowsPerPage,
+                page * rowsPerPage + rowsPerPage,
               )
               .map((request) => (
                 <RequestsTableRow key={request.id} request={request} />
@@ -57,12 +53,11 @@ function RequestsTable({ requests }: RequestsTableProps) {
       <TablePagination
         component="div"
         count={requests.length}
-        page={currentPage}
-        onPageChange={(_, newPage) => setPage(newPage)}
+        page={page}
+        onPageChange={(_, newPage) => onPageChange(newPage)}
         rowsPerPage={rowsPerPage}
         onRowsPerPageChange={(event) => {
-          setRowsPerPage(Number(event.target.value))
-          setPage(0)
+          onRowsPerPageChange(Number(event.target.value))
         }}
         rowsPerPageOptions={[5, 10, 25]}
         labelRowsPerPage="Itens por página:"

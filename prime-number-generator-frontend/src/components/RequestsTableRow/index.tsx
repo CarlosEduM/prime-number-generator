@@ -2,9 +2,9 @@ import { Chip, Link, TableCell, TableRow } from '@mui/material'
 import type { ChipProps } from '@mui/material/Chip'
 import { Link as RouterLink } from 'react-router'
 import type {
-  IPrimeRequest,
   PrimeRequestStatus,
 } from '../../interfaces/IPrimeRequest'
+import type { IRequestsTableRowProps } from '../../interfaces/IRequestsTableRowProps'
 
 const statusPresentation = {
   PENDING: { label: 'Pendente', color: 'warning' },
@@ -15,11 +15,7 @@ const statusPresentation = {
   { label: string; color: ChipProps['color'] }
 >
 
-interface RequestsTableRowProps {
-  request: IPrimeRequest
-}
-
-function RequestsTableRow({ request }: RequestsTableRowProps) {
+function RequestsTableRow({ request }: IRequestsTableRowProps) {
   const status = statusPresentation[request.status]
 
   return (
