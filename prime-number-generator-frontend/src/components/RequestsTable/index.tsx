@@ -12,6 +12,7 @@ import RequestsTableRow from '../RequestsTableRow'
 
 function RequestsTable({
   requests,
+  totalElements,
   page,
   rowsPerPage,
   onPageChange,
@@ -32,15 +33,10 @@ function RequestsTable({
             </TableRow>
           </TableHead>
           <TableBody>
-            {requests
-              .slice(
-                page * rowsPerPage,
-                page * rowsPerPage + rowsPerPage,
-              )
-              .map((request) => (
-                <RequestsTableRow key={request.id} request={request} />
-              ))}
-            {requests.length === 0 && (
+            {requests.map((request) => (
+              <RequestsTableRow key={request.id} request={request} />
+            ))}
+            {totalElements === 0 && (
               <TableRow>
                 <TableCell colSpan={6} align="center">
                   No requests found.
@@ -52,7 +48,7 @@ function RequestsTable({
       </TableContainer>
       <TablePagination
         component="div"
-        count={requests.length}
+        count={totalElements}
         page={page}
         onPageChange={(_, newPage) => onPageChange(newPage)}
         rowsPerPage={rowsPerPage}

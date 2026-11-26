@@ -20,15 +20,18 @@ function CreateRequestDialog({
   const [inputNumberMin, setInputNumberMin] = useState('')
   const [inputNumberMax, setInputNumberMax] = useState('')
   const [validationError, setValidationError] = useState('')
+  const [requestError, setRequestError] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   function handleClose() {
     setInputNumberMin('')
     setInputNumberMax('')
     setValidationError('')
+    setRequestError('')
     onClose()
   }
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
 
     if (!/^\d+$/.test(inputNumberMin) || !/^\d+$/.test(inputNumberMax)) {
@@ -45,8 +48,18 @@ function CreateRequestDialog({
       return
     }
 
-    onCreate({ inputNumberMin, inputNumberMax })
-    handleClose()
+    setIsSubmitting(true)
+    setRequestError('')
+    try {
+      await onCreate({ inputNumberMin, inputNumberMax })
+      handleClose()
+    } catch (error) {
+      setRequestError(
+        error instanceof Error ? error.message : 'Could not create the request.',
+      )
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -74,6 +87,7 @@ function CreateRequestDialog({
               onChange={(event) => {
                 setInputNumberMin(event.target.value)
                 setValidationError('')
+                setRequestError('')
               }}
               slotProps={{
                 htmlInput: { inputMode: 'numeric', pattern: '[0-9]*' },
@@ -87,6 +101,7 @@ function CreateRequestDialog({
               onChange={(event) => {
                 setInputNumberMax(event.target.value)
                 setValidationError('')
+                setRequestError('')
               }}
               slotProps={{
                 htmlInput: { inputMode: 'numeric', pattern: '[0-9]*' },
@@ -99,12 +114,19 @@ function CreateRequestDialog({
                 {validationError}
               </Typography>
             )}
+            {requestError && (
+              <Typography role="alert" color="error">
+                {requestError}
+              </Typography>
+            )}
           </Stack>
         </DialogContent>
         <DialogActions sx={{ px: 3, pb: 2 }}>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button type="submit" variant="contained">
-            Create request
+          <Button onClick={handleClose} disabled={isSubmitting}>
+            Cancel
+          </Button>
+          <Button type="submit" variant="contained" disabled={isSubmitting}>
+            {isSubmitting ? 'Creating…' : 'Create request'}
           </Button>
         </DialogActions>
       </form>

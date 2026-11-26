@@ -5,5 +5,5 @@ export interface ICreateRequestDialogProps {
   onClose: () => void
   onCreate: (
     range: Pick<IPrimeRequest, 'inputNumberMin' | 'inputNumberMax'>,
-  ) => void
+  ) => Promise<void>
 }

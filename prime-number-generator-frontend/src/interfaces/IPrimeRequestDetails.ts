@@ -8,7 +8,7 @@ export type ProcessingResultState =
 
 export interface IProcessingResultDetails {
   state: ProcessingResultState
-  results?: string[]
+  results?: Array<string | number>
   errorMessage?: string
   startedAt?: string
   finishedAt?: string

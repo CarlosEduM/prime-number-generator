@@ -35,7 +35,7 @@ function RequestResult({ processingResult }: IRequestResultProps) {
           </Typography>
           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
             {processingResult.results?.map((prime) => (
-              <Chip key={prime} label={prime} variant="outlined" />
+              <Chip key={String(prime)} label={prime} variant="outlined" />
             ))}
           </Box>
           {processingResult.finishedAt && (

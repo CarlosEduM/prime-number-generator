@@ -39,7 +39,6 @@ function RequestsTableRow({ request }: IRequestsTableRowProps) {
         <Link
           component={RouterLink}
           to={`/requests/${request.id}`}
-          state={{ request }}
         >
           View details
         </Link>
