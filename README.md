@@ -124,10 +124,11 @@ the application.
 ## Repository layout
 
 ```text
+prime-number-generator-frontend/      React client application
 prime-number-generator-orchestrator/  Client API, request lifecycle, persistence, Kafka integration
 prime-number-generator-processor/     Internal processing worker
 examples/                             Example Kafka result-update payloads
-compose.yaml                          Local PostgreSQL, Kafka, Kafka UI, orchestrator, and processor
+compose.yaml                          Local frontend, PostgreSQL, Kafka, Kafka UI, orchestrator, and processor
 ```
 
 For service-specific behavior and contracts, see:
@@ -153,6 +154,7 @@ docker compose up --build
 
 Compose starts:
 
+- the frontend at `http://localhost:3000`;
 - the orchestrator API at `http://localhost:8080`;
 - the processor worker, connected to the Compose Kafka broker;
 - PostgreSQL at `localhost:5432`, with data stored in the `postgres_data`
@@ -182,6 +184,16 @@ These defaults and the issuer setup are for local demonstration only. Issuer
 validation alone does not restrict tokens to a specific OAuth client audience;
 configure audience validation and production-grade secrets and transport
 security before using the system in a deployed environment.
+
+To enable Google sign-in in the frontend, provide the OAuth client ID when
+building the Compose stack:
+
+```bash
+GOOGLE_CLIENT_ID=my-google-client-id docker compose up --build
+```
+
+The client ID is embedded in the frontend build and is not required to start
+the stack; without it, Google sign-in remains disabled.
 
 Stop the containers with:
 

@@ -4,13 +4,19 @@ This document describes the current architecture of the Prime Number Generator s
 
 ## 1. Project Structure
 
-The repository is organized as a small event-driven system with two Java services:
+The repository is organized as a small event-driven system with a React frontend
+and two Java services:
 
 ```text
 /
 ├── README.md
 ├── ARCHITECTURE.md
 ├── compose.yaml
+├── prime-number-generator-frontend/
+│   ├── Dockerfile
+│   ├── .dockerignore
+│   ├── nginx.conf
+│   └── src/
 ├── examples/
 │   └── processing-result-updates/
 │       ├── processing.json
@@ -55,6 +61,7 @@ The repository does not use a monolith. Instead, it separates responsibilities i
 
 - Orchestrator: public API, request lifecycle, persistence, security, Kafka publication, and result update handling.
 - Processor: internal worker that consumes range jobs and emits processing updates.
+- Frontend: React client for signing in and managing prime-generation requests.
 
 ## 2. High-Level System Diagram
 
