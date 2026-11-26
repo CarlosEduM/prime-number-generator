@@ -1,0 +1,50 @@
+import { Chip, Link, TableCell, TableRow } from '@mui/material'
+import type { ChipProps } from '@mui/material/Chip'
+import { Link as RouterLink } from 'react-router'
+import type {
+  PrimeRequestStatus,
+} from '../../interfaces/IPrimeRequest'
+import type { IRequestsTableRowProps } from '../../interfaces/IRequestsTableRowProps'
+
+const statusPresentation = {
+  PENDING: { label: 'Pending', color: 'warning' },
+  PROCESSING: { label: 'Processing', color: 'info' },
+  COMPLETED: { label: 'Completed', color: 'success' },
+} satisfies Record<
+  PrimeRequestStatus,
+  { label: string; color: ChipProps['color'] }
+>
+
+function RequestsTableRow({ request }: IRequestsTableRowProps) {
+  const status = statusPresentation[request.status]
+
+  return (
+    <TableRow hover>
+      <TableCell>
+        {request.id}
+      </TableCell>
+      <TableCell>
+        {request.inputNumberMin} a {request.inputNumberMax}
+      </TableCell>
+      <TableCell>
+        <Chip label={status.label} color={status.color} size="small" />
+      </TableCell>
+      <TableCell>
+        {new Date(request.createdAt).toLocaleString('en-US')}
+      </TableCell>
+      <TableCell>
+        {new Date(request.updatedAt).toLocaleString('en-US')}
+      </TableCell>
+      <TableCell>
+        <Link
+          component={RouterLink}
+          to={`/requests/${request.id}`}
+        >
+          View details
+        </Link>
+      </TableCell>
+    </TableRow>
+  )
+}
+
+export default RequestsTableRow
