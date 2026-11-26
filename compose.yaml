@@ -85,5 +85,14 @@ services:
       kafka:
         condition: service_healthy
 
+  frontend:
+    build:
+      context: ./prime-number-generator-frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
+    ports:
+      - "3000:80"
+
 volumes:
   postgres_data:
