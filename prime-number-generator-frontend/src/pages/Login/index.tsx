@@ -66,10 +66,10 @@ function LoginPage() {
           </Box>
           <Box>
             <Typography component="h1" variant="h4" sx={{ mb: 1 }}>
-              Gerador de números primos
+              Prime Number Generator
             </Typography>
             <Typography color="text.secondary">
-              Entre para acompanhar suas solicitações e resultados.
+              Sign in to track your requests and results.
             </Typography>
           </Box>
           <Alert
@@ -77,8 +77,8 @@ function LoginPage() {
             sx={{ width: '100%', textAlign: 'left' }}
           >
             {googleClientId
-              ? 'Você será autenticado com sua conta Google. Nenhuma senha é solicitada por esta aplicação.'
-              : 'Configure VITE_GOOGLE_CLIENT_ID no arquivo .env.local para habilitar o login Google.'}
+              ? 'You will be authenticated with your Google account. This application does not request a password.'
+              : 'Configure VITE_GOOGLE_CLIENT_ID in the .env.local file to enable Google sign-in.'}
           </Alert>
           {loginError && (
             <Alert severity="error" sx={{ width: '100%', textAlign: 'left' }}>
@@ -93,7 +93,7 @@ function LoginPage() {
                 onSuccess={(response) => {
                   if (!response.credential) {
                     setLoginError(
-                      'O Google não retornou uma credencial de autenticação.',
+                      'Google did not return an authentication credential.',
                     )
                     return
                   }
@@ -103,7 +103,7 @@ function LoginPage() {
                 }}
                 onError={() => {
                   setLoginError(
-                    'Não foi possível iniciar o login com o Google. Tente novamente.',
+                    'Could not start Google sign-in. Please try again.',
                   )
                 }}
               />
@@ -116,7 +116,7 @@ function LoginPage() {
           >
             <LoginIcon fontSize="small" />
             <Typography variant="caption">
-              A autenticação é feita com segurança pelo Google.
+              Authentication is securely provided by Google.
             </Typography>
           </Stack>
         </Stack>

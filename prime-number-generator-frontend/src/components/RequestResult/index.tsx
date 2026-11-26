@@ -6,32 +6,32 @@ function RequestResult({ processingResult }: IRequestResultProps) {
   return (
     <Paper variant="outlined" sx={{ p: 3 }}>
       <Typography component="h2" variant="h6" sx={{ mb: 2 }}>
-        Resultado
+        Result
       </Typography>
       {processingResult.state === 'IN_QUEUE' && (
         <Alert severity="info">
-          Sua solicitação está na fila e será processada em breve.
+          Your request is in the queue and will be processed shortly.
         </Alert>
       )}
       {processingResult.state === 'PROCESSING' && (
         <Alert severity="info">
-          A solicitação está sendo processada
+          The request is being processed
           {processingResult.startedAt
-            ? ` desde ${formatDate(processingResult.startedAt)}.`
+            ? ` since ${formatDate(processingResult.startedAt)}.`
             : '.'}
         </Alert>
       )}
       {processingResult.state === 'FAIL' && (
         <Alert severity="error">
           {processingResult.errorMessage ??
-            'Não foi possível concluir o processamento.'}
+            'Could not complete processing.'}
         </Alert>
       )}
       {processingResult.state === 'SUCCESS' && (
         <Stack spacing={2}>
           <Typography color="text.secondary">
-            {processingResult.results?.length ?? 0} números primos encontrados
-            no intervalo.
+            {processingResult.results?.length ?? 0} prime numbers found
+            in the range.
           </Typography>
           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
             {processingResult.results?.map((prime) => (
@@ -40,7 +40,7 @@ function RequestResult({ processingResult }: IRequestResultProps) {
           </Box>
           {processingResult.finishedAt && (
             <Typography variant="body2" color="text.secondary">
-              Concluída em {formatDate(processingResult.finishedAt)}
+              Completed at {formatDate(processingResult.finishedAt)}
             </Typography>
           )}
         </Stack>

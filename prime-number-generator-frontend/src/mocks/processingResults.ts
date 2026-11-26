@@ -49,7 +49,7 @@ export function getMockProcessingResult(
     return {
       state: 'FAIL',
       errorMessage:
-        'O processador não conseguiu concluir esta solicitação. Tente novamente mais tarde.',
+        'The processor could not complete this request. Please try again later.',
       finishedAt: request.updatedAt,
     }
   }

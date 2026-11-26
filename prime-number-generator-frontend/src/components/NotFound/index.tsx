@@ -11,7 +11,7 @@ function NotFound({ message }: INotFoundProps) {
         to="/requests"
         startIcon={<ArrowBackIcon />}
       >
-        Voltar para processos
+        Back to requests
       </Button>
       <Alert severity="warning">{message}</Alert>
     </Stack>

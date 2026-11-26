@@ -49,14 +49,13 @@ function RequestsPage() {
       >
         <Stack spacing={1}>
           <Typography component="h1" variant="h4">
-            Processos
+            Requests
           </Typography>
           <Typography color="text.secondary">
-            Acompanhe suas solicitações de geração de números primos.
+            Track your prime number generation requests.
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Dados de demonstração: as solicitações ainda não são enviadas ao
-            orquestrador.
+            Demo data: requests are not yet sent to the orchestrator.
           </Typography>
         </Stack>
         <Button
@@ -64,7 +63,7 @@ function RequestsPage() {
           startIcon={<AddIcon />}
           onClick={() => setIsCreateDialogOpen(true)}
         >
-          Nova solicitação
+          New request
         </Button>
       </Stack>
       <Paper variant="outlined">

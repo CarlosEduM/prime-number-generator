@@ -43,7 +43,7 @@ function RequestDetailsPage() {
         <RequestDetailsLoading />
       ) : !details ? (
         <NotFound
-          message={`A solicitação com o ID "${requestId}" não foi encontrada.`}
+          message={`The request with ID "${requestId}" was not found.`}
         />
       ) : (
         <Stack spacing={3}>
@@ -55,8 +55,8 @@ function RequestDetailsPage() {
           <RequestProgress status={details.status} />
           <RequestResult processingResult={details.processingResult} />
           <Typography variant="caption" color="text.secondary">
-            Protótipo com dados de demonstração; a atualização automática e a
-            integração com o orquestrador serão adicionadas depois.
+            Demonstration prototype; automatic updates and orchestrator
+            integration will be added later.
           </Typography>
         </Stack>
       )}

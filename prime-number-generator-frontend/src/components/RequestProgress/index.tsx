@@ -1,7 +1,7 @@
 import { Paper, Step, StepLabel, Stepper, Typography } from '@mui/material'
 import type { IRequestProgressProps } from '../../interfaces/IRequestProgressProps'
 
-const steps = ['Na fila', 'Em processamento', 'Concluída']
+const steps = ['In queue', 'Processing', 'Completed']
 
 function RequestProgress({ status }: IRequestProgressProps) {
   const activeStep =
@@ -10,7 +10,7 @@ function RequestProgress({ status }: IRequestProgressProps) {
   return (
     <Paper variant="outlined" sx={{ p: 3 }}>
       <Typography component="h2" variant="h6" sx={{ mb: 3 }}>
-        Andamento
+        Progress
       </Typography>
       <Stepper activeStep={activeStep} alternativeLabel>
         {steps.map((step) => (

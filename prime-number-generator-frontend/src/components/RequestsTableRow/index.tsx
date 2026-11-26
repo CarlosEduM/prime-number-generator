@@ -7,9 +7,9 @@ import type {
 import type { IRequestsTableRowProps } from '../../interfaces/IRequestsTableRowProps'
 
 const statusPresentation = {
-  PENDING: { label: 'Pendente', color: 'warning' },
-  PROCESSING: { label: 'Em processamento', color: 'info' },
-  COMPLETED: { label: 'Concluído', color: 'success' },
+  PENDING: { label: 'Pending', color: 'warning' },
+  PROCESSING: { label: 'Processing', color: 'info' },
+  COMPLETED: { label: 'Completed', color: 'success' },
 } satisfies Record<
   PrimeRequestStatus,
   { label: string; color: ChipProps['color'] }
@@ -30,10 +30,10 @@ function RequestsTableRow({ request }: IRequestsTableRowProps) {
         <Chip label={status.label} color={status.color} size="small" />
       </TableCell>
       <TableCell>
-        {new Date(request.createdAt).toLocaleString('pt-BR')}
+        {new Date(request.createdAt).toLocaleString('en-US')}
       </TableCell>
       <TableCell>
-        {new Date(request.updatedAt).toLocaleString('pt-BR')}
+        {new Date(request.updatedAt).toLocaleString('en-US')}
       </TableCell>
       <TableCell>
         <Link
@@ -41,7 +41,7 @@ function RequestsTableRow({ request }: IRequestsTableRowProps) {
           to={`/requests/${request.id}`}
           state={{ request }}
         >
-          Ver detalhes
+          View details
         </Link>
       </TableCell>
     </TableRow>

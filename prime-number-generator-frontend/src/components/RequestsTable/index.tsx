@@ -20,15 +20,15 @@ function RequestsTable({
   return (
     <>
       <TableContainer sx={{ overflowX: 'auto' }}>
-        <Table aria-label="Solicitações de geração de números primos">
+        <Table aria-label="Prime number generation requests">
           <TableHead>
             <TableRow>
               <TableCell>ID</TableCell>
-              <TableCell>Intervalo solicitado</TableCell>
+              <TableCell>Requested range</TableCell>
               <TableCell>Status</TableCell>
-              <TableCell>Criada em</TableCell>
-              <TableCell>Atualizada em</TableCell>
-              <TableCell>Ações</TableCell>
+              <TableCell>Created at</TableCell>
+              <TableCell>Updated at</TableCell>
+              <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -43,7 +43,7 @@ function RequestsTable({
             {requests.length === 0 && (
               <TableRow>
                 <TableCell colSpan={6} align="center">
-                  Nenhum processo encontrado.
+                  No requests found.
                 </TableCell>
               </TableRow>
             )}
@@ -60,9 +60,9 @@ function RequestsTable({
           onRowsPerPageChange(Number(event.target.value))
         }}
         rowsPerPageOptions={[5, 10, 25]}
-        labelRowsPerPage="Itens por página:"
+        labelRowsPerPage="Items per page:"
         labelDisplayedRows={({ from, to, count }) =>
-          `${from}–${to} de ${count !== -1 ? count : `mais de ${to}`}`
+          `${from}–${to} of ${count !== -1 ? count : `more than ${to}`}`
         }
       />
     </>

@@ -5,7 +5,7 @@ function RequestDetailsLoading() {
     <Stack
       spacing={2}
       role="status"
-      aria-label="Carregando detalhes da solicitação"
+      aria-label="Loading request details"
     >
       <Skeleton variant="text" width={240} height={48} />
       <Skeleton variant="rounded" height={130} />

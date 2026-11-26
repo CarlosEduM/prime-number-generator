@@ -6,7 +6,7 @@ function RequestSummary({ request }: IRequestSummaryProps) {
   return (
     <Paper variant="outlined" sx={{ p: 3 }}>
       <Typography component="h2" variant="h6" sx={{ mb: 2 }}>
-        Resumo
+        Summary
       </Typography>
       <Box
         sx={{
@@ -17,7 +17,7 @@ function RequestSummary({ request }: IRequestSummaryProps) {
       >
         <Box>
           <Typography variant="body2" color="text.secondary">
-            Intervalo solicitado
+            Requested range
           </Typography>
           <Typography sx={{ fontWeight: 600 }}>
             {request.inputNumberMin} a {request.inputNumberMax}
@@ -25,7 +25,7 @@ function RequestSummary({ request }: IRequestSummaryProps) {
         </Box>
         <Box>
           <Typography variant="body2" color="text.secondary">
-            Criada em
+            Created at
           </Typography>
           <Typography sx={{ fontWeight: 600 }}>
             {formatDate(request.createdAt)}
@@ -33,7 +33,7 @@ function RequestSummary({ request }: IRequestSummaryProps) {
         </Box>
         <Box>
           <Typography variant="body2" color="text.secondary">
-            Última atualização
+            Last updated
           </Typography>
           <Typography sx={{ fontWeight: 600 }}>
             {formatDate(request.updatedAt)}

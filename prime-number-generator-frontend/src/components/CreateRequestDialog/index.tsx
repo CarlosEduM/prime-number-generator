@@ -32,7 +32,7 @@ function CreateRequestDialog({
     event.preventDefault()
 
     if (!/^\d+$/.test(inputNumberMin) || !/^\d+$/.test(inputNumberMax)) {
-      setValidationError('Informe valores inteiros não negativos.')
+      setValidationError('Enter non-negative integer values.')
       return
     }
 
@@ -40,7 +40,7 @@ function CreateRequestDialog({
 
     if (difference < 10n || difference > 1000n) {
       setValidationError(
-        'O valor máximo deve estar entre 10 e 1.000 unidades acima do mínimo.',
+        'The maximum value must be between 10 and 1,000 units above the minimum.',
       )
       return
     }
@@ -59,17 +59,17 @@ function CreateRequestDialog({
     >
       <form onSubmit={handleSubmit}>
         <DialogTitle id="create-request-title">
-          Nova solicitação
+          New request
         </DialogTitle>
         <DialogContent>
           <Stack spacing={2} sx={{ pt: 1 }}>
             <Typography color="text.secondary">
-              Informe o intervalo de números para a geração de primos. O mínimo
-              deve ser maior ou igual a zero e a diferença entre máximo e
-              mínimo deve ficar entre 10 e 1.000.
+              Enter the number range for prime generation. The minimum must be
+              greater than or equal to zero, and the difference between maximum
+              and minimum must be between 10 and 1,000.
             </Typography>
             <TextField
-              label="Número mínimo"
+              label="Minimum number"
               value={inputNumberMin}
               onChange={(event) => {
                 setInputNumberMin(event.target.value)
@@ -82,7 +82,7 @@ function CreateRequestDialog({
               fullWidth
             />
             <TextField
-              label="Número máximo"
+              label="Maximum number"
               value={inputNumberMax}
               onChange={(event) => {
                 setInputNumberMax(event.target.value)
@@ -102,9 +102,9 @@ function CreateRequestDialog({
           </Stack>
         </DialogContent>
         <DialogActions sx={{ px: 3, pb: 2 }}>
-          <Button onClick={handleClose}>Cancelar</Button>
+          <Button onClick={handleClose}>Cancel</Button>
           <Button type="submit" variant="contained">
-            Criar solicitação
+            Create request
           </Button>
         </DialogActions>
       </form>

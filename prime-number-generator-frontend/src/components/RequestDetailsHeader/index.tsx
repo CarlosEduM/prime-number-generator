@@ -6,9 +6,9 @@ import type { IRequestDetailsHeaderProps } from '../../interfaces/IRequestDetail
 import type { PrimeRequestStatus } from '../../interfaces/IPrimeRequest'
 
 const requestStatusPresentation = {
-  PENDING: { label: 'Pendente', color: 'warning' },
-  PROCESSING: { label: 'Em processamento', color: 'info' },
-  COMPLETED: { label: 'Concluída', color: 'success' },
+  PENDING: { label: 'Pending', color: 'warning' },
+  PROCESSING: { label: 'Processing', color: 'info' },
+  COMPLETED: { label: 'Completed', color: 'success' },
 } satisfies Record<
   PrimeRequestStatus,
   { label: string; color: ChipProps['color'] }
@@ -20,7 +20,7 @@ function RequestDetailsHeader({
 }: IRequestDetailsHeaderProps) {
   const status =
     resultState === 'FAIL'
-      ? { label: 'Falhou', color: 'error' as const }
+      ? { label: 'Failed', color: 'error' as const }
       : requestStatusPresentation[request.status]
 
   return (
@@ -31,7 +31,7 @@ function RequestDetailsHeader({
         startIcon={<ArrowBackIcon />}
         sx={{ alignSelf: 'flex-start' }}
       >
-        Voltar para processos
+        Back to requests
       </Button>
       <Stack
         sx={{
@@ -44,7 +44,7 @@ function RequestDetailsHeader({
       >
         <Box>
           <Typography component="h1" variant="h4" gutterBottom>
-            Detalhes da solicitação
+            Request details
           </Typography>
           <Typography
             variant="body2"
